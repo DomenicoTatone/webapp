@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="it">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Web2App</title>
+      <link rel="icon" type="image/png" href="https://bookinglinks.s3.eu-north-1.amazonaws.com/icona.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/compressorjs/1.0.7/compressor.min.js"></script>
+      <script src="https://bookinglinks.s3.eu-north-1.amazonaws.com/linksEN.js"></script>
+      <script src="https://bookinglinks.s3.eu-north-1.amazonaws.com/linksES.js"></script>
+      <script src="https://bookinglinks.s3.eu-north-1.amazonaws.com/linksFR.js"></script>
+      <script src="https://bookinglinks.s3.eu-north-1.amazonaws.com/linksIT.js"></script>
+      <style>
+         body { font-family: Arial, sans-serif; }
+         .navbar { overflow: hidden; background-color: #333; }
+         .navbar a { float: left; display: block; color: #f2f2f2; text-align: center; padding: 14px 20px; text-decoration: none; }
+         .navbar a:hover { background-color: #ddd; color: black; }
+         .content { padding: 20px; display: none; }
+         .content.active { display: block; }
+         .navbar a.icon {display: none;}
+         @media screen and (max-width: 600px) {
+         .navbar a:not(:first-child) {display: none;}
+         .navbar a.icon {
+         float: right;
+         display: block;
+         }
+         .navbar.responsive {position: relative;}
+         .navbar.responsive a.icon {
+         position: absolute;
+         right: 0;
+         top: 0;
+         }
+         .navbar.responsive a {
+         float: none;
+         display: block;
+         text-align: left;
+         }
+         }
+         @media (max-width: 768px) {
+         #generatoreCTA {
+         max-width: 100%; /* Permette al contenitore di usare tutta la larghezza disponibile su dispositivi più piccoli */
+         margin: 10px; /* Riduce il margine per adattarsi a schermi più piccoli */
+         padding: 10px; /* Riduce il padding per adattarsi a schermi più piccoli */
+         }
+         }
+         .centered-container {
+         display: flex;
+         justify-content: center; /* Centra orizzontalmente i contenuti all'interno del contenitore */
+         align-items: center; /* Centra verticalmente i contenuti all'interno del contenitore */
+         }
+         #generatoreCTA {
+         background-color: #007BFF; /* Colore di sfondo blu */
+         color: #FFFFFF; /* Testo bianco per contrasto */
+         padding: 20px 40px; /* Più spazio intorno al testo */
+         border-radius: 5px; /* Bordi arrotondati */
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera per profondità */
+         font-family: 'Arial', sans-serif; /* Stile del font coerente con il resto dell'UI */
+         font-size: 24px; /* Dimensione del font più grande */
+         text-align: center; /* Centratura del testo */
+         margin: 20px auto; /* Centratura orizzontale del titolo */
+         display: block; /* Assicura che h1 sia trattato come blocco */
+         width: fit-content; /* Adatta la larghezza al contenuto */
+         cursor: pointer; /* Cambia il cursore per indicare la cliccabilità */
+         transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transizione fluida per gli effetti */
+         }
+         #generatoreCTA:hover {
+         filter: brightness(110%);
+         box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+         }
+         label {
+         display: block;
+         margin-bottom: 5px;
+         color: #333;
+         }
+         #ctaLink {
+         width: 100%;
+         padding: 8px;
+         margin-bottom: 15px;
+         border: 1px solid #ddd;
+         border-radius: 5px;
+         box-sizing: border-box;
+         }
+         #bookingLink {
+         width: 100%;
+         padding: 8px;
+         margin-bottom: 15px;
+         border: 1px solid #ddd;
+         border-radius: 5px;
+         box-sizing: border-box;
+         }
+         #ctaText {
+         width: 100%;
+         padding: 8px;
+         margin-bottom: 15px;
+         border: 1px solid #ddd;
+         border-radius: 5px;
+         box-sizing: border-box;
+         }
+         label[for="ctaText"] {
+         margin-top: 20px;
+         font-weight: bold;
+         }
+         label[for="ctaLink"] {
+         margin-top: 20px;
+         font-weight: bold;
+         }
+         label[for="bookingLink"] {
+         margin-top: 20px;
+         font-weight: bold;
+         }
+         label[for="ctaColor"] {
+         margin-top: 20px;
+         font-weight: bold;
+         }
+         label[for="ctaTextColor"] {
+         font-weight: bold;
+         }
+         label[for="fontSizeSlider"] {
+         margin-top: 10px;
+         font-weight: bold;
+         }
+         label[for="verticalPaddingSlider"] {
+         margin-top: 10px;
+         font-weight: bold;
+         }
+         label[for="horizontalPaddingSlider"] {
+         margin-top: 10px;
+         font-weight: bold;
+         }
+         #colorPalette,
+         #textColorPalette {
+         margin-top: 10px;
+         display: flex;
+         flex-wrap: wrap;
+         gap: 5px;
+         }
+         .textOption {
+         width: 30px;
+         height: 30px;
+         border: 1px solid #ddd;
+         border-radius: 5px;
+         cursor: pointer;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         }
+         .colorOption {
+         width: 30px;
+         height: 30px;
+         border: 1px solid #ddd;
+         border-radius: 5px;
+         cursor: pointer;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         }
+         button {
+         background-color: #4caf50;
+         color: #fff;
+         padding: 10px 20px;
+         border: none;
+         border-radius: 5px;
+         cursor: pointer;
+         font-size: 16px;
+         margin-right: 5px;
+         margin-bottom: 10px;
+         }
+         button:active {
+         transform: translateY(2px);
+         }
+         #risultatoCTA {
+         background-color: #ffffff;
+         border-radius: 5px;
+         overflow-wrap: break-word;
+         text-align: center;
+         }
+         .cta-action-container {
+         display: flex;
+         align-items: center; /* Allinea verticalmente al centro gli elementi */
+         justify-content: flex-start; /* Allinea gli elementi all'inizio del contenitore */
+         gap: 10px; /* Distanza tra gli elementi */
+         }
+         #feedbackMessage {
+         color: green;
+         text-align: right;
+         }
+         #errorFeedbackMessage {
+         color: red;
+         text-align: right;
+         }
+         @keyframes fadeOut {
+         from { opacity: 1; }
+         to { opacity: 0; }
+         }
+         .fadeOut {
+         animation: fadeOut 3s ease-out forwards; /* Aggiustato a 3s per l'animazione, 'forwards' mantiene lo stato finale */
+         }
+         #linkOptions {
+         margin-bottom: 20px;
+         display: flex;
+         }
+         #linkOptions label {
+         display: inline-block;
+         }
+         #linkOptions label:nth-child(2),
+         #linkOptions label:nth-child(3) {
+         display: inline-block;
+         margin-left: 20px;
+         }
+         .category-box {
+         width: 217px;
+         background-color: #ffffff;
+         margin: 20px;
+         padding: 20px;
+         border-radius: 8px;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+         text-align: center;
+         display: inline-block;
+         flex-wrap: wrap;
+         justify-content: space-between;
+         }
+         #emojiContainer {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 8px;
+         justify-content: center;
+         max-height: 190px; /* Imposta un'altezza massima */
+         overflow-y: auto; /* Abilita lo scorrimento verticale se il contenuto supera l'altezza massima */
+         scrollbar-width: thin; /* Per Firefox */
+         scrollbar-color: rgba(0,0,0,0.2) transparent; /* Per Firefox: thumb e track */
+         }
+         /* Stili per Webkit browsers (Chrome, Safari) */
+         #emojiContainer::-webkit-scrollbar {
+         width: 8px; /* Larghezza della scrollbar */
+         }
+         #emojiContainer::-webkit-scrollbar-track {
+         background: transparent; /* Sfondo della traccia: trasparente per simulare lo stile macOS */
+         }
+         #emojiContainer::-webkit-scrollbar-thumb {
+         background-color: rgba(0,0,0,0.2); /* Colore del cursore: semi-trasparente */
+         border-radius: 4px; /* Bordi arrotondati del cursore */
+         border: 2px solid transparent; /* Nasconde il bordo reale del cursore con un trucco di trasparenza */
+         background-clip: padding-box; /* Assicura che lo sfondo (e quindi il colore) sia applicato solo dove vogliamo */
+         }
+         .customEmoji {
+         font-size: 23px; /* Dimensione di base per desktop */
+         cursor: pointer;
+         transition: transform 0.3s ease; /* Opzionale: aggiunge un effetto al passaggio del mouse/tap */
+         }
+         .customEmoji:hover,
+         .customEmoji:focus {
+         transform: scale(1.2); /* Opzionale: ingrandisce l'emoji quando si passa sopra o si seleziona */
+         }
+         @media (max-width: 768px) {
+         .customEmoji {
+         font-size: 20px; /* Riduci la dimensione delle emoji per schermi fino a 768px di larghezza */
+         }
+         }
+         @media (max-width: 480px) {
+         .customEmoji {
+         font-size: 18px; /* Riduci ulteriormente per schermi molto piccoli */
+         }
+         }
+         .selected {
+         border: 2px solid #0077cc; /* Esempio di feedback visivo */
+         box-shadow: 0 0 5px #0077cc;
+         }
+         /* Stile per l'anteprima CTA */
+         #anteprimaCTA {
+         margin-top: 20px;
+         padding: 10px;
+         border: 1px solid #ddd;
+         border-radius: 5px;
+         }
+         @media (max-width: 768px) {
+         body {
+         margin: 10px;
+         }
+         h1 {
+         font-size: 1.5em; /* Riduci la dimensione del titolo */
+         }
+         .category-box, .cta-action-container, #linkOptions {
+         flex-direction: column; /* Imposta gli elementi in colonna */
+         align-items: center; /* Centra gli elementi */
+         }
+         button {
+         width: 100%; /* Fai occupare al bottone tutta la larghezza */
+         margin: 10px 0; /* Aggiungi margine sopra e sotto */
+         }
+         .customEmoji {
+         font-size: 20px; /* Riduci leggermente la dimensione degli emoji */
+         }
+         }
+         @media (max-width: 480px) {
+         label, input[type="text"], #linkOptions label {
+         font-size: 0.9em; /* Riduci ulteriormente la dimensione del testo per schermi molto piccoli */
+         }
+         }
+         .cta-button:hover {
+         filter: brightness(110%);
+         }
+         .cta-button:active {
+         transform: translateY(2px);
+         box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+         }
+         /* Aggiungi lo stile per l'anteprima del CTA */
+         #anteprimaCTA .cta-button {
+         display: inline-block;
+         margin: 0;
+         box-shadow: none;
+         transition: box-shadow 0.3s, transform 0.3s;
+         }
+         #anteprimaCTA .cta-button:hover {
+         box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+         }
+         #anteprimaCTA .cta-button:active {
+         transform: translateY(2px);
+         box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+         }
+         input[type="range"] {
+         width: 100%;
+         margin: 5px 0 20px;
+         }
+         .sliders-container {
+         width: 100%;
+         display: flex;
+         justify-content: space-between; /* Distribuisce lo spazio tra gli elementi */
+         align-items: center; /* Centra gli elementi verticalmente */
+         flex-wrap: wrap; /* Permette agli elementi di andare a capo se non c'è abbastanza spazio */
+         gap: 20px; /* Distanza tra gli slider */
+         }
+         .slider {
+         flex: 1; /* Fa in modo che ogni slider occupi una porzione equa dello spazio disponibile */
+         min-width: 200px; /* Imposta una larghezza minima per ogni slider per evitare che diventino troppo stretti */
+         margin: 10px 0;
+         }
+         .flex-container {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         gap: 20px; /* Regola la distanza tra gli elementi se necessario */
+         }
+         .title-container {
+         display: flex;
+         justify-content: center; /* Centra il contenuto orizzontalmente */
+         align-items: center; /* Centra il contenuto verticalmente */
+         text-align: left; /* Allinea il testo a sinistra per evitare centratura del titolo rispetto al contenitore */
+         width: 100%; /* Assicura che il contenitore occupi tutta la larghezza */
+         }
+         .title-container h1 {
+         text-align: center;
+         margin-left: 8px; /* Aggiunge spazio tra l'SVG e il titolo */
+         }
+         .drop-zone {
+         border: 2px dashed #0087F7;
+         border-radius: 5px;
+         padding: 20px;
+         cursor: pointer;
+         color: #0284FE;
+         margin: 20px auto;
+         max-width: 500px;
+         text-align: center;
+         }
+         .drop-zone.over {
+         border-color: #0056b3;
+         background: #e2eafc;
+         }
+         input[type="file"] {
+         display: none;
+         }
+         button {
+         background-color: #4CAF50;
+         color: white;
+         padding: 10px 20px;
+         margin: 20px 0;
+         border: none;
+         cursor: pointer;
+         border-radius: 5px;
+         transition: background-color 0.3s ease;
+         }
+         button:hover {
+         background-color: #45a049;
+         }
+         button:disabled {
+         background-color: #cccccc;
+         cursor: not-allowed;
+         }
+         #feedback {
+         margin-top: 20px;
+         color: #0087F7;
+         }
+         .img-preview {
+         margin: 10px;
+         border: 1px solid #ddd;
+         border-radius: 4px;
+         padding: 5px;
+         width: 100px;
+         display: inline-block;
+         }
+         .compression-result {
+         color: #FF0000;
+         }
+         #images-preview {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         align-items: center;
+         margin-top: 20px;
+         }
+         @keyframes buttonClick {
+         0% {
+         transform: scale(1);
+         }
+         50% {
+         transform: scale(0.95);
+         }
+         100% {
+         transform: scale(1);
+         }
+         }
+         @keyframes pulse {
+         0% { transform: scale(1); }
+         50% { transform: scale(0.95); }
+         100% { transform: scale(1); }
+         }
+         button:active {
+         animation: pulse 0.4s;
+         }
+         .image-card-container {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         }
+         .image-card-wrap {
+         margin: 10px;
+         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+         border-radius: 4px;
+         overflow: hidden;
+         }
+         /* Stili per la sezione Link Utili */
+         #app3 {
+         background-color: #f0f8ff; /* Colore di sfondo leggero per la sezione */
+         border-radius: 8px; /* Bordi arrotondati */
+         padding: 20px; /* Spaziatura interna */
+         margin-top: 20px; /* Margine superiore per distanziarla dalle altre sezioni */
+         }
+         #app3 h1 {
+         color: #333; /* Colore del testo per l'intestazione */
+         text-align: center; /* Centra l'intestazione */
+         margin-bottom: 20px; /* Spazio sotto l'intestazione */
+         }
+         #app3 ul {
+         list-style-type: none; /* Rimuove i punti della lista */
+         padding: 0; /* Rimuove il padding predefinito */
+         display: flex; /* Display flex per mettere gli elementi in linea */
+         flex-wrap: wrap; /* Permette agli elementi di andare a capo se non ci sta spazio */
+         gap: 20px; /* Distanza tra gli elementi */
+         }
+         #app3 ul li {
+         display: flex; /* Display flex per mettere link e pulsante in linea */
+         align-items: center; /* Centra verticalmente il contenuto del li */
+         }
+         #app3 ul li a {
+         margin-right: 10px; /* Spazio tra il link e il pulsante di copia */
+         }
+         #app3 li {
+         margin-bottom: 10px; /* Spazio tra i link */
+         }
+         #app3 a {
+         text-decoration: none; /* Rimuove il sottolineato dei link */
+         color: #007bff; /* Colore del link */
+         font-weight: bold; /* Rende il testo dei link in grassetto */
+         }
+         #app3 a:hover {
+         color: #0056b3; /* Cambia il colore del link al passaggio del mouse */
+         }
+         /* Stili responsive per dispositivi mobili */
+         @media (max-width: 768px) {
+         #app3 {
+         margin-top: 10px; /* Riduci il margine superiore su schermi più piccoli */
+         padding: 10px; /* Riduci la spaziatura interna */
+         }
+         }
+         #bookingSearchContainer {
+         margin: 20px;
+         text-align: center;
+         }
+         #bookingSearchInput {
+         width: 60%;
+         padding: 10px;
+         margin-bottom: 20px;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         }
+         #bookingSearchResults {
+         margin-top: 20px;
+         }
+         #globalMessage {
+         position: fixed;
+         top: -50px;
+         right: 10px;
+         background-color: green;
+         color: white;
+         padding: 10px;
+         border-radius: 4px;
+         z-index: 1000;
+         transition: top 0.5s ease;
+         }
+         #globalMessage.show {
+         top: 80px;
+         }
+         select {
+         padding: 8px 16px;
+         border: 1px solid #ccc; /* Colore del bordo */
+         border-radius: 20px; /* Bordi arrotondati */
+         background-color: white; /* Colore di sfondo */
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra leggera per profondità */
+         outline: none; /* Rimuove l'outline di default al focus */
+         cursor: pointer; /* Cambia il cursore in una manina per indicare che l'elemento è cliccabile */
+         margin-right: 10px; /* Spazio tra i selettori */
+         }
+         select:hover {
+         background-color: #f0f0f0; /* Cambia lo sfondo al passaggio del mouse */
+         }
+         select:focus {
+         border-color: #007bff; /* Cambia il colore del bordo quando il selettore è focalizzato */
+         }
+         /* Puoi personalizzare ulteriormente i selettori per differenti dispositivi/screen */
+         @media (max-width: 768px) {
+         select {
+         padding: 10px 14px; /* Adatta il padding per schermi più piccoli */
+         width: 100%; /* Usa tutta la larghezza disponibile */
+         margin-bottom: 10px; /* Spazio tra i selettori quando sono uno sopra l'altro */
+         margin-right: 0; /* Rimuove il margine destro */
+         }
+         }
+         h2 {
+         font-size: 20px; /* Leggermente più piccolo dell'h1 per mantenere la gerarchia */
+         color: #555; /* Colore del testo un po' più morbido rispetto all'h1 */
+         text-align: center; /* Allineamento a sinistra per differenziarlo dall'h1 centrato */
+         margin: 40px; /* Margine superiore per separarlo dal contenuto sopra */
+         margin-bottom: 20px; /* Margine inferiore per avvicinarlo al contenitore di ricerca */
+         font-family: 'Arial', sans-serif; /* Consistenza con la famiglia di font dell'h1 */
+         text-transform: none; /* Nessuna trasformazione, per differenziarlo dall'h1 */
+         letter-spacing: normal; /* Spaziatura normale delle lettere */
+         padding-left: 20px; /* Padding sinistro per allinearlo con gli altri elementi interni al div */
+         }
+         #controlsContainer {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         flex-wrap: wrap; /* Permette agli elementi di andare a capo se non ci sta abbastanza spazio */
+         gap: 10px; /* Distanza tra gli elementi */
+         }
+         /* Stili aggiuntivi per i select e i button per renderli coerenti */
+         #linkSelector, #languageSelector, #copyButton, #openButton {
+         padding: 8px 12px;
+         margin: 5px; /* Margini leggeri per separare leggermente gli elementi */
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         cursor: pointer;
+         }
+.buttonContainer {
+    visibility: hidden;
+    display: flex;
+    gap: 20px; /* Distanza tra i bottoni */
+}
+
+.container:hover .buttonContainer {
+    visibility: visible;
+}
+
+/* Stili per i bottoni */
+.buttonContainer button {
+    background-color: #4CAF50; /* Colore di sfondo verde */
+    color: white; /* Testo bianco */
+    padding: 10px 20px; /* Padding intorno al testo */
+    margin: 20px 0; /* Margine sopra e sotto il bottone */
+    border: none; /* Nessun bordo */
+    cursor: pointer; /* Cursor a forma di puntatore */
+    border-radius: 5px; /* Bordi arrotondati */
+    transition: background-color 0.3s ease; /* Transizione fluida del colore di sfondo */
+}
+
+.buttonContainer button:hover {
+    background-color: #45a049; /* Colore di sfondo più scuro al passaggio del mouse */
+}
+
+.buttonContainer button:disabled {
+    background-color: #cccccc; /* Colore di sfondo per i bottoni disabilitati */
+    cursor: not-allowed; /* Cursor che indica l'azione non permessa */
+}
+/* Media query per dispositivi con larghezza fino a 768px */
+@media (max-width: 768px) {
+    .buttonContainer {
+        flex-direction: column; /* Imposta i bottoni in colonna */
+        gap: 5px; /* Riduce la distanza tra i bottoni */
+    }
+    
+    .buttonContainer button {
+        margin: 5px 0; /* Riduce il margine sopra e sotto i bottoni */
+        padding: 8px 16px; /* Riduce il padding per adattarsi meglio agli schermi più piccoli */
+    }
+}
+
+      </style>
+   </head>
+   <body>
+      <div class="navbar" id="myTopnav">
+         <a href="javascript:void(0)" onclick="showApp('app1')">Compressore di Immagini</a>
+         <a href="javascript:void(0)" onclick="showApp('app2')">Generatore di CTA</a>
+         <a href="javascript:void(0)" onclick="showApp('app3')">Link Utili</a>
+         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+         <i class="fa fa-bars"></i>
+         </a>
+      </div>
+      <div id="app1" class="content active">
+         <div class="title-container">
+            <svg width="140px" height="140px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+               <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+               <g id="SVGRepo_iconCarrier">
+                  <defs>
+                     <radialGradient id="a" cx="-428.363" cy="-337.616" r="0.076" gradientTransform="matrix(22.426, -0.918, 0.944, 23.053, 9940.275, 7417.533)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#ffffff"></stop>
+                        <stop offset="1" stop-color="#41c3f3"></stop>
+                     </radialGradient>
+                     <linearGradient id="b" x1="-414.07" y1="-323.688" x2="-413.475" y2="-323.688" gradientTransform="translate(3599.15 2562.224) rotate(-2.754) scale(8.352)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#3dc2f3"></stop>
+                        <stop offset="1" stop-color="#ffffff"></stop>
+                     </linearGradient>
+                     <linearGradient id="c" x1="-466.763" y1="-351.799" x2="-466.168" y2="-351.799" gradientTransform="translate(-3224.585 -2139.318) rotate(176.688) scale(6.683)" xlink:href="#b"></linearGradient>
+                     <linearGradient id="d" x1="-515.182" y1="-375.873" x2="-514.587" y2="-375.873" gradientTransform="matrix(-2.607, 0.014, -0.014, -2.607, -1327.883, -959.089)" xlink:href="#b"></linearGradient>
+                     <linearGradient id="e" x1="-413.465" y1="-322.372" x2="-412.869" y2="-322.372" gradientTransform="translate(3557.82 2614.61) rotate(-1.63) scale(8.403)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#0995dd"></stop>
+                        <stop offset="1" stop-color="#ffffff"></stop>
+                     </linearGradient>
+                     <linearGradient id="f" x1="-515.182" y1="-373.034" x2="-514.587" y2="-373.034" gradientTransform="matrix(-2.607, 0.014, -0.014, -2.607, -1327.785, -940.81)" xlink:href="#b"></linearGradient>
+                     <linearGradient id="g" x1="-415.664" y1="-321.968" x2="-415.069" y2="-321.968" gradientTransform="translate(3992.128 2325.757) rotate(-7.749) scale(8.752)" xlink:href="#e"></linearGradient>
+                     <radialGradient id="h" cx="-435.908" cy="-337.858" r="0.076" gradientTransform="matrix(22.426, -0.918, 0.944, 23.053, 10123.552, 7416.068)" xlink:href="#a"></radialGradient>
+                     <linearGradient id="i" x1="-397.199" y1="-317.443" x2="-396.604" y2="-317.443" gradientTransform="translate(1942.918 1600.128) rotate(0.719) scale(4.876)" xlink:href="#b"></linearGradient>
+                  </defs>
+                  <title>file_type_zip2</title>
+                  <g transform="scale(0.5,0.5) translate(30,15)">
+                     <path d="M9.832,2l7.415.053a2,2,0,0,1,2.054.936l.67.819h5.672c.5.032.8.175.949.446A2.8,2.8,0,0,1,26.684,5.3l.019.913c.008,1.534-.388,1.533-1.009,1.523l-1.31.017,0,11.741a8.05,8.05,0,0,1,.846.019c.621.011,1.19.005,1.191,1.366-.009.224-.017.45-.01.621a2.2,2.2,0,0,0,0,.569c-.032.5-.07.83-.3,1.047-.18.231-.487.312-.988.28-.277-.024-.516.021-.741.012l-.016,2.207c.105.031.225.007.33.039.156.045.329.04.419.121a1.43,1.43,0,0,1,1.124,1.4l1.952.113a.587.587,0,0,1,.227-.388.754.754,0,0,1,.524-.245l.053.015a.9.9,0,0,1,.79.8l-.015.053.012.741a.942.942,0,0,1-.286.6,1.194,1.194,0,0,1-.577.229.753.753,0,0,1-.546-.271.425.425,0,0,1-.148-.271l-2.082.134a1.6,1.6,0,0,1-.452.777,2.156,2.156,0,0,1-1.513.525l-2.9.011a2.421,2.421,0,0,1-1.585-.4,1.483,1.483,0,0,1-.482-.877l-3.2-.133a.518.518,0,0,1-.211.335.866.866,0,0,1-.577.23.745.745,0,0,1-.56-.219.868.868,0,0,1-.23-.577l0-.794a.754.754,0,0,1,.271-.545.6.6,0,0,1,.577-.23.745.745,0,0,1,.56.219.428.428,0,0,1,.149.27l3.2-.264a1.928,1.928,0,0,1,.6-.9,2.406,2.406,0,0,1,1.274-.48l.016-2.208c-.292.028-.568,0-.913.019l-1.247,1.169a2.482,2.482,0,0,1-2.158.793c-1.19-.005-2.5.012-3.809.029-1.243-.02-2.484-.04-3.847-.038a2.971,2.971,0,0,1-1.144-.162,3.342,3.342,0,0,1-1.052-.872,5.746,5.746,0,0,1-.469-.533c-.127-.15-.253-.3-.469-.533a.763.763,0,0,1-.164-.218.467.467,0,0,1,.106-.367c.067-.037.15-.126.218-.163.172-.007.359-.066.532-.073,1.415.013,3.053.035,4.639.041s3.173.013,4.812.035a2.273,2.273,0,0,0,1-.333,5.376,5.376,0,0,0,.833-.722c.88-.88,2.044-1.96,2.837-1.957a.5.5,0,0,1,.277.023l.033-11.848-.4,0a1.545,1.545,0,0,1-1.4-.634l-1.377-1.7c-.633-.75-.633-.75-1.546-.732L7.55,4.572c-.517.02-1.429.04-.805-.744l.827-.9A3.127,3.127,0,0,1,8.66,2.115,5.06,5.06,0,0,1,9.828,2" style="fill:#2e2a2b"></path>
+                     <path d="M15.366,27.055l-.005.018-.041.007-.041.007-.018-.007-.082.015-.018-.007-.128.04-.028.03-.041.007-.016.054-.046.025-.018-.007-.016.054-.016.054-.016.054-.016.054-.016.054-.016.054-.016.054.022.123-.005.018-.01.035.022.123-.016.054.012.158-.016.054-.016.054.031.028.008.041-.016.054-.016.054.048.033-.01.035.038.069.043.051-.005.018.054.015.038.069.054.015c.028.051.092.068.173.07l.077,0,.082-.015a.45.45,0,0,0,.164-.03l.051-.044.018.007.016-.054.085-.092.016-.054.016-.054.016-.054.016-.054.016-.054.01-.035-.038-.069.031-.107-.017-.141.026-.089-.022-.123.016-.054.016-.054-.038-.069.016-.054.01-.035-.031-.028-.008-.041-.013-.023-.025-.046-.038-.069-.02-.064-.054-.015-.145-.1-.089-.026Z" style="fill:url(#a)"></path>
+                     <polygon points="19.234 27.352 19.111 27.375 19.058 27.36 18.935 27.382 18.776 27.394 18.723 27.379 18.6 27.402 18.477 27.424 18.355 27.447 18.247 27.415 18.13 27.419 18.025 27.447 17.972 27.432 17.849 27.454 17.672 27.462 17.619 27.446 17.496 27.469 17.373 27.491 17.32 27.476 17.161 27.488 17.039 27.511 16.985 27.495 16.862 27.518 16.74 27.54 16.632 27.509 16.51 27.531 16.405 27.559 16.399 27.577 16.336 27.597 16.282 27.582 16.106 27.589 16.085 28.261 16.154 28.222 16.244 28.248 16.366 28.226 16.42 28.241 16.473 28.256 16.65 28.249 16.703 28.264 16.757 28.28 16.88 28.257 16.933 28.273 17.022 28.299 17.145 28.276 17.199 28.291 17.375 28.284 17.429 28.3 17.482 28.315 17.605 28.292 17.659 28.308 17.766 28.339 17.871 28.311 17.924 28.327 18.047 28.304 18.154 28.335 18.208 28.351 18.33 28.328 18.384 28.344 18.437 28.359 18.596 28.347 18.65 28.362 18.703 28.377 18.82 28.373 18.928 28.404 19.05 28.382 19.104 28.397 19.158 28.412 19.28 28.39 19.287 27.366 19.233 27.35 19.234 27.352" style="fill:url(#b)"></polygon>
+                     <path d="M24.59,26.043a.777.777,0,0,1-.176.007c-.1-.03-.162-.047-.23-.007l-.054-.015-.054-.015-.335.019-.176.007-.176.007-.158.012-.337-.039-.353.014-.158.012-.176.007-.176.007-.367-.068L21.31,26l-.123.022-.054-.015-.064.02-.059,0a1.327,1.327,0,0,0-.3.088,1.161,1.161,0,0,0-.174.066l-.087.033a.406.406,0,0,0-.156.071l-.074.056-.11.045-.016.054c-.053-.015-.071.038-.138.076l-.044.084-.033.048-.09.11-.01.035a.967.967,0,0,0-.124.429l-.018,1.2A1.128,1.128,0,0,0,19.8,29l.007.041c.037.067.06.134.165.164l.079.061.084.044a.551.551,0,0,0,.15.082l.031.028.071.021.089.026c.1.03.215.006.319.034s.234.007.391.055l.005-.018.018.007.1-.009.054.015.158-.012.176-.007.176-.007.337.039.158-.012.176-.007.176-.007.171.011.158-.012.176-.007.337.039.335-.019.036.011h.194c.067-.037,0,0,.054.015l.1-.028c.106-.012.209,0,.317-.024a.942.942,0,0,0,.174-.066.936.936,0,0,0,.325-.119l.005-.018a.588.588,0,0,0,.143-.094l.005-.018L25.3,29.2l.023-.012.074-.056a1.072,1.072,0,0,0,.162-.224.881.881,0,0,0,.227-.515.344.344,0,0,0,.009-.23l0-1.006-.01-.1a.681.681,0,0,0-.108-.361.562.562,0,0,0-.229-.279,1.075,1.075,0,0,0-.183-.169L25,26.166l-.107-.031-.25-.073-.054-.015Z" style="fill:url(#c)"></path>
+                     <path d="M23.876,7.715l-.335.019-.337-.04-.335.019-.176.007-.176.007-.278-.042-.281.035-.176.007-.23-.009-.028,2.432L21.53,16l.009.235,0,2.654-.01.636.077,0,.1-.009a.531.531,0,0,0,.235-.01,1.656,1.656,0,0,1,.26.037l.1-.009.077,0a.811.811,0,0,1,.176-.007c.12-.023.215,0,.335-.019.052.015.055.016.123-.022l.089.026a.824.824,0,0,0,.276-.017l.041-.007a2.009,2.009,0,0,1,.266.019,1.4,1.4,0,0,1,.141-.018l.036.011c.052.015.054.015.069-.038l.019-2.2-.014-2.889.007-2.961-.007-.176-.007-2.713,0-.794-.059,0,.005-.018Z" style="fill:url(#d)"></path>
+                     <path d="M25.9,4.263a2.521,2.521,0,0,1-.283-.024l-.276.017-.572-.03h-.736l-.741.017-.687.033-.388,0H21.48L20.7,4.227l-.759.012-.051.043-.2-.116-.076-.138-.674-.815a2.164,2.164,0,0,0-.313-.323,1.118,1.118,0,0,0-.471-.311,2.133,2.133,0,0,0-.763-.105l-.123.022-.266-.019-.353.014-.779-.052h-.736l-.741.017h-.406l-.741.017-.388,0-.72-.054-.253,0-.153-.006L11,2.439l-.388,0-.353.014-.442-.012c-.119.022-.226-.025-.294.012-.135,0-.29,0-.388,0a1.279,1.279,0,0,0-.315.083l-.069.038a1.308,1.308,0,0,0-.2.078,1.45,1.45,0,0,0-.19.119l-.028.031a1.919,1.919,0,0,0-.385.392L7.1,4.136a2.047,2.047,0,0,1,.4.02L8.679,4.15l.353-.014h1.142l.741-.017.779.052.335-.019.794,0h1.142l.335-.019h.406l.725.036h.194l.207.021.565-.011c.07,0,.115-.007.176-.007.156-.007.272-.009.388,0a1.219,1.219,0,0,1,.686.238,3.355,3.355,0,0,1,.381.42,1.089,1.089,0,0,1,.209.215l.485.664.712.884.183.169a1.878,1.878,0,0,0,.209.215l.018.005a1.451,1.451,0,0,0,.326.211,1.558,1.558,0,0,0,.391.055.173.173,0,0,0,.158-.012l.225.026h.406l.725.036.335-.019.353-.014.388,0h1.142l.353-.014.388,0h.406l.266.019.054.016.1-.01a.319.319,0,0,0,.325-.254,3.266,3.266,0,0,0,.052-.779l.045-.955c0-.068-.005-.114-.007-.176-.013-.345,0-.562-.084-.644-.022-.12-.133-.155-.29-.2ZM23.874,7.7l.055.81,0-.794L23.874,7.7Z" style="fill:url(#e)"></path>
+                     <path d="M23.876,23.365l-.005.018-.117,0-.054-.015-.117,0-.054-.015-.069.038-.161-.047-.005.018-.064.02-.089-.026-.069.038-.161-.047-.051.044-.018-.007-.107-.031-.069.038-.107-.031-.123.022-.036-.011-.123.022-.071-.021-.158.012-.054-.015c-.068.037-.071.038-.123.022l-.077,0a.258.258,0,0,1-.153,0l-.036-.011L21.6,23.4l-.041.007-.023.012-.023.613.021,1.129v.406l.054.015.054.015.158-.012.054.015.123-.022.054.015.176-.007.054.015.123-.022.054.015.158-.012.054.015.123-.022.054.015L23,25.587l.054.015.117,0,.054.015.158-.012.054.015.123-.022.054.015.176-.007.054.015.005-.018.064-.02,0-.794v-.135l.021-1.272-.054-.015Z" style="fill:url(#f)"></path>
+                     <path d="M25.542,19.973a1.57,1.57,0,0,0-.237-.049l-.069.038a.5.5,0,0,0-.171-.011,2.583,2.583,0,0,0-.623.013c-.142,0-.276.008-.388,0a3.98,3.98,0,0,1-.46-.02,3.534,3.534,0,0,1-.388,0l-.1.009-.077,0-.117,0c-.1.009-.219.011-.353.014a3.682,3.682,0,0,0-.618,0,3.69,3.69,0,0,1-.388,0c-.113,0-.233-.007-.347,0l-.112-.014c-.068.037-.16.012-.228.05a.2.2,0,0,0-.176.007l-.146.035-.082.015-.151.053-.005.018a8.1,8.1,0,0,0-.763.5c-.117.108-.223.219-.346.326l-.046.025-.056.061c-.093.077-.192.15-.3.224-.083.089-.168.2-.259.293l-.08.074a1.176,1.176,0,0,1-.223.168c-.083.089-.1.127-.164.165l-.005.018a2.265,2.265,0,0,1-.672.58l-.016.054a5.191,5.191,0,0,1-.765.3,1.5,1.5,0,0,1-.2.037l-.041.007a.84.84,0,0,1-.171-.011l-.046.025-.023.012c-.1-.031-.216-.007-.373-.05a4.353,4.353,0,0,1-.593.041,4.292,4.292,0,0,0-.524,0c-.106,0-.215-.019-.324-.016-.219-.007-.439,0-.654-.014-.277-.024-.517.025-.794,0l-.041.007-.059,0c-.12,0-.241-.017-.36-.027-.293.029-.572.011-.863.04a.406.406,0,0,0-.23-.007c-.052-.015-.086-.043-.153,0-.14,0-.281-.008-.406,0a4.247,4.247,0,0,1-.442-.013c-.136,0-.273.01-.406,0a4.249,4.249,0,0,1-.442-.013c-.059.011-.131,0-.194,0s-.142,0-.212,0c-.292.028-.566-.007-.858.022a4.549,4.549,0,0,0-.848-.014c-.167,0-.333,0-.5-.009-.057,0-.114-.009-.171-.011l-.123.022c-.078.014-.15.036-.228.05l-.016.054a1.663,1.663,0,0,1,.387.4l.081.12a1.712,1.712,0,0,1,.188.152l.148.159.013.023a.3.3,0,0,0,.183.169,1.572,1.572,0,0,0,.29.336l.013.023.048.033a1.675,1.675,0,0,0,.407.331l.107.031.357.1c.113,0,.263,0,.406,0h.212l.094.009.135,0c.277.024.566.008.843.032l.141-.017c.088.009.178.011.266.019.278-.027.546-.01.822-.033l.041-.007a4.606,4.606,0,0,0,.848.014c.224.007.442.03.666.038.172-.006.34-.019.565-.01.146-.015.294-.008.429-.011.269-.022.53,0,.8-.02.057,0,.114.011.171.011a3.859,3.859,0,0,0,.7.008c.136,0,.273-.01.406,0s.253,0,.388,0c.12-.022.233.007.353-.014l.107.031c.292-.029.532-.081.772-.125l.023-.012.018.007c.084-.021.141-.033.21-.055a1.435,1.435,0,0,0,.156-.071l.046-.025a2.2,2.2,0,0,0,.241-.162l.1-.069.005-.018c.052-.047.108-.092.159-.148l.169-.183.182-.16.192-.2.387-.333.4-.387.174-.066.094.009.082-.015c.133.011.27,0,.406,0,.277.024.571-.01.848.014.239-.024.466,0,.7-.01l.158-.012a.17.17,0,0,0,.158-.012l.112.014.117,0c.128,0,.263,0,.406,0,.277.024.571-.009.848.014.292-.029.572-.011.863-.04.07,0,.137.019.207.022a1.918,1.918,0,0,0,.6-.059l.085-.092A1.285,1.285,0,0,0,26,22.063a2.921,2.921,0,0,1-.011-.565,2.092,2.092,0,0,1,.01-.636c-.008-.107-.02-.2-.035-.281a1.147,1.147,0,0,0-.063-.251l-.058-.133-.025-.046-.079-.061-.008-.041-.071-.021-.12-.054Z" style="fill:url(#g)"></path>
+                     <path d="M28.993,27l-.117,0-.059,0-.028.03-.041.007-.01.035-.059,0-.016.054-.051.043-.01.035-.016.054-.016.054-.016.054-.016.054-.016.054-.016.054,0,.118-.005.018-.005.018L28.5,27.7l.008.041.015.082-.031.107.028.1-.016.054-.016.054.038.069-.016.054-.016.054.031.028.008.041.013.023.01.1.054.015.038.069.054.015.038.069.107.031.143.041c.058-.031.151-.063.22-.091l.041-.007.051-.043.033-.048.069-.038.005-.018.01-.035.016-.054.016-.054.016-.054.016-.054.01-.035-.038-.069.016-.054.016-.054-.007-.176.016-.054-.007-.176-.022-.123.016-.054.01-.035-.013-.023-.013-.023-.013-.023.016-.054-.018-.007-.02-.064-.018-.007-.056-.074a.055.055,0,0,1-.038-.069l-.107-.031-.054-.015a1.383,1.383,0,0,0-.161-.047Z" style="fill:url(#h)"></path>
+                     <polygon points="27.982 27.59 27.976 27.608 27.912 27.628 27.859 27.613 27.752 27.582 27.647 27.609 27.593 27.594 27.54 27.579 27.417 27.601 27.363 27.586 27.256 27.555 27.251 27.572 27.187 27.592 27.133 27.577 27.026 27.546 26.909 27.55 26.855 27.535 26.766 27.509 26.761 27.527 26.697 27.547 26.643 27.531 26.536 27.5 26.467 27.538 26.413 27.523 26.36 27.508 26.306 27.493 26.301 27.51 26.237 27.53 26.216 28.202 26.226 28.302 26.224 28.378 26.277 28.394 26.4 28.371 26.454 28.387 26.577 28.364 26.612 28.375 26.735 28.352 26.853 28.348 26.906 28.363 27.029 28.341 27.082 28.356 27.205 28.334 27.259 28.349 27.381 28.327 27.435 28.342 27.486 28.299 27.54 28.314 27.663 28.292 27.716 28.307 27.839 28.285 27.892 28.3 27.898 28.282 27.962 28.262 28.015 28.278 28.069 28.293 28.074 28.275 28.138 28.255 28.191 28.27 28.196 27.652 28.143 27.637 28.089 27.621 27.982 27.59 27.982 27.59" style="fill:url(#i)"></polygon>
+                     <path d="M20.9,9.083l3.385-.719.1.03a.746.746,0,0,1,.591.115A.975.975,0,0,1,25.293,9l-.015.052a.329.329,0,0,1-.009.224c-.015.052.022.12-.046.157a.855.855,0,0,1-.683.6l-3.438.7-.052-.015a.773.773,0,0,1-.591-.115.965.965,0,0,1-.313-.488l-.038-.067a.329.329,0,0,0,.009-.224l.046-.157a.9.9,0,0,1,.736-.58Zm-.177,8.23,3.475-.637.068-.038a1.1,1.1,0,0,1,.575.167.529.529,0,0,1,.312.488l.037.067.007.173-.061.209a.984.984,0,0,1-.736.58l-3.422.652c-.067.037-.067.037-.12.021a.633.633,0,0,1-.523-.152.791.791,0,0,1-.38-.45l.03-.1a.2.2,0,0,1-.007-.172l.046-.157a1.013,1.013,0,0,1,.7-.648Zm.128-5.522a1.013,1.013,0,0,0-.7.649l-.046.157a.411.411,0,0,0-.008.225l-.015.052a.864.864,0,0,0,.365.5.666.666,0,0,0,.538.1l.052.015,3.438-.705a.983.983,0,0,0,.736-.581l.046-.157c.03-.1-.007-.172.009-.224l-.037-.067a.624.624,0,0,0-.312-.488.787.787,0,0,0-.59-.114l-.053-.015-3.422.652Zm-.063,2.761a1.07,1.07,0,0,0-.751.633l-.046.157a.2.2,0,0,1,.006.172l-.015.052.038.068a1.473,1.473,0,0,0,.313.487.773.773,0,0,0,.591.114l.052.015,3.49-.689a.921.921,0,0,0,.683-.6l.061-.209a.2.2,0,0,0-.007-.172l.015-.052a.727.727,0,0,0-.312-.488,1.122,1.122,0,0,0-.576-.167c-.067.037-.067.037-.119.022l-3.422.652" style="fill:#2e2a2b"></path>
+                     <g transform="scale(0.5,0.5) translate(10,10)">
+                        <path fill="#2D2220" d="M27.5,6h-23C3.67,6,3,6.67,3,7.5v17C3,25.33,3.67,26,4.5,26h23c0.83,0,1.5-0.67,1.5-1.5v-17 C29,6.67,28.33,6,27.5,6z M28,18.69c0,0,0,3.899,0,5.81c0,0.28-0.22,0.5-0.5,0.5h-23C4.22,25,4,24.78,4,24.5c0-0.4,0-0.75,0-0.75 c0-0.5,0-1,0-1l10.31-6.81l3.04,2.23l5.24-4.23L28,17.69C28,17.69,28,18.09,28,18.69z M28,16.4l-4.84-3.28 c-0.18-0.12-0.37-0.18-0.561-0.18c-0.189,0-0.39,0.06-0.56,0.18l-4.7,3.76l-2.52-1.78c-0.17-0.12-0.37-0.18-0.56-0.18 c-0.19,0-0.38,0.06-0.56,0.18L4,21.54c0,0,0-13.1,0-14.04C4,7.22,4.22,7,4.5,7h23C27.78,7,28,7.22,28,7.5C28,8.06,28,16.4,28,16.4z "></path>
+                        <path fill="#FFD561" d="M13,11c0,0.93-0.64,1.71-1.5,1.93c-0.86-0.22-1.5-1-1.5-1.93s0.64-1.71,1.5-1.93C12.36,9.29,13,10.07,13,11 z"></path>
+                        <path fill="#5FFFBA" d="M28,18.69c0,0,0,3.899,0,5.81c0,0.28-0.22,0.5-0.5,0.5h-23C4.22,25,4,24.78,4,24.5c0-0.4,0-0.75,0-0.75 l10.31-6.81l3.04,2.23l5.24-4.23L28,18.69z"></path>
+                        <path fill="#2D2220" d="M11,9c1.103,0,2,0.897,2,2s-0.897,2-2,2s-2-0.897-2-2S9.897,9,11,9 M11,8c-1.657,0-3,1.343-3,3s1.343,3,3,3 s3-1.343,3-3S12.657,8,11,8L11,8z"></path>
+                     </g>
+                  </g>
+               </g>
+            </svg>
+            <h1>Compressore di Immagini</h1>
+         </div>
+         <div class="drop-zone" id="drop-zone">
+            Trascina qui le immagini o <br><b>clicca per selezionarle</b>
+            <input type="file" id="file-input" multiple accept="image/*">
+         </div>
+         <button id="compress-button">Scarica Immagini Compresse</button>
+         <div id="feedback"></div>
+         <div id="images-preview"></div>
+      </div>
+      <div id="app2" class="content">
+         <h1 id="generatoreCTA" class="animate__animated animate__rubberBand">Generatore di CTA</h1>
+         <label for="ctaText">Testo del CTA:</label>
+         <input type="text" id="ctaText" placeholder="Inserisci il testo...">
+         <div class="centered-container">
+            <div class="category-box">
+               <div id="emojiContainer" onclick="selectCustomEmoji(event)">
+                  <!-- Categoria: Alloggi e Viaggi-->
+                  <div class="customEmoji" data-emoji="🏡" title="Casa con giardino">🏡</div>
+                  <div class="customEmoji" data-emoji="🏠" title="Casa">🏠</div>
+                  <div class="customEmoji" data-emoji="🏘️" title="Case">🏘️</div>
+                  <div class="customEmoji" data-emoji="🏚️" title="Casolare">🏚️</div>
+                  <div class="customEmoji" data-emoji="🏰" title="Castello">🏰</div>
+                  <div class="customEmoji" data-emoji="🏢" title="Condominio o Appartamenti">🏢</div>
+                  <div class="customEmoji" data-emoji="🏪" title="Negozio">🏪</div>
+                  <div class="customEmoji" data-emoji="🏨" title="Hotel">🏨</div>
+                  <div class="customEmoji" data-emoji="🏩" title="Motel">🏩</div>
+                  <div class="customEmoji" data-emoji="🏤" title="Ufficio postale">🏤</div>
+                  <div class="customEmoji" data-emoji="🛌" title="Persona nel letto">🛌</div>
+                  <div class="customEmoji" data-emoji="🛏️" title="Letto">🛏️</div>
+                  <div class="customEmoji" data-emoji="🛫" title="Aereo in decollo">🛫</div>
+                  <div class="customEmoji" data-emoji="✈️" title="Aereo">✈️</div>
+                  <div class="customEmoji" data-emoji="🛬" title="Aereo in atterraggio">🛬</div>
+                  <div class="customEmoji" data-emoji="🌍" title="Mondo">🌍</div>
+                  <div class="customEmoji" data-emoji="🌈" title="Arcobaleno">🌈</div>
+                  <div class="customEmoji" data-emoji="🚗" title="Automobile">🚗</div>
+                  <div class="customEmoji" data-emoji="🚆" title="Treno">🚆</div>
+                  <div class="customEmoji" data-emoji="🛳️" title="Nave passeggeri">🛳️</div>
+                  <div class="customEmoji" data-emoji="🏞️" title="Parco nazionale">🏞️</div>
+                  <div class="customEmoji" data-emoji="🏔️" title="Montagna innevata">🏔️</div>
+                  <div class="customEmoji" data-emoji="🌋" title="Vulcano">🌋</div>
+                  <div class="customEmoji" data-emoji="🏕️" title="Campeggio">🏕️</div>
+                  <div class="customEmoji" data-emoji="🚵" title="Mountain bike">🚵</div>
+                  <div class="customEmoji" data-emoji="🚴‍♂️" title="Ciclismo uomo">🚴‍♂️</div>
+                  <div class="customEmoji" data-emoji="🏇" title="Cavalcare">🏇</div>
+                  <div class="customEmoji" data-emoji="🚶" title="Pedone">🚶</div>
+                  <div class="customEmoji" data-emoji="🔑" title="Chiave">🔑</div>
+                  <div class="customEmoji" data-emoji="🚙" title="Automobile">🚙</div>
+                  <div class="customEmoji" data-emoji="⏰" title="Orologio">⏰</div>
+                  <div class="customEmoji" data-emoji="🛣" title="Strada">🛣</div>
+                  <div class="customEmoji" data-emoji="🔥" title="Fuoco">🔥</div>
+                  <div class="customEmoji" data-emoji="🚀" title="Razzo">🚀</div>
+                  <div class="customEmoji" data-emoji="🎉" title="Festa">🎉</div>
+                  <div class="customEmoji" data-emoji="🗺" title="Mappa">🗺</div>
+                  <div class="customEmoji" data-emoji="💼" title="Valigetta">💼</div>
+                  <div class="customEmoji" data-emoji="🏖" title="Spiaggia">🏖</div>
+                  <div class="customEmoji" data-emoji="🌟" title="Stella">🌟</div>
+                  <div class="customEmoji" data-emoji="🚗" title="Auto">🚗</div>
+                  <div class="customEmoji" data-emoji="🚙" title="SUV">🚙</div>
+                  <div class="customEmoji" data-emoji="🚘" title="Coupé">🚘</div>
+                  <div class="customEmoji" data-emoji="🚖" title="Taxi">🚖</div>
+                  <div class="customEmoji" data-emoji="🚕" title="Taxi">🚕</div>
+                  <div class="customEmoji" data-emoji="🚐" title="Furgone">🚐</div>
+                  <div class="customEmoji" data-emoji="🏎" title="Auto da corsa">🏎</div>
+                  <div class="customEmoji" data-emoji="🛻" title="Pick-up">🛻</div>
+                  <div class="customEmoji" data-emoji="🚚" title="Furgone di consegna">🚚</div>
+                  <div class="customEmoji" data-emoji="🚛" title="Tir">🚛</div>
+                  <div class="customEmoji" data-emoji="🚓" title="Auto della polizia">🚓</div>
+                  <div class="customEmoji" data-emoji="🚔" title="Auto della polizia">🚔</div>
+                  <div class="customEmoji" data-emoji="🚒" title="Camion dei pompieri">🚒</div>
+                  <div class="customEmoji" data-emoji="🚍" title="Autobus">🚍</div>
+                  <div class="customEmoji" data-emoji="🚲" title="Bicicletta">🚲</div>
+                  <div class="customEmoji" data-emoji="🛴" title="Monopattino">🛴</div>
+                  <div class="customEmoji" data-emoji="🏍" title="Moto">🏍</div>
+                  <div class="customEmoji" data-emoji="🛵" title="Scooter">🛵</div>
+               </div>
+            </div>
+            <div class="category-box">
+               <div id="emojiContainer" onclick="selectCustomEmoji(event)">
+                  <!-- Categoria: Spiaggia e Vacanze -->
+                  <div class="customEmoji" data-emoji="🌄" title="Alba sui monti">🌄</div>
+                  <div class="customEmoji" data-emoji="🌅" title="Alba sul mare">🌅</div>
+                  <div class="customEmoji" data-emoji="🏖️" title="Spiaggia con ombrellone">🏖️</div>
+                  <div class="customEmoji" data-emoji="🏝️" title="Isola deserta">🏝️</div>
+                  <div class="customEmoji" data-emoji="🌴" title="Palma">🌴</div>
+                  <div class="customEmoji" data-emoji="🌞" title="Sole con viso">🌞</div>
+                  <div class="customEmoji" data-emoji="👣" title="Impronte">👣</div>
+                  <div class="customEmoji" data-emoji="🥾" title="Scarponi da montagna">🥾</div>
+                  <div class="customEmoji" data-emoji="🌳" title="Albero">🌳</div>
+                  <div class="customEmoji" data-emoji="🗺️" title="Mappa del mondo">🗺️</div>
+                  <div class="customEmoji" data-emoji="🤿" title="Subacqueo">🤿</div>
+                  <div class="customEmoji" data-emoji="🦑" title="Calamaro">🦑</div>
+                  <div class="customEmoji" data-emoji="🐟" title="Pesce">🐟</div>
+                  <div class="customEmoji" data-emoji="🏊" title="Nuotatore">🏊</div>
+                  <div class="customEmoji" data-emoji="🌊" title="Onda">🌊</div>
+                  <div class="customEmoji" data-emoji="🦀" title="Granchio">🦀</div>
+                  <div class="customEmoji" data-emoji="🐚" title="Conchiglia">🐚</div>
+                  <div class="customEmoji" data-emoji="🏄" title="Surfista">🏄</div>
+                  <div class="customEmoji" data-emoji="🌺" title="Hibiscus">🌺</div>
+                  <div class="customEmoji" data-emoji="🍃" title="Foglia che vola">🍃</div>
+                  <div class="customEmoji" data-emoji="🐋" title="Balena">🐋</div>
+                  <div class="customEmoji" data-emoji="🚢" title="Nave">🚢</div>
+                  <div class="customEmoji" data-emoji="🐬" title="Delfino">🐬</div>
+                  <div class="customEmoji" data-emoji="🐠" title="Pesce tropicale">🐠</div>
+                  <div class="customEmoji" data-emoji="🦐" title="Gambero">🦐</div>
+                  <div class="customEmoji" data-emoji="🎣" title="Pesca con canna">🎣</div>
+                  <div class="customEmoji" data-emoji="🚣‍♀️" title="Canoista donna">🚣‍♀️</div>
+                  <div class="customEmoji" data-emoji="🚤" title="Motoscafo">🚤</div>
+                  <div class="customEmoji" data-emoji="⛵" title="Barca a vela">⛵</div>
+                  <div class="customEmoji" data-emoji="🛶" title="Canoa">🛶</div>
+                  <div class="customEmoji" data-emoji="⛷️" title="Sciatore">⛷️</div>
+                  <div class="customEmoji" data-emoji="🏂" title="Snowboarder">🏂</div>
+                  <div class="customEmoji" data-emoji="🍲" title="Pentola con cibo">🍲</div>
+                  <div class="customEmoji" data-emoji="🥣" title="Ciotola con cucchiaio">🥣</div>
+                  <div class="customEmoji" data-emoji="🍛" title="Ciotola con riso">🍛</div>
+                  <div class="customEmoji" data-emoji="🍽" title="Piatti con posate">🍽</div>
+                  <div class="customEmoji" data-emoji="🍴" title="Forchetta e coltello">🍴</div>
+                  <div class="customEmoji" data-emoji="🥄" title="Cucchiaio">🥄</div>
+                  <div class="customEmoji" data-emoji="👩‍🍳" title="Cuoca">👩‍🍳</div>
+                  <div class="customEmoji" data-emoji="👨‍🍳" title="Cuoco">👨‍🍳</div>
+                  <div class="customEmoji" data-emoji="🌱" title="Germoglio">🌱</div>
+                  <div class="customEmoji" data-emoji="🌿" title="Erba">🌿</div>
+                  <div class="customEmoji" data-emoji="🥗" title="Insalata verde">🥗</div>
+                  <div class="customEmoji" data-emoji="🍷" title="Bicchiere di vino">🍷</div>
+                  <div class="customEmoji" data-emoji="🍹" title="Bevanda tropicale">🍹</div>
+                  <div class="customEmoji" data-emoji="🏭" title="Fabbrica">🏭</div>
+                  <div class="customEmoji" data-emoji="🧀" title="Formaggio">🧀</div>
+                  <div class="customEmoji" data-emoji="🥛" title="Latte">🥛</div>
+                  <div class="customEmoji" data-emoji="🐄" title="Mucca">🐄</div>
+                  <div class="customEmoji" data-emoji="🥦" title="Broccoli">🥦</div>
+                  <div class="customEmoji" data-emoji="🥕" title="Carota">🥕</div>
+                  <div class="customEmoji" data-emoji="🍅" title="Pomodoro">🍅</div>
+                  <div class="customEmoji" data-emoji="🥑" title="Avocado">🥑</div>
+                  <div class="customEmoji" data-emoji="🌽" title="Mais">🌽</div>
+                  <div class="customEmoji" data-emoji="🍆" title="Melanzana">🍆</div>
+                  <div class="customEmoji" data-emoji="🥒" title="Cetriolo">🥒</div>
+                  <div class="customEmoji" data-emoji="🍠" title="Patata dolce">🍠</div>
+               </div>
+            </div>
+         </div>
+         <div id="risultatoCTA"></div>
+         <div class="sliders-container">
+            <!-- Contenitore per Dimensione Font e Colore del Testo -->
+            <div class="sliders-container">
+               <div>
+                  <label for="ctaTextColor">Seleziona il colore del testo:</label>
+                  <div id="textColorPalette" onclick="selectTextColor(event)">
+                     <div class="textOption" style="background-color: #333333;" title="Eleganza e formalità per un messaggio sofisticato" data-color="#333333"></div>
+                     <div class="textOption" style="background-color: #FFFFFF;" title="Chiaro e diretto, perfetto per leggibilità e focalizzazione" data-color="#FFFFFF"></div>
+                     <div class="textOption" style="background-color: #FF0000;" title="Eccitazione e azione per promozioni imperdibili" data-color="#FF0000"></div>
+                     <div class="textOption" style="background-color: #0000FF;" title="Fiducia e affidabilità per una prenotazione senza pensieri" data-color="#0000FF"></div>
+                  </div>
+               </div>
+               <div class="slider">
+                  <label for="fontSizeSlider">Dimensione Font CTA:</label>
+                  <input type="range" id="fontSizeSlider" min="12" max="24" value="16">
+               </div>
+            </div>
+            <div class="sliders-container">
+               <div class="slider">
+                  <label for="verticalPaddingSlider">Padding Verticale Bottone CTA:</label>
+                  <input type="range" id="verticalPaddingSlider" min="5" max="100" value="10">
+               </div>
+               <div class="slider">
+                  <label for="horizontalPaddingSlider">Padding Orizzontale Bottone CTA:</label>
+                  <input type="range" id="horizontalPaddingSlider" min="5" max="100" value="10">
+               </div>
+            </div>
+         </div>
+         <label for="ctaColor">Seleziona il colore di sfondo:</label>
+         <div id="colorPalette" onclick="selectColor(event)">
+            <div class="colorOption" style="background-color: #FFFFFF;" title="Crea spazio e apertura, perfetto per design pulito e moderno" data-color="#FFFFFF"></div>
+            <div class="colorOption" style="background-color: #FFDD33;" title="Ottimismo e allegria per vacanze soleggiate" data-color="#FFDD33"></div>
+            <div class="colorOption" style="background-color: #ECBC1E;" title="Ospitalità e calore per un'accoglienza amichevole" data-color="#ECBC1E"></div>
+            <div class="colorOption" style="background-color: #FE8903;" title="Comunicazione e socialità per viaggi in compagnia" data-color="#FE8903"></div>
+            <div class="colorOption" style="background-color: #FE2D02;" title="Avventura e passione per escursioni emozionanti" data-color="#FE2D02"></div>
+            <div class="colorOption" style="background-color: #C9302C;" title="Determinazione e forza per itinerari avventurosi" data-color="#C9302C"></div>
+            <div class="colorOption" style="background-color: #FF6600;" title="Confidenza e sicurezza per servizi affidabili" data-color="#FF6600"></div>
+            <div class="colorOption" style="background-color: #EC971F;" title="Entusiasmo e energia per attività dinamiche" data-color="#EC971F"></div>
+            <div class="colorOption" style="background-color: #A9D300;" title="Crescita e rigenerazione per una fuga dalla routine" data-color="#A9D300"></div>
+            <div class="colorOption" style="background-color: #4CAF50;" title="Armonia e benessere per soggiorni rigeneranti" data-color="#4CAF50"></div>
+            <div class="colorOption" style="background-color: #0E8A2D;" title="Stabilità e Fiducia per Decisioni Consapevoli" data-color="#0E8A2D"></div>
+            <div class="colorOption" style="background-color: #00A86B;" title="Calma e Equilibrio per uno Spirito Pacifico" data-color="#00A86B"></div>
+            <div class="colorOption" style="background-color: #40e0d0;" title="Serenità e rinnovamento per esperienze rilassanti" data-color="#40e0d0"></div>
+            <div class="colorOption" style="background-color: #31B0D5;" title="Affidabile e fidato per una navigazione intuitiva" data-color="#31B0D5"></div>
+            <div class="colorOption" style="background-color: #5BC0DE;" title="Libertà e spensieratezza per esperienze al mare" data-color="#5BC0DE"></div>
+            <div class="colorOption" style="background-color: #003580;" title="Fiducia e stabilità per viaggi di lavoro e piacere" data-color="#003580"></div>
+            <div class="colorOption" style="background-color: #286090;" title="Invita alla calma e alla riflessione, ottimo per destinazioni rilassanti" data-color="#286090"></div>
+            <div class="colorOption" style="background-color: #006CE4;" title="Evoce esclusività e profondità, ideale per viaggi di lusso" data-color="#006CE4"></div>
+            <div class="colorOption" style="background-color: #F417AB;" title="Divertimento e vitalità per vacanze indimenticabili" data-color="#F417AB"></div>
+            <div class="colorOption" style="background-color: #8418AF;" title="Creatività e originalità per esperienze uniche" data-color="#8418AF"></div>
+         </div>
+         <label for="ctaLink">Inserisci il link target:</label>
+         <input type="text" id="ctaLink" placeholder="https://www.example.com">
+         <div id="linkOptions">
+            <label><input type="checkbox" id="openInNewTab"> Apri il link in una nuova scheda</label>
+            <label><input type="checkbox" id="nofollow"> Nofollow</label>
+            <label><input type="checkbox" id="sponsored"> Sponsored</label>
+         </div>
+         <div class="cta-action-container">
+            <button id="copyCTA" onclick="copiaCTA()">Copia il codice del CTA</button>
+            <p id="feedbackMessage" style="margin-left: 10px;"></p>
+         </div>
+<div class="booking-cta-container">
+    <label for="bookingLink">CTA con stile fisso:</label>
+    <input type="text" id="bookingLink" placeholder="Inserisci il link di Booking qui...">
+    <button id="copyBookingCTA">Copia il codice del CTA</button>
+</div>
+<h2>Esempio stile fisso</h2>
+<div style="text-align: center; margin-top: 20px;">
+    <a class="cta-button" style="font-size: 21px; padding: 19px 69px; background-color: #006CE4; cursor: pointer; color: #FFFFFF; border-radius: 5px; text-decoration: none; display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.3);" target="_blank" rel="noopener noreferrer">
+        <strong>Prenota Ora</strong>
+    </a>
+</div>
+      </div>
+      </div>
+      <div id="app3" class="content">
+         <h1>Link Utili</h1>
+         <div id="controlsContainer">
+            <select id="linkSelector"></select>
+            <select id="languageSelector">
+               <option value="it">IT</option>
+               <option value="es">ES</option>
+               <option value="en">EN</option>
+               <option value="fr">FR</option>
+            </select>
+            <button id="copyButton">Copia link</button>
+            <button id="openButton">Apri</button>
+         </div>
+         <div id="bookingSearchContainer">
+            <h2>Cerca il tuo link di Booking</h2>
+            <select id="languageSelect">
+                <option value="it">IT</option>
+                <option value="es">ES</option>
+                <option value="en">EN</option>
+                <option value="fr">FR</option>
+             </select>
+            <input type="text" id="bookingSearchInput" placeholder="Cerca link di Booking...">
+            <div id="bookingSearchResults"></div>
+        </div>
+      <script>
+         document.addEventListener("DOMContentLoaded", function() {
+             const links = [
+                 { name: "GetYourGuide", urls: { it: "https://www.getyourguide.it/?partner_id=Q5TFESQ", es: "https://www.getyourguide.es/?partner_id=Q5TFESQ", en: "https://www.getyourguide.com?partner_id=Q5TFESQ", fr: "https://www.getyourguide.fr?partner_id=Q5TFESQ" } },
+                 { name: "Civitatis", urls: { it: "https://www.civitatis.com/it/?aid=5488", es: "https://www.civitatis.com/es/?aid=5488", en: "https://www.civitatis.com/en/?aid=5488", fr: "https://www.civitatis.com/fr/?aid=5488" } },
+                 { name: "Coches Menorca", urls: { it: "https://cochesmenorca.es/it/?agentId=3", es: "https://cochesmenorca.es/?agentId=3", en: "https://cochesmenorca.es/en/?agentId=3" } },
+                 { name: "Menorca Rent", urls: { it: "https://www.menorcarent.com/it/?agentId=15", es: "https://www.menorcarent.com/es/?agentId=15", en: "https://www.menorcarent.com/?agentId=15", fr: "https://www.menorcarent.com/fr/?agentId=15" } },
+                 { name: "Autos Xoroi", urls: { it: "http://www.alquilercochesmenorca.com/it/?link=ISOLADIMINORCA", es: "http://www.alquilercochesmenorca.com/es/?link=ISOLADIMINORCA", en: "http://www.alquilercochesmenorca.com/?link=ISOLADIMINORCA", fr: "http://www.alquilercochesmenorca.com/fr/?link=ISOLADIMINORCA" } },
+                 { name: "HIPER", urls: { it: "https://hiperrentacar.com/it/?colaborador=LO-0495108", es: "https://hiperrentacar.com/es/?colaborador=LO-0495108", en: "https://hiperrentacar.com/?colaborador=LO-0495108", fr: "https://hiperrentacar.com/fr/?colaborador=LO-0495108" } },
+                 { name: "Rentalcars", urls: { it: "https://www.rentalcars.com/it/?affiliateCode=TUOCODICE", es: "https://www.rentalcars.com/es/?affiliateCode=TUOCODICE", en: "https://www.rentalcars.com/?affiliateCode=TUOCODICE", fr: "https://www.rentalcars.com/fr/?affiliateCode=TUOCODICE" } },
+                 { name: "eDreams", urls: { it: "https://clk.tradedoubler.com/click?p=17269&a=TUOCODICE&url=https%3A%2F%2Fwww.edreams.it%2F", es: "https://clk.tradedoubler.com/click?p=17269&a=TUOCODICE&url=https%3A%2F%2Fwww.edreams.es%2F", en: "https://clk.tradedoubler.com/click?p=17269&a=TUOCODICE&url=https%3A%2F%2Fwww.edreams.com%2F", fr: "https://clk.tradedoubler.com/click?p=17269&a=TUOCODICE&url=https%3A%2F%2Fwww.edreams.fr%2F" } },
+                 { name: "Vueling", urls: { it: "https://clk.tradedoubler.com/click?p=288053&a=TUOCODICE&url=https%3A%2F%2Fwww.vueling.com%2Fit", es: "https://clk.tradedoubler.com/click?p=288053&a=TUOCODICE&url=https%3A%2F%2Fwww.vueling.com%2Fes", en: "https://clk.tradedoubler.com/click?p=288053&a=TUOCODICE&url=https%3A%2F%2Fwww.vueling.com%2F", fr: "https://clk.tradedoubler.com/click?p=288053&a=TUOCODICE&url=https%3A%2F%2Fwww.vueling.com%2Ffr" } },
+                 { name: "Booking Minorca", urls: { it: "https://www.booking.com/searchresults.it.html?region=1409&aid=TUOCODICE&no_rooms=1&group_adults=2", es: "https://www.booking.com/searchresults.es.html?region=1409&aid=TUOCODICE&no_rooms=1&group_adults=2", en: "https://www.booking.com/searchresults.en.html?region=1409&aid=TUOCODICE&no_rooms=1&group_adults=2", fr: "https://www.booking.com/searchresults.fr.html?region=1409&aid=TUOCODICE&no_rooms=1&group_adults=2" } }
+             ];
+         
+             const linkSelector = document.getElementById('linkSelector');
+             const languageSelector = document.getElementById('languageSelector');
+             const copyButton = document.getElementById('copyButton');
+             const openButton = document.getElementById('openButton');
+         
+             // Popola il selettore di link
+             links.forEach((link, index) => {
+                 const option = document.createElement('option');
+                 option.value = index; // L'indice dell'elemento nell'array links
+                 option.textContent = link.name;
+                 linkSelector.appendChild(option);
+             });
+         
+             function getSelectedLink() {
+                 const selectedLinkIndex = linkSelector.value;
+                 const selectedLanguage = languageSelector.value;
+                 return links[selectedLinkIndex].urls[selectedLanguage];
+             }
+         
+             copyButton.onclick = function() {
+                 const url = getSelectedLink();
+                 navigator.clipboard.writeText(url).then(() => {
+                     mostraMessaggioGlobalmente('Link copiato negli appunti!');
+                 }).catch(err => {
+                     console.error('Errore nella copia del link: ', err);
+                 });
+             };
+         
+             openButton.onclick = function() {
+                 const url = getSelectedLink();
+                 window.open(url, '_blank');
+             };
+         });
+         
+         function mostraMessaggioGlobalmente(testo) {
+             const messageElement = document.getElementById('globalMessage') || document.createElement('div');
+             if (!messageElement.id) {
+                 messageElement.id = 'globalMessage';
+                 document.body.appendChild(messageElement);
+             }
+         
+             messageElement.textContent = testo;
+             messageElement.classList.add('show');
+         
+             setTimeout(() => { messageElement.classList.remove('show'); }, 3000); // Nascondi il messaggio dopo 3 secondi
+         }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Rileva se l'utente sta utilizzando un dispositivo touch
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (isTouchDevice) {
+        // Seleziona tutti i container
+        const containers = document.querySelectorAll('.container');
+
+        containers.forEach(container => {
+            container.addEventListener('click', function() {
+                // Trova il buttonContainer nel container cliccato
+                const buttonContainer = this.querySelector('.buttonContainer');
+                // Controlla la visibilità e cambiala
+                const isHidden = getComputedStyle(buttonContainer).visibility === 'hidden';
+                // Prima di mostrare il buttonContainer corrente, nascondi tutti gli altri
+                document.querySelectorAll('.buttonContainer').forEach(bc => {
+                    if (bc !== buttonContainer) {
+                        bc.style.visibility = 'hidden';
+                    }
+                });
+                // Mostra o nasconde il buttonContainer corrente
+                buttonContainer.style.visibility = isHidden ? 'visible' : 'hidden';
+            });
+        });
+    }
+});
+
+         
+document.addEventListener('DOMContentLoaded', function () {
+    // Rileva il cambiamento del selettore di lingua
+    document.getElementById('languageSelect').addEventListener('change', function () {
+        const selectedLanguage = this.value;
+        updateLinks(selectedLanguage);
+    });
+
+    // Rileva la ricerca dell'utente
+    document.getElementById('bookingSearchInput').addEventListener('input', function() {
+        const selectedLanguage = document.getElementById('languageSelect').value;
+        updateLinks(selectedLanguage);
+    });
+
+// Funzione per aggiornare i link in base alla lingua selezionata e per gestire la ricerca
+function updateLinks(language) {
+    const searchTerm = document.getElementById('bookingSearchInput').value.toLowerCase();
+    const resultsContainer = document.getElementById('bookingSearchResults');
+    resultsContainer.innerHTML = ''; // Pulisce i risultati precedenti
+
+    if (searchTerm.length < 3) {
+        return; // Evita la ricerca per input troppo corti
+    }
+
+    let links;
+    switch (language) {
+        case 'it':
+            links = linksIT;
+            break;
+        case 'en':
+            links = linksEN;
+            break;
+        case 'es':
+            links = linksES;
+            break;
+        case 'fr':
+            links = linksFR;
+            break;
+        default:
+            links = []; // In caso di lingua non supportata, non ci sono link disponibili
+            break;
+    }
+
+    const filteredLinks = links.filter(link => link[0] && link[0].toLowerCase().includes(searchTerm));
+
+    // Mostra i risultati della ricerca...
+    displayResults(filteredLinks);
+}
+
+// Funzione per visualizzare i risultati della ricerca
+function displayResults(filteredLinks) {
+    const resultsContainer = document.getElementById('bookingSearchResults');
+    
+    if (filteredLinks.length === 0) {
+        resultsContainer.innerHTML = '<p>Nessun risultato trovato.</p>';
+        return;
+    }
+
+    filteredLinks.forEach(link => {
+        const container = document.createElement('div');
+        container.className = 'container';
+        container.style.display = 'flex';
+        container.style.alignItems = 'center';
+        container.style.marginBottom = '10px';
+        
+        const linkElement = document.createElement('a');
+        linkElement.href = link[3]; // L'URL è il quarto elemento nell'array
+        linkElement.target = "_blank";
+        linkElement.textContent = `${link[0]} - ${link[2]}`; // Il nome e la città
+        linkElement.style.marginRight = '10px';
+        
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'buttonContainer'; // Utilizzo della classe invece di inline style per 'display'
+
+        const copyButton = document.createElement('button');
+        copyButton.textContent = 'Copia link';
+        copyButton.onclick = function() {
+            navigator.clipboard.writeText(link[3]).then(() => {
+                mostraMessaggioGlobalmente('Link copiato negli appunti!');
+            }).catch(err => {
+                console.error('Errore nella copia del link: ', err);
+            });
+        };
+
+        const openButton = document.createElement('button');
+        openButton.textContent = 'Apri';
+        openButton.onclick = function() {
+            window.open(link[3], '_blank');
+        };
+
+        buttonContainer.appendChild(copyButton);
+        buttonContainer.appendChild(openButton);
+        container.appendChild(linkElement);
+        container.appendChild(buttonContainer);
+        resultsContainer.appendChild(container);
+    });
+}
+
+    // Iniziale carica i link per la lingua predefinita (inglese)
+    updateLinks('en');
+});
+
+
+
+
+         
+         function showApp(appId) {
+             // Nasconde tutti i div con classe 'content'
+             document.querySelectorAll('.content').forEach(function(page) {
+                 page.classList.remove('active');
+             });
+             // Mostra il div con l'ID corrispondente a quello passato alla funzione
+             var selectedApp = document.getElementById(appId);
+             if (selectedApp) {
+                 selectedApp.classList.add('active');
+             } else {
+                 console.error('App con ID ' + appId + ' non trovata.');
+             }
+         }
+                           document.addEventListener('DOMContentLoaded', function() {
+                               const dropZone = document.getElementById('drop-zone');
+                               const fileInput = document.getElementById('file-input');
+                               const imagesPreview = document.getElementById('images-preview');
+                               const compressButton = document.getElementById('compress-button');
+                               let zip = new JSZip();
+                           
+                               function addToZipAndDisplay(file, result) {
+                                   const reader = new FileReader();
+                                   reader.onload = function(e) {
+                                       const imgElement = document.createElement('img');
+                                       imgElement.src = e.target.result;
+                                       imgElement.classList.add('img-preview');
+                                       const compressionResult = document.createElement('div');
+                                       compressionResult.textContent = '- ' + ((1 - (result.size / file.size)) * 100).toFixed(2) + '%';
+                                       compressionResult.classList.add('compression-result');
+                                       const div = document.createElement('div');
+                                       div.classList.add('image-card-wrap'); // Aggiunto per il nuovo stile
+                                       div.appendChild(imgElement);
+                                       div.appendChild(compressionResult);
+                                       imagesPreview.appendChild(div);
+                                       zip.file(file.name, result, {binary: true});
+                                   };
+                                   reader.readAsDataURL(result);
+                               }
+                           
+                               function handleFiles(files) {
+                                   imagesPreview.innerHTML = '';
+                                   const promises = Array.from(files).map(file => new Promise((resolve, reject) => {
+                                       new Compressor(file, {
+                                           quality: 0.6,
+                                           success(result) {
+                                               addToZipAndDisplay(file, result);
+                                               resolve();
+                                           },
+                                           error(err) {
+                                               console.error('Compression error:', err.message);
+                                               reject(err);
+                                           },
+                                       });
+                                   }));
+                                   Promise.all(promises).then(() => {
+                                       compressButton.disabled = false;
+                                   });
+                               }
+                           
+                               dropZone.addEventListener('click', () => fileInput.click());
+                               dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
+                               dropZone.addEventListener('dragleave', e => { e.preventDefault(); dropZone.classList.remove('over'); });
+                               dropZone.addEventListener('drop', e => {
+                                   e.preventDefault(); dropZone.classList.remove('over');
+                                   handleFiles(e.dataTransfer.files);
+                               });
+                           
+                               fileInput.addEventListener('change', e => handleFiles(e.target.files));
+                           
+                               compressButton.addEventListener('click', () => {
+                                   compressButton.disabled = true;
+                                   compressButton.style.animation = 'buttonClick 0.4s ease';
+                                   zip.generateAsync({type:"blob"}).then(content => {
+                                       saveAs(content, "immagini_compresse.zip");
+                                       zip = new JSZip();
+                                       compressButton.style.animation = '';
+                                   });
+                               });
+                           });
+               
+               
+                           document.getElementById('copyBookingCTA').addEventListener('click', function() {
+                   const bookingLink = document.getElementById('bookingLink').value;
+                   const ctaHtml = `&nbsp;<div style="text-align: center;"><a href="${bookingLink}" class="cta-button" style="font-size: 21px; padding: 19px 69px; background-color: #006CE4; color: #FFFFFF; border-radius: 5px; text-decoration: none; display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.3);" target="_blank" rel="noopener noreferrer"><strong>Prenota Ora</strong></a></div>&nbsp;`;
+               
+                   navigator.clipboard.writeText(ctaHtml).then(() => {
+                       feedbackMessage.textContent = 'CTA Booking copiato!';
+                   }).catch(err => {
+                       console.error('Errore durante la copia:', err);
+                   });
+               });
+               
+               document.addEventListener('DOMContentLoaded', function() {
+                   // Altri inizializzatori qui...
+                   creaCTA(); // Chiama la funzione iniziale per impostare lo stato iniziale del CTA
+               
+                   // Aggiungi gli event listener per gli input esistenti
+                   document.getElementById('ctaText').addEventListener('input', creaCTA);
+                   document.getElementById('ctaLink').addEventListener('input', creaCTA);
+                   document.querySelectorAll('.colorOption, .textOption').forEach(el => {
+                       el.addEventListener('click', creaCTA);
+                   });
+                   document.getElementById('openInNewTab').addEventListener('change', creaCTA);
+                   document.getElementById('nofollow').addEventListener('change', creaCTA);
+                   document.getElementById('sponsored').addEventListener('change', creaCTA);
+               
+                   // Aggiungi gli event listener per i nuovi slider
+                   document.getElementById('fontSizeSlider').addEventListener('input', creaCTA);
+                   document.getElementById('verticalPaddingSlider').addEventListener('input', creaCTA);
+                   document.getElementById('horizontalPaddingSlider').addEventListener('input', creaCTA);
+               });
+               
+               
+               function creaCTA() {
+                   var ctaText = document.getElementById('ctaText').value;
+                   var ctaLink = document.getElementById('ctaLink').value;
+                   var fontSize = document.getElementById('fontSizeSlider').value + 'px';
+                   var verticalPadding = document.getElementById('verticalPaddingSlider').value + 'px';
+                   var horizontalPadding = document.getElementById('horizontalPaddingSlider').value + 'px';
+                   
+                   var ctaColor = document.querySelector('.colorOption.selected')?.getAttribute('data-color') || '#fff';
+                   var ctaTextColor = document.querySelector('.textOption.selected')?.getAttribute('data-color') || '#000';
+                   var openInNewTab = document.getElementById('openInNewTab').checked ? 'target="_blank" rel="noopener noreferrer"' : '';
+                   var nofollow = document.getElementById('nofollow').checked ? 'rel="nofollow"' : '';
+                   var sponsored = document.getElementById('sponsored').checked ? 'rel="sponsored"' : '';
+                   var emoji = document.querySelector('.customEmoji.clicked')?.getAttribute('data-emoji') || '';
+                   
+                   var relAttributes = [openInNewTab, nofollow, sponsored].filter(attr => attr !== '').join(' ');
+                   
+                   var codiceCTA = `
+                       &nbsp;<div style="text-align: center;"><a href="${ctaLink}" class="cta-button" style="font-size: ${fontSize}; padding: ${verticalPadding} ${horizontalPadding}; background-color: ${ctaColor}; color: ${ctaTextColor}; border-radius: 5px; text-decoration: none; display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.3);" ${relAttributes}><strong>${ctaText}</strong> ${emoji}</a></div>&nbsp;
+                   `;
+               
+                   document.getElementById('risultatoCTA').innerHTML = codiceCTA;
+               }
+               
+               
+               function aggiornaAnteprimaCTA(ctaText, ctaColor, ctaTextColor, ctaLink, emojiPart, targetOption, relOptions) {
+                   var anteprimaCTA = document.getElementById('anteprimaCTA');
+                   anteprimaCTA.innerHTML = `
+                       <a href="${ctaLink}" class="cta-button" style="background-color: ${ctaColor}; color: ${ctaTextColor}; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;" ${targetOption} ${relOptions}>
+                           <strong>${ctaText}</strong>${emojiPart}
+                       </a>
+                   `;
+               }
+               
+               function copiaCTA() {
+                   var codiceCTA = document.getElementById('risultatoCTA').innerHTML.trim();
+                   var feedbackMessage = document.getElementById('feedbackMessage');
+               
+                   if (codiceCTA) {
+                       navigator.clipboard.writeText(codiceCTA).then(function() {
+                           feedbackMessage.textContent = 'Codice CTA copiato negli appunti!';
+                           feedbackMessage.style.opacity = '1'; // Assicurati che l'opacità sia piena prima di iniziare il fade out
+                           feedbackMessage.classList.remove('fadeOut'); // Rimuove la classe per assicurarsi che l'animazione possa ripartire
+               
+                           // Imposta l'animazione di fade-out per iniziare immediatamente
+                           setTimeout(function() {
+                               feedbackMessage.classList.add('fadeOut'); // Aggiunge l'animazione di fade-out
+                           }, 0); // Parte immediatamente
+               
+                           // Rimuovi il testo dopo che l'animazione di fade-out è completata
+                           setTimeout(function() {
+                               feedbackMessage.textContent = '';
+                               feedbackMessage.classList.remove('fadeOut'); // Rimuovi la classe fadeOut per resettare lo stato
+                               feedbackMessage.style.opacity = '0'; // Resetta l'opacità per assicurarsi che il prossimo messaggio sia visibile
+                           }, 3000); // Dopo 5 secondi per permettere all'animazione di completarsi
+                       }).catch(function(err) {
+                           console.error('Errore durante la copia negli appunti:', err);
+                       });
+                   }
+               }
+               
+               function selectColor(event) {
+                   var colorOptions = document.querySelectorAll('.colorOption');
+                   colorOptions.forEach(function(option) {
+                       option.classList.remove('selected');
+                       option.style.borderWidth = '1px'; // Resetta lo stile del bordo per tutti gli elementi
+                   });
+               
+                   if (event.target.classList.contains('colorOption')) {
+                       event.target.classList.add('selected');
+                       event.target.style.borderColor = event.target.getAttribute('data-color');
+                       event.target.style.borderWidth = '2px'; // Evidenzia l'elemento selezionato
+               
+                       // Chiamata immediata a creaCTA per aggiornare l'anteprima con il nuovo colore
+                       creaCTA();
+                   }
+               }
+               
+               function selectTextColor(event) {
+                   var textOptions = document.querySelectorAll('.textOption');
+                   textOptions.forEach(function(option) {
+                       option.classList.remove('selected');
+                       option.style.borderWidth = '1px'; // Resetta lo stile del bordo per tutti gli elementi
+                   });
+               
+                   if (event.target.classList.contains('textOption')) {
+                       event.target.classList.add('selected');
+                       event.target.style.borderColor = event.target.getAttribute('data-color');
+                       event.target.style.borderWidth = '2px'; // Evidenzia l'elemento selezionato
+               
+                       // Chiamata immediata a creaCTA per aggiornare l'anteprima con il nuovo colore del testo
+                       creaCTA();
+                   }
+               }
+               
+               function selectCustomEmoji(event) {
+                   var emojiContainer = event.currentTarget;
+                   var selectedEmoji = event.target.getAttribute('data-emoji');
+               
+                   if (selectedEmoji) {
+                       var ctaTextElement = document.getElementById('ctaText');
+                       var cursorPosition = ctaTextElement.selectionStart;
+                       var textBeforeCursor = ctaTextElement.value.substring(0, cursorPosition);
+                       var textAfterCursor = ctaTextElement.value.substring(cursorPosition);
+                       ctaTextElement.value = textBeforeCursor + selectedEmoji + textAfterCursor;
+                       ctaTextElement.focus();
+                       ctaTextElement.setSelectionRange(cursorPosition + selectedEmoji.length, cursorPosition + selectedEmoji.length);
+               
+                       creaCTA();
+                   }
+               
+                   if (event.type === 'click') {
+                       event.target.classList.add('clicked');
+                       setTimeout(function () {
+                           event.target.classList.remove('clicked');
+                       }, 300);
+                   }
+               }
+         
+         function myFunction() {
+           var x = document.getElementById("myTopnav");
+           if (x.className === "navbar") {
+             x.className += " responsive";
+           } else {
+             x.className = "navbar";
+           }
+         }
+             
+      </script>
+   </body>
+</html>
