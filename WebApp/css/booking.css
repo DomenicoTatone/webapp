@@ -1,0 +1,158 @@
+#bookingSearchContainer {
+  margin: 20px;
+  text-align: center;
+  }
+  #bookingSearchInput {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  }
+#bookingSearchResults {
+display: none;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+padding: 10px;
+border-radius: 5px;
+}
+
+#bookingSearchResults .container {
+background-color: white; /* Sfondo bianco per ogni risultato */
+box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ombra leggera per profondità */
+padding: 10px; /* Padding intorno ai contenuti */
+margin-bottom: 10px; /* Margine tra i risultati */
+border-radius: 5px; /* Bordi arrotondati */
+}
+#bookingSearchResults a {
+color: #007bff; /* Colore del link */
+font-weight: bold; /* Testo in grassetto */
+}
+
+#bookingSearchResults .container {
+color: #333; /* Colore del testo per migliorare la leggibilità */
+}
+@media (max-width: 768px) {
+#bookingSearchResults .container {
+ flex-direction: column; /* Elementi in colonna su schermi piccoli */
+}
+}
+.buttonContainer {
+  visibility: visible; /* Rendi i bottoni sempre visibili */
+  margin-left: auto; /* Allinea i bottoni a destra */
+ }
+       /* Stili per i bottoni */
+ .buttonContainer button {
+  background-color: #4CAF50; /* Colore di sfondo verde */
+  color: white; /* Testo bianco */
+  padding: 10px 20px; /* Padding intorno al testo */
+  margin: 5px; /* Aggiunge margine intorno ai bottoni per separarli */
+  border: none; /* Nessun bordo */
+  cursor: pointer; /* Cursor a forma di puntatore */
+  border-radius: 5px; /* Bordi arrotondati */
+  transition: background-color 0.3s ease; /* Transizione fluida del colore di sfondo */
+ }
+ 
+ .buttonContainer button:hover {
+  background-color: #45a049; /* Colore di sfondo più scuro al passaggio del mouse */
+ }
+ 
+ .buttonContainer button:not(:last-child) {
+  margin-right: 10px; /* Aggiunge margine a destra di ogni bottone tranne l'ultimo */
+ }
+ 
+       .buttonContainer button:hover {
+       background-color: #45a049; /* Colore di sfondo più scuro al passaggio del mouse */
+       }
+       .buttonContainer button:disabled {
+       background-color: #cccccc; /* Colore di sfondo per i bottoni disabilitati */
+       cursor: not-allowed; /* Cursor che indica l'azione non permessa */
+       }
+@media (max-width: 768px) {
+  .buttonContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    width: 100%; /* Assicura che il contenitore si estenda per tutta la larghezza disponibile */
+  }
+  .buttonContainer button {
+    margin: 5px; /* Aggiunge margine attorno ai bottoni */
+    padding: 10px 20px; /* Padding intorno al testo dei bottoni */
+    justify-content: center; /* Centra i bottoni orizzontalmente */
+  }
+}
+#selectionContainer {
+  margin-bottom: 20px; /* Distanza dal contenitore di ricerca */
+  display: flex;
+  justify-content: space-between; /* Distribuisce uniformemente lo spazio tra i select */
+  flex-wrap: wrap; /* Permette agli elementi di andare a capo se non c'è abbastanza spazio */
+}
+
+#selectionContainer select {
+  margin: 5px; /* Spazio tra i select */
+  flex-grow: 1; /* Permette ai select di crescere e occupare lo spazio disponibile */
+}
+#pageSubTypeRadioGroup {
+  display: flex;
+  align-items: center; /* Questo assicura che gli elementi siano allineati verticalmente al centro */
+  gap: 10px; /* Aggiunge uno spazio tra gli elementi */
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px; /* Limita la larghezza del tooltip */
+  white-space: normal; /* Permette al testo di andare a capo */
+  visibility: hidden;
+  background-color: #f9f9f9;
+  color: #333;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #d3d3d3;
+  z-index: 1;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* Aggiunge un'ombra leggera per un effetto di profondità */
+}
+
+.tooltip:hover::after {
+  visibility: visible;
+}
+
+/* Contenitore principale dei risultati */
+#bookingSearchResults {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+
+/* Stile per ogni link di landing page */
+.landing-page-link {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+/* Stile per gli URL */
+.landing-page-url {
+  color: #007BFF;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.landing-page-url:hover {
+  text-decoration: underline;
+}

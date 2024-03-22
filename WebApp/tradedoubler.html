@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebApp</title>
+    <link rel="icon" type="image/png" href="https://bookinglinks.s3.eu-north-1.amazonaws.com/icona.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/menu-style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/tradedoubler.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+    <script src="script/menu.js"></script>
+    <script src="script/function.js"></script>
+    <script src="script/translator.js"></script>
+</head>
+<body>
+    <div id="app" class="container mt-5">
+        <h2 class="tradedoubler custom-heading" id="usefulTLinksHeader">I Programmi Attivi</h2>
+        <div class="form-group">
+            <label for="siteSelect">Siti</label>
+            <select id="siteSelect" class="form-control">
+                <option value="0">Seleziona un sito</option>
+            </select>
+        </div>
+        <div id="programsList" class="mt-4">
+        </div>
+        <div id="searchTNotice" style="margin-top: 10px; color: rgb(91, 91, 91); font-style: italic;">
+            <p class="nota">Sono Link di tracciamento standard e puntano alla Homepage delle varie piattaforme.</p>
+        </div>
+    </div>
+    <div id="modalDescrizione" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="testoDescrizione"></p>
+        </div>
+    </div>  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="script/tradedoubler.js"></script>
+</body>
+</html>

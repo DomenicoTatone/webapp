@@ -1,0 +1,86 @@
+  /* Stile del contenitore della lista dei programmi */
+.programs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Distanza tra le carte */
+  justify-content: center; /* Centra le carte se non occupano tutta la larghezza */
+}
+
+/* Stile delle singole carte dei programmi */
+.program {
+  border: 1px solid #ccc; /* Bordo leggero */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ombra leggera per profondità */
+  border-radius: 8px; /* Angoli arrotondati */
+  overflow: hidden; /* Assicura che tutto dentro la carta sia contenuto */
+  width: 300px; /* Larghezza fissa per le carte */
+  background-color: #fff; /* Sfondo bianco */
+}
+
+.program img {
+  width: 100%; /* Rende l'immagine larga quanto la carta */
+  height: auto; /* Mantiene le proporzioni dell'immagine */
+  max-height: 200px; /* Altezza massima per l'immagine */
+  object-fit: cover; /* Assicura che l'immagine copra lo spazio disponibile */
+}
+
+.program h2 {
+  font-size: 18px; /* Dimensione del font per il titolo */
+  margin: 12px; /* Margine intorno al titolo */
+}
+
+.program p, .program a {
+  font-size: 14px; /* Dimensione del font per paragrafi e link */
+  margin: 12px; /* Margine intorno a paragrafi e link */
+  text-align: center; /* Centra il testo */
+}
+
+.program a {
+  display: inline-block; /* Rende il link un blocco per margini */
+  background-color: #007bff; /* Colore di sfondo per il link */
+  color: #ffffff; /* Colore del testo per il link */
+  padding: 8px 16px; /* Padding intorno al testo del link */
+  text-decoration: none; /* Rimuove il sottolineato dal link */
+  border-radius: 4px; /* Angoli arrotondati per il link */
+}
+
+.program a:hover {
+  background-color: #0056b3; /* Colore di sfondo al passaggio del mouse */
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+.modal {
+  display: none; /* Nascosto di default */
+  position: fixed; /* Resta in posizione fissa */
+  z-index: 1; /* Situato sopra tutto */
+  left: 0;
+  top: 0;
+  width: 100%; /* Larghezza completa */
+  height: 100%; /* Altezza completa */
+  overflow: auto; /* Abilita lo scroll se necessario */
+  background-color: rgb(0,0,0); /* Colore sfondo */
+  background-color: rgba(0,0,0,0.4); /* Colore sfondo con opacità */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% dal top e centrato orizzontalmente */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Puoi regolare questa larghezza */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

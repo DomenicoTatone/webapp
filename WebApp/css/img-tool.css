@@ -1,0 +1,107 @@
+body {
+  text-align: center;
+}
+
+header h1 {
+  font-size: 32px; /* Dimensione del testo */
+  text-align: center; /* Allineamento del testo */
+}
+
+header h1 img {
+  vertical-align: middle; /* Allinea l'icona SVG al centro verticalmente rispetto al testo */
+  width: 150px; /* Larghezza dell'icona SVG */
+  height: auto; /* Altezza automatica per mantenere le proporzioni */
+}
+
+#upload-container {
+  background-color: #fff;
+  border: 2px dashed #007bff;
+  padding: 10px; /* Aumentato il padding per più spazio interno */
+  width: 80%; /* Larghezza come percentuale della larghezza del viewport per una maggiore reattività */
+  max-width: 800px; /* Imposta una larghezza massima per evitare che l'elemento diventi troppo largo su schermi grandi */
+  margin: auto;
+  margin-bottom: 20px;
+  border-radius: 10px; /* Bordi leggermente più arrotondati per un aspetto morbido */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Ombra più definita per una sensazione di profondità */
+  text-align: center; /* Assicura che il testo e gli elementi interni siano centrati */
+}
+
+#drop-area {
+  cursor: pointer;
+  padding: 60px; /* Mantiene un padding interno per distanziare il contenuto dai bordi */
+  height: auto; /* Altezza automatica basata sul contenuto, ma puoi impostarla esplicitamente se desideri */
+}
+
+#drop-area.highlight {
+  background-color: rgba(0,123,255,0.1);
+}
+
+#images-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+#image-input {
+  position: absolute;
+  left: -9999px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.image-container {
+  border: 1px solid #ccc;
+  display: inline-block;
+  margin: 5px;
+  padding: 5px;
+}
+
+.image-container.original {
+  border-color: blue;
+}
+
+.image-container.compressed {
+  border-color: green;
+}
+
+.pswp__title-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  pointer-events: none; /* Assicurati che l'overlay non interferisca con i clic */
+  z-index: 1000; /* Assicurati che l'overlay sia sopra le immagini */
+}

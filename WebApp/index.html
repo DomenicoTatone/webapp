@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebApp</title>
+    <link rel="icon" type="image/png" href="https://bookinglinks.s3.eu-north-1.amazonaws.com/icona.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="css/menu-style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/booking.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+    <script src="script/menu.js"></script>
+    <script src="script/function.js"></script>
+    <script src="script/translator.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="bookingSearchContainer">
+            <h2 id="bookingHeader">Cerca il Deep Link di Booking (Spagna e Isole)</h2>
+            <div id="selectionContainer">
+                <select id="languageSelect">
+                    <option value="it">IT</option>
+                    <option value="es">ES</option>
+                    <option value="en">EN</option>
+                    <option value="fr">FR</option>
+                </select>
+                <select id="pageTypeSelect">
+                    <option value="airportPage">Pagina Aeroporto</option>
+                    <option value="cityPage">Pagina Città</option>
+                    <option value="districtPage">Pagina Quartiere</option>
+                    <option value="genericLandingPages">Pagina dei risultati generica</option>
+                    <option value="hotelPage">Pagina Hotel</option>
+                    <option value="islandPage">Pagina Isola</option>
+                    <option value="landmarkPage">Pagina Luogo di Interesse</option>
+                    <option value="regionPage">Pagina Regione</option>
+                </select>            
+                <div id="tooltip" style="display:none; position:absolute; padding:5px; background-color:#f9f9f9; border:1px solid #d3d3d3; z-index:100;">Tooltip</div>
+                <div id="pageSubTypeRadioGroup">
+                    <div class="tooltip" data-tooltip="Una pagina dei Risultati di Ricerca mostra un elenco di sistemazioni nella città, nella regione o nella nazione che hai specificato.">
+                        <input type="radio" id="searchResultsPage" name="pageSubType" value="searchResultsPage" checked>
+                        <label for="searchResultsPage">Pagina dei Risultati di Ricerca</label>
+                    </div>
+                    <div class="tooltip" data-tooltip="Una Landing Page fornisce informazioni sulla città, sulla regione o sul Paese a cui vuoi che i tuoi lettori arrivino tramite link.">
+                        <input type="radio" id="landingPage" name="pageSubType" value="landingPage">
+                        <label for="landingPage">Landing Page</label>
+                    </div>                    
+                </div>                
+            </div>            
+            <input type="text" id="bookingSearchInput" placeholder="Inserisci il termine di ricerca...">
+            <div id="bookingSearchResults"></div>
+            <div id="searchNotice" style="margin-top: 10px; color: rgb(91, 91, 91); font-style: italic;">
+                <p class="nota">È normale che la ricerca richieda alcuni secondi per elaborare un grande numero di strutture. In Spagna, ad esempio, ci sono 206.775 strutture..</p>
+            </div>
+        </div>
+    </div>    
+    <script src="script/selectionsAndScriptLoading.js" defer></script>
+    <script src="script/displayResultsAndTooltips.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif; /* Usa il font importato */
+  margin: 0;
+  padding: 0;
+}
+.nota::before {
+  margin-bottom: 15px;
+  content: "Nota:";
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+}
+.nota {
+  font-size: 16px;
+  color: #666;
+  padding: 15px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aggiungi un'ombra leggera */
+  border-left: 4px solid rgb(255, 0, 85);
+  text-align: center;
+}
+#app {
+  background-color: #f0f8ff; /* Colore di sfondo leggero per la sezione */
+  border-radius: 8px; /* Bordi arrotondati */
+  padding: 20px; /* Spaziatura interna */
+  margin-top: 20px; /* Margine superiore per distanziarla dalle altre sezioni */
+  }
+  #app h1 {
+  color: #333; /* Colore del testo per l'intestazione */
+  text-align: center; /* Centra l'intestazione */
+  margin-bottom: 20px; /* Spazio sotto l'intestazione */
+  }
+  #app ul {
+  list-style-type: none; /* Rimuove i punti della lista */
+  padding: 0; /* Rimuove il padding predefinito */
+  display: flex; /* Display flex per mettere gli elementi in linea */
+  flex-wrap: wrap; /* Permette agli elementi di andare a capo se non ci sta spazio */
+  gap: 20px; /* Distanza tra gli elementi */
+  }
+  #app ul li {
+  display: flex; /* Display flex per mettere link e pulsante in linea */
+  align-items: center; /* Centra verticalmente il contenuto del li */
+  }
+  #app ul li a {
+  margin-right: 10px; /* Spazio tra il link e il pulsante di copia */
+  }
+  #app li {
+  margin-bottom: 10px; /* Spazio tra i link */
+  }
+  #app a {
+  text-decoration: none; /* Rimuove il sottolineato dei link */
+  color: #007bff; /* Colore del link */
+  font-weight: bold; /* Rende il testo dei link in grassetto */
+  }
+  #app a:hover {
+  color: #0056b3; /* Cambia il colore del link al passaggio del mouse */
+  }
+  /* Stili responsive per dispositivi mobili */
+  @media (max-width: 768px) {
+  #app {
+  margin-top: 10px; /* Riduci il margine superiore su schermi più piccoli */
+  padding: 10px; /* Riduci la spaziatura interna */
+  }
+  }
+    select {
+      padding: 8px 16px;
+      border: 1px solid #ccc; /* Colore del bordo */
+      border-radius: 20px; /* Bordi arrotondati */
+      background-color: white; /* Colore di sfondo */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra leggera per profondità */
+      outline: none; /* Rimuove l'outline di default al focus */
+      cursor: pointer; /* Cambia il cursore in una manina per indicare che l'elemento è cliccabile */
+      margin-right: 10px; /* Spazio tra i selettori */
+      }
+      select:hover {
+      background-color: #f0f0f0; /* Cambia lo sfondo al passaggio del mouse */
+      }
+      select:focus {
+      border-color: #007bff; /* Cambia il colore del bordo quando il selettore è focalizzato */
+      }
+      /* Puoi personalizzare ulteriormente i selettori per differenti dispositivi/screen */
+      @media (max-width: 768px) {
+      select {
+      padding: 10px 14px; /* Adatta il padding per schermi più piccoli */
+      width: 100%; /* Usa tutta la larghezza disponibile */
+      margin-bottom: 10px; /* Spazio tra i selettori quando sono uno sopra l'altro */
+      margin-right: 0; /* Rimuove il margine destro */
+      }
+      }
+      h2 {
+        font-size: 20px !important; /* Leggermente più piccolo dell'h1 per mantenere la gerarchia */
+        color: #555 !important; /* Colore del testo un po' più morbido rispetto all'h1 */
+        text-align: center !important; /* Allineamento a sinistra per differenziarlo dall'h1 centrato */
+        margin: 40px !important; /* Margine superiore per separarlo dal contenuto sopra */
+        margin-bottom: 20px !important; /* Margine inferiore per avvicinarlo al contenitore di ricerca */
+        font-family: 'Arial', sans-serif !important; /* Consistenza con la famiglia di font dell'h1 */
+        text-transform: none !important; /* Nessuna trasformazione, per differenziarlo dall'h1 */
+        letter-spacing: normal !important; /* Spaziatura normale delle lettere */
+        padding-left: 20px !important; /* Padding sinistro per allinearlo con gli altri elementi interni al div */
+    }
+    
+      #controlsContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap; /* Permette agli elementi di andare a capo se non ci sta abbastanza spazio */
+      gap: 10px; /* Distanza tra gli elementi */
+      }
+      /* Stili aggiuntivi per i select e i button per renderli coerenti */
+      #linkSelector, #languageSelector, #copyButton, #openButton {
+      padding: 8px 12px;
+      margin: 5px; /* Margini leggeri per separare leggermente gli elementi */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      }
+/* Miglioramenti alla visibilità dei bottoni (esempio) */
+#copyButton, #openButton {
+ background-color: #007bff;
+ color: white;
+ padding: 10px 20px;
+ border: none;
+ border-radius: 5px;
+ cursor: pointer;
+ transition: background-color 0.3s ease;
+}
+
+#copyButton:hover, #openButton:hover {
+ background-color: #0056b3;
+}

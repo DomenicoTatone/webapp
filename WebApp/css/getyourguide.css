@@ -1,0 +1,70 @@
+#inputLink, #transformedLink {
+  font-family: Arial, sans-serif; /* Esempio di impostazione del font */
+  font-size: 16px; /* Dimensione del font */
+  color: #333; /* Colore del testo */
+}
+
+#linkTransformerContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#inputLink {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#transformedLinkContainer {
+  display: none; /* Nascondi fino alla trasformazione del link */
+  margin-top: 10px;
+}
+
+/* Stili base per i bottoni */
+#transformButton, #copyTransformedLink, #openTransformedLink {
+  padding: 12px 12px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#transformButton:hover, #copyTransformedLink:hover, #openTransformedLink:hover {
+  background-color: #0056b3;
+}
+
+/* Miglioramenti generici per i selettori e bottoni */
+#transformButton, #copyTransformedLink, #openTransformedLink {
+  padding: 8px 12px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Stilizzazione del contenitore del link trasformato */
+#transformedLinkContainer {
+  margin-top: 20px; /* Distanza dal bottone di trasformazione */
+}
+
+#transformedLink {
+  margin-bottom: 10px; /* Distanza dai bottoni */
+  word-break: break-all; /* Assicura che il link non superi la larghezza del contenitore */
+  padding: 10px; /* Padding per migliorare la leggibilità */
+  background-color: #f8f9fa; /* Sfondo leggermente differente per distinguerlo */
+  border: 1px solid #ddd; /* Bordo sottile */
+  border-radius: 5px; /* Bordi arrotondati */
+}
+.program-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebApp</title>
+    <link rel="icon" type="image/png" href="https://bookinglinks.s3.eu-north-1.amazonaws.com/icona.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="css/menu-style.css">
+    <link rel="stylesheet" href="css/getyourguide.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+    <script src="script/menu.js"></script>
+    <script src="script/function.js"></script>
+    <script src="script/translator.js"></script>
+    <script src="script/getyourguide.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2 id="usefulGLinksHeader">Deep Link Homepage di GetYourGuide</h2>
+        <div id="controlsContainer">
+            <select id="languageSelector">
+                <option value="it">IT</option>
+                <option value="es">ES</option>
+                <option value="en">EN</option>
+                <option value="fr">FR</option>
+            </select>
+            <button id="copyButton">Copia link</button>
+            <button id="openButton">Apri</button>
+        </div>
+        <div id="searchGNotice" style="margin-top: 10px; color: rgb(91, 91, 91); font-style: italic;">
+            <p class="nota">I link puntano alla homepage di GetYourGuide.</p>
+        </div>
+        <div id="linkTransformerContainer">
+        <h2 id="getyourguide_gen">Genera Deep Link di GetYourGuide</h2>
+        <input type="text" id="inputLink" placeholder="Inserisci il link di GetYourGuide qui" />
+        <button id="transformButton">Genera Link</button>
+        <div id="transformedLinkContainer">
+            <p id="transformedLink"></p>
+            <button id="copyTransformedLink">Copia Link</button>
+            <button id="openTransformedLink">Apri Link</button>
+        </div>
+    </div>    
+    </div>
+</body>
+</html>
