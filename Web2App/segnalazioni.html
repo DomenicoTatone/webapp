@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="it">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>WebApp</title>
+      <link rel="icon" type="image/png" href="https://bookinglinks.s3.eu-north-1.amazonaws.com/icona.png">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+      <link rel="stylesheet" href="css/menu-style.css">
+      <link rel="stylesheet" href="css/footer-style.css">
+      <link rel="stylesheet" href="css/style.css">
+      <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+      <script src="script/menu.js"></script>
+      <script src="script/footer.js"></script>
+      <script src="script/function.js"></script>
+      <script src="script/translator.js"></script>
+      <style>
+form {
+   max-width: 500px; /* Larghezza massima del form per dispositivi più grandi */
+   margin: auto;
+   padding: 20px;
+   background: #f9f9f9;
+   border-radius: 8px;
+   transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transizione morbida per ombra e trasformazione */
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombra iniziale leggera */
+}
+
+form:hover, form:focus-within {
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra più profonda per effetto "sollevamento" */
+   transform: translateY(-2px); /* Sposta leggermente verso l'alto il form */
+}
+
+.form-group {
+   margin-bottom: 15px;
+}
+
+label {
+   display: block;
+   margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+   width: 100%;
+   padding: 10px;
+   margin-top: 5px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   box-sizing: border-box; /* Mantiene la larghezza complessiva */
+}
+
+textarea {
+   resize: vertical; /* Consente all'utente di modificare l'altezza */
+   height: 150px;
+}
+
+button[type="submit"] {
+   width: 100%;
+   padding: 10px;
+   background-color: #007bff;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   font-size: medium;
+}
+
+button[type="submit"]:hover {
+   background-color: #0056b3;
+}
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+   transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Aggiunge una transizione morbida */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+select:focus,
+textarea:focus {
+   border-color: #007bff; /* Cambia il colore del bordo quando l'elemento è in focus */
+   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Aggiunge un leggero ombreggiatura intorno all'elemento in focus */
+   outline: none; /* Rimuove l'outline di default per mantenere il design coeso */
+}
+
+button[type="submit"]:hover {
+   background-color: #0056b3;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Aggiunge un ombreggiatura al pulsante quando si passa sopra con il mouse */
+}
+.fa-lightbulb {
+   color: #007bff; /* Cambia il colore */
+}
+select {
+   font-size: 1rem; /* Aumenta la dimensione del font */
+}
+      </style>
+   </head>
+   <body>
+      <div id="container">
+         <div id="app">
+            <div>
+         <h1>
+            <i class="fas fa-lightbulb"></i> Segnalazioni e Suggerimenti
+         </h1>
+         <form name="contact" method="POST" data-netlify="true">
+            <input type="hidden" name="form-name" value="contact" />
+            <div class="form-group">
+               <label for="name">Nome:</label>
+               <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+               <label for="email">Email:</label>
+               <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+               <label for="platform">Piattaforma:</label>
+               <select id="platform" name="platform" required>
+                   <option value="booking">Booking</option>
+                   <option value="tradedoubler">TradeDoubler</option>
+                   <option value="getyourguide">GetYourGuide</option>
+                   <option value="civitatis">Civitatis</option>
+                   <option value="noleggio_auto">Noleggio Auto</option>
+                   <option value="ImgCompr">ImgCompr</option>
+                   <option value="other">Altro</option>
+               </select>
+            </div>
+            <div class="form-group">
+               <label for="message">Messaggio:</label>
+               <textarea id="message" name="message" required></textarea>
+            </div>
+            <div class="form-group">
+               <button type="submit">Invia</button>
+            </div>
+         </form>         
+        </div>
+      </div>
+   </div>
+</body>
+</html>

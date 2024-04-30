@@ -1,0 +1,184 @@
+#inputLink, #transformedLink, #searchInput {
+  font-family: Arial, sans-serif; /* Esempio di impostazione del font */
+  font-size: 16px; /* Dimensione del font */
+  color: #333; /* Colore del testo */
+}
+
+#linkTransformerContainer, #searchContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#inputLink {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#searchInput {
+  width: 70%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#transformedLinkContainer {
+  display: none; /* Nascondi fino alla trasformazione del link */
+  margin-top: 10px;
+}
+
+/* Stili base per i bottoni */
+#transformButton, #copyTransformedLink, #openTransformedLink, #searchButton {
+  padding: 12px 12px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 16px; /* Dimensione del font */
+  transition: background-color 0.3s ease;
+}
+
+#transformButton:hover, #copyTransformedLink:hover, #openTransformedLink, #searchButton:hover {
+  background-color: #0056b3;
+}
+
+/* Stilizzazione del contenitore del link trasformato */
+#transformedLinkContainer {
+  margin-top: 20px; /* Distanza dal bottone di trasformazione */
+}
+
+#transformedLink {
+  margin-bottom: 10px; /* Distanza dai bottoni */
+  word-break: break-all; /* Assicura che il link non superi la larghezza del contenitore */
+  padding: 10px; /* Padding per migliorare la leggibilità */
+  background-color: #f8f9fa; /* Sfondo leggermente differente per distinguerlo */
+  border: 1px solid #ddd; /* Bordo sottile */
+  border-radius: 5px; /* Bordi arrotondati */
+}
+.program-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Aggiunta transizione per box-shadow */
+  overflow: hidden;
+}
+
+.activity-card:hover {
+  transform: scale(1.05); /* Effetto di scaling leggero all'hover */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Ombra più marcata all'hover */
+}
+
+.activity-card button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 20px 5px;
+  transition: background-color 0.3s;
+}
+
+.activity-card button:hover {
+  background-color: #0056b3;
+}
+
+.activity-card img {
+  width: 100%;
+  height: auto;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  #resultsContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+  }
+}
+
+#progressContainer {
+  display: flex;
+  align-items: center; /* Centra gli elementi verticalmente nel contenitore */
+  width: 100%; /* Occupa tutta la larghezza disponibile */
+  padding: 10px; /* Aggiungi spazio intorno agli elementi */
+}
+
+#loadingText {
+  margin-right: 20px; /* Spazio tra il testo e la barra di progresso */
+  white-space: nowrap; /* Impedisce la suddivisione del testo in più linee */
+  color: #666; /* Colore del testo */
+}
+
+#progressBarContainer {
+  width: 6%;
+  background-color: #ddd; /* Colore di sfondo della barra di caricamento */
+  border-radius: 10px; /* Bordi arrotondati */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ombra leggera per un effetto sollevato */
+  overflow: hidden; /* Nasconde tutto ciò che è al di fuori del bordo arrotondato */
+}
+
+#progressBar {
+  height: 20px;
+  width: 0%;
+  background-color: #4CAF50; /* Colore iniziale della barra di progresso */
+  background-image: linear-gradient(45deg, #4CAF50, #81C784); /* Effetto gradiente */
+  transition: width 0.5s ease-in-out; /* Transizione morbida per il cambio di larghezza */
+  display: flex;
+  align-items: center; /* Centra il testo verticalmente */
+  justify-content: center; /* Centra il testo orizzontalmente */
+  color: white; /* Colore del testo */
+  font-weight: bold; /* Grassetto per il testo */
+}
+
+#progressText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 20px;
+    color: white;
+    pointer-events: none; /* Previene l'interazione con il mouse */
+}
+
+/* Opzionale: Animazione che ripete un leggero movimento del gradiente per un effetto dinamico */
+@keyframes moveBackground {
+  0% { background-position: 0 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+#progressBar {
+  animation: moveBackground 10s linear infinite;
+}
