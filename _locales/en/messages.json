@@ -68,5 +68,18 @@
     "downloadAll": "Download All (ZIP)",
     "download": "Download",
     "images": "images",
-    "downloadStarted": "Download started!"
+    "downloadStarted": "Download started!",
+    "feedbackNav": "💡",
+    "feedbackHeader": "💡 Feedback & Suggestions",
+    "yourName": "Name",
+    "yourEmail": "Email",
+    "platform": "Platform",
+    "message": "Message",
+    "other": "Other",
+    "send": "Send",
+    "thankYou": "Thank you!",
+    "messageReceived": "Your message has been received. We'll get back to you soon.",
+    "sendAnother": "Send another",
+    "messageSent": "Message sent!",
+    "sendError": "Error sending. Please try again."
 }

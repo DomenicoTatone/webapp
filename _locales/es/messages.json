@@ -68,5 +68,18 @@
     "downloadAll": "Descargar Todo (ZIP)",
     "download": "Descargar",
     "images": "imágenes",
-    "downloadStarted": "¡Descarga iniciada!"
+    "downloadStarted": "¡Descarga iniciada!",
+    "feedbackNav": "💡",
+    "feedbackHeader": "💡 Sugerencias y Comentarios",
+    "yourName": "Nombre",
+    "yourEmail": "Email",
+    "platform": "Plataforma",
+    "message": "Mensaje",
+    "other": "Otro",
+    "send": "Enviar",
+    "thankYou": "¡Gracias!",
+    "messageReceived": "Tu mensaje ha sido recibido. Te responderemos pronto.",
+    "sendAnother": "Enviar otro",
+    "messageSent": "¡Mensaje enviado!",
+    "sendError": "Error al enviar. Inténtalo de nuevo."
 }

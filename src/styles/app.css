@@ -432,3 +432,55 @@
         transform: translateY(0);
     }
 }
+
+/* ============================================
+   FEEDBACK FORM STYLES
+   ============================================ */
+
+.feedback-card {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.btn-lg {
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--font-size-lg);
+    width: 100%;
+}
+
+.feedback-success {
+    text-align: center;
+    padding: var(--space-10);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.success-icon {
+    font-size: 64px;
+    margin-bottom: var(--space-4);
+}
+
+.feedback-success h3 {
+    font-size: var(--font-size-2xl);
+    color: var(--color-success);
+    margin-bottom: var(--space-3);
+}
+
+.feedback-success p {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

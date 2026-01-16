@@ -76,7 +76,8 @@ class App {
       getyourguide: () => { content.innerHTML = this.renderGetYourGuidePage(); this.initGetYourGuidePage(); },
       civitatis: () => { content.innerHTML = this.renderCivitatisPage(); this.initCivitatisPage(); },
       carrental: () => { content.innerHTML = this.renderCarRentalPage(); this.initCarRentalPage(); },
-      imgtool: () => { content.innerHTML = this.renderImageToolPage(); this.initImageToolPage(); }
+      imgtool: () => { content.innerHTML = this.renderImageToolPage(); this.initImageToolPage(); },
+      feedback: () => { content.innerHTML = this.renderFeedbackPage(); this.initFeedbackPage(); }
     };
 
     (pages[pageName] || (() => { content.innerHTML = '<p>Page not found</p>'; }))();
@@ -1085,6 +1086,99 @@ class App {
     URL.revokeObjectURL(a.href);
 
     notifications.success(i18n.t('downloadStarted'));
+  }
+
+  // ============================================
+  // FEEDBACK PAGE
+  // ============================================
+
+  renderFeedbackPage() {
+    return `
+      <div class="page-header">
+        <h2 data-i18n="feedbackHeader">💡 Segnalazioni e Suggerimenti</h2>
+      </div>
+
+      <div class="card feedback-card">
+        <form id="feedbackForm" name="contact" method="POST" data-netlify="true">
+          <input type="hidden" name="form-name" value="contact">
+          
+          <div class="form-group">
+            <label class="form-label" data-i18n="yourName">Nome</label>
+            <input type="text" id="feedbackName" name="name" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="yourEmail">Email</label>
+            <input type="email" id="feedbackEmail" name="email" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="platform">Piattaforma</label>
+            <select id="feedbackPlatform" name="platform" class="form-select" required>
+              <option value="booking">Booking</option>
+              <option value="tradedoubler">Tradedoubler</option>
+              <option value="getyourguide">GetYourGuide</option>
+              <option value="civitatis">Civitatis</option>
+              <option value="carrental" data-i18n="carRentalNav">Noleggio Auto</option>
+              <option value="imgtool" data-i18n="imageToolNav">Immagini</option>
+              <option value="other" data-i18n="other">Altro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="message">Messaggio</label>
+            <textarea id="feedbackMessage" name="message" class="form-control form-textarea" rows="6" required></textarea>
+          </div>
+
+          <div class="button-group">
+            <button type="submit" class="btn btn-primary btn-lg" data-i18n="send">Invia</button>
+          </div>
+        </form>
+
+        <div id="feedbackSuccess" class="feedback-success" style="display:none;">
+          <div class="success-icon">✅</div>
+          <h3 data-i18n="thankYou">Grazie!</h3>
+          <p data-i18n="messageReceived">Il tuo messaggio è stato ricevuto. Ti risponderemo al più presto.</p>
+          <button id="newFeedbackBtn" class="btn btn-outline mt-4" data-i18n="sendAnother">Invia un altro</button>
+        </div>
+      </div>
+    `;
+  }
+
+  initFeedbackPage() {
+    const form = document.getElementById('feedbackForm');
+    const successMessage = document.getElementById('feedbackSuccess');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
+        });
+
+        if (response.ok) {
+          form.style.display = 'none';
+          successMessage.style.display = 'block';
+          notifications.success(i18n.t('messageSent'));
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (error) {
+        console.error('Form error:', error);
+        notifications.error(i18n.t('sendError'));
+      }
+    });
+
+    document.getElementById('newFeedbackBtn')?.addEventListener('click', () => {
+      form.reset();
+      form.style.display = 'block';
+      successMessage.style.display = 'none';
+    });
   }
 }
 
