@@ -49,5 +49,10 @@
     "dataLoaded": "Daten erfolgreich geladen!",
     "errorLoadingData": "Fehler beim Laden. Bitte erneut versuchen.",
     "resultsFound": "Ergebnisse gefunden",
-    "retryLoad": "Erneut versuchen"
+    "retryLoad": "Erneut versuchen",
+    "carRentalNav": "Mietwagen",
+    "carRentalHeader": "Mietwagen auf Menorca",
+    "selectProvider": "Anbieter auswählen",
+    "affiliateLink": "Affiliate-Link",
+    "carRentalNotice": "Die Links führen zu den Startseiten der jeweiligen Autovermietungsplattformen."
 }

@@ -11,7 +11,7 @@ import { i18n } from './services/I18nService.js';
 import { linkGenerator } from './services/LinkGeneratorService.js';
 import { notifications } from './services/NotificationService.js';
 import { bookingData } from './services/BookingDataService.js';
-import { AFFILIATE_PARTNERS } from './data/affiliates.js';
+import { AFFILIATE_PARTNERS, CAR_RENTAL_PROVIDERS } from './data/affiliates.js';
 
 class App {
   constructor() {
@@ -74,7 +74,8 @@ class App {
       booking: () => { content.innerHTML = this.renderBookingPage(); this.initBookingPage(); },
       tradedoubler: () => { content.innerHTML = this.renderTradedoublerPage(); this.initTradedoublerPage(); },
       getyourguide: () => { content.innerHTML = this.renderGetYourGuidePage(); this.initGetYourGuidePage(); },
-      civitatis: () => { content.innerHTML = this.renderCivitatisPage(); this.initCivitatisPage(); }
+      civitatis: () => { content.innerHTML = this.renderCivitatisPage(); this.initCivitatisPage(); },
+      carrental: () => { content.innerHTML = this.renderCarRentalPage(); this.initCarRentalPage(); }
     };
 
     (pages[pageName] || (() => { content.innerHTML = '<p>Page not found</p>'; }))();
@@ -617,6 +618,66 @@ class App {
     });
 
     document.getElementById('civOpenBtn')?.addEventListener('click', () => {
+      linkGenerator.openLink(resultLink.href);
+    });
+  }
+
+  // ============================================
+  // CAR RENTAL PAGE
+  // ============================================
+
+  renderCarRentalPage() {
+    return `
+      <div class="page-header">
+        <h2 data-i18n="carRentalHeader">Noleggio Auto a Minorca</h2>
+      </div>
+
+      <div class="card">
+        <div class="form-group">
+          <label class="form-label" data-i18n="selectProvider">Seleziona Noleggio</label>
+          <select id="carProviderSelect" class="form-select">
+            ${CAR_RENTAL_PROVIDERS.map((p, i) => `<option value="${i}">${p.name}</option>`).join('')}
+          </select>
+        </div>
+
+        <div id="carLinkContainer" class="result-container">
+          <label class="form-label" data-i18n="affiliateLink">Link Affiliato</label>
+          <div class="result-box">
+            <a id="carResultLink" href="#" target="_blank" class="result-link"></a>
+          </div>
+          <div class="button-group mt-4">
+            <button id="carCopyBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
+            <button id="carOpenBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
+          </div>
+        </div>
+
+        <p class="note text-muted" style="margin-top: 16px; font-style: italic;" data-i18n="carRentalNotice">I link puntano alle homepage delle rispettive piattaforme di noleggio auto.</p>
+      </div>
+    `;
+  }
+
+  initCarRentalPage() {
+    const providerSelect = document.getElementById('carProviderSelect');
+    const resultLink = document.getElementById('carResultLink');
+
+    const updateLink = () => {
+      const provider = CAR_RENTAL_PROVIDERS[providerSelect.value];
+      const lang = i18n.getLanguage();
+      // Fallback to 'en' if language not available
+      const url = provider.urls[lang] || provider.urls['en'] || Object.values(provider.urls)[0];
+      resultLink.href = url;
+      resultLink.textContent = url;
+    };
+
+    providerSelect.addEventListener('change', updateLink);
+    updateLink(); // Initial load
+
+    document.getElementById('carCopyBtn')?.addEventListener('click', async () => {
+      const success = await linkGenerator.copyToClipboard(resultLink.href);
+      notifications[success ? 'success' : 'error'](i18n.t(success ? 'deepLinkCopied' : 'copyError'));
+    });
+
+    document.getElementById('carOpenBtn')?.addEventListener('click', () => {
       linkGenerator.openLink(resultLink.href);
     });
   }

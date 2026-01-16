@@ -49,5 +49,10 @@
     "dataLoaded": "Données chargées avec succès !",
     "errorLoadingData": "Erreur de chargement. Veuillez réessayer.",
     "resultsFound": "résultats trouvés",
-    "retryLoad": "Réessayer"
+    "retryLoad": "Réessayer",
+    "carRentalNav": "Location de Voitures",
+    "carRentalHeader": "Location de Voitures à Minorque",
+    "selectProvider": "Sélectionnez un Loueur",
+    "affiliateLink": "Lien d'Affiliation",
+    "carRentalNotice": "Les liens pointent vers les pages d'accueil des plateformes de location de voitures respectives."
 }

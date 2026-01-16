@@ -49,5 +49,10 @@
     "dataLoaded": "¡Datos cargados correctamente!",
     "errorLoadingData": "Error al cargar datos. Por favor, reintenta.",
     "resultsFound": "resultados encontrados",
-    "retryLoad": "Reintentar"
+    "retryLoad": "Reintentar",
+    "carRentalNav": "Alquiler de Coches",
+    "carRentalHeader": "Alquiler de Coches en Menorca",
+    "selectProvider": "Selecciona Alquiler",
+    "affiliateLink": "Enlace de Afiliado",
+    "carRentalNotice": "Los enlaces apuntan a las páginas de inicio de las respectivas plataformas de alquiler de coches."
 }

@@ -49,5 +49,10 @@
     "dataLoaded": "Data loaded successfully!",
     "errorLoadingData": "Error loading data. Please retry.",
     "resultsFound": "results found",
-    "retryLoad": "Retry"
+    "retryLoad": "Retry",
+    "carRentalNav": "Car Rental",
+    "carRentalHeader": "Car Rental in Menorca",
+    "selectProvider": "Select Provider",
+    "affiliateLink": "Affiliate Link",
+    "carRentalNotice": "Links point to the homepages of the respective car rental platforms."
 }

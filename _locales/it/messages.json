@@ -49,5 +49,10 @@
     "dataLoaded": "Dati caricati correttamente!",
     "errorLoadingData": "Errore nel caricamento dati. Riprova.",
     "resultsFound": "risultati trovati",
-    "retryLoad": "Riprova"
+    "retryLoad": "Riprova",
+    "carRentalNav": "Noleggio Auto",
+    "carRentalHeader": "Noleggio Auto a Minorca",
+    "selectProvider": "Seleziona Noleggio",
+    "affiliateLink": "Link Affiliato",
+    "carRentalNotice": "I link puntano alle homepage delle rispettive piattaforme di noleggio auto."
 }
