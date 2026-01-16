@@ -75,7 +75,8 @@ class App {
       tradedoubler: () => { content.innerHTML = this.renderTradedoublerPage(); this.initTradedoublerPage(); },
       getyourguide: () => { content.innerHTML = this.renderGetYourGuidePage(); this.initGetYourGuidePage(); },
       civitatis: () => { content.innerHTML = this.renderCivitatisPage(); this.initCivitatisPage(); },
-      carrental: () => { content.innerHTML = this.renderCarRentalPage(); this.initCarRentalPage(); }
+      carrental: () => { content.innerHTML = this.renderCarRentalPage(); this.initCarRentalPage(); },
+      imgtool: () => { content.innerHTML = this.renderImageToolPage(); this.initImageToolPage(); }
     };
 
     (pages[pageName] || (() => { content.innerHTML = '<p>Page not found</p>'; }))();
@@ -680,6 +681,280 @@ class App {
     document.getElementById('carOpenBtn')?.addEventListener('click', () => {
       linkGenerator.openLink(resultLink.href);
     });
+  }
+
+  // ============================================
+  // IMAGE TOOL PAGE - MODERN COMPRESSOR
+  // ============================================
+
+  renderImageToolPage() {
+    return `
+      <div class="page-header">
+        <h2 data-i18n="imageToolHeader">Compressore di Immagini</h2>
+      </div>
+
+      <div class="card">
+        <div id="dropZone" class="drop-zone">
+          <div class="drop-zone-content">
+            <span class="drop-zone-icon">📷</span>
+            <p data-i18n="dropZoneText">Trascina qui le immagini o clicca per selezionarle</p>
+            <input type="file" id="imageInput" multiple accept="image/*" style="display:none;">
+          </div>
+          <div id="dropZoneProgress" class="drop-zone-progress" style="display:none;">
+            <div class="progress-bar"><div class="progress-bar-fill"></div></div>
+            <span class="progress-text">0%</span>
+          </div>
+        </div>
+
+        <div class="form-group mt-6">
+          <label class="form-label" data-i18n="compressionQuality">Qualità Compressione</label>
+          <div class="slider-container">
+            <input type="range" id="qualitySlider" min="10" max="95" value="75" class="slider">
+            <span id="qualityValue" class="slider-value">75%</span>
+          </div>
+          <p class="text-muted text-sm" data-i18n="qualityHint">Valori più bassi = file più piccoli, qualità ridotta</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="outputFormat">Formato Output</label>
+          <select id="formatSelect" class="form-select">
+            <option value="image/jpeg">JPEG (consigliato)</option>
+            <option value="image/webp">WebP (moderno)</option>
+            <option value="image/png">PNG (lossless)</option>
+          </select>
+        </div>
+
+        <p class="note text-muted" style="font-style: italic;" data-i18n="imageToolNotice">La compressione avviene localmente nel browser. Le immagini non vengono caricate su nessun server.</p>
+      </div>
+
+      <div id="imagesContainer" class="images-grid mt-6"></div>
+
+      <div id="downloadAllContainer" class="card mt-6" style="display:none;">
+        <div class="flex-between">
+          <div>
+            <span id="totalStats" class="text-muted"></span>
+          </div>
+          <div class="button-group">
+            <button id="clearAllBtn" class="btn btn-outline" data-i18n="clearAll">Cancella Tutto</button>
+            <button id="downloadAllBtn" class="btn btn-success" data-i18n="downloadAll">Scarica Tutto (ZIP)</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  initImageToolPage() {
+    const dropZone = document.getElementById('dropZone');
+    const imageInput = document.getElementById('imageInput');
+    const qualitySlider = document.getElementById('qualitySlider');
+    const qualityValue = document.getElementById('qualityValue');
+    const formatSelect = document.getElementById('formatSelect');
+    const imagesContainer = document.getElementById('imagesContainer');
+    const downloadAllContainer = document.getElementById('downloadAllContainer');
+
+    // Store compressed images for batch download
+    this.compressedImages = [];
+
+    // Quality slider
+    qualitySlider.addEventListener('input', () => {
+      qualityValue.textContent = `${qualitySlider.value}%`;
+    });
+
+    // Click to upload
+    dropZone.addEventListener('click', () => imageInput.click());
+
+    // Drag & Drop
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => {
+      dropZone.addEventListener(event, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    });
+
+    dropZone.addEventListener('dragenter', () => dropZone.classList.add('drag-over'));
+    dropZone.addEventListener('dragover', () => dropZone.classList.add('drag-over'));
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', (e) => {
+      dropZone.classList.remove('drag-over');
+      const files = e.dataTransfer.files;
+      this.processImages(files);
+    });
+
+    // File input change
+    imageInput.addEventListener('change', () => {
+      this.processImages(imageInput.files);
+    });
+
+    // Clear all
+    document.getElementById('clearAllBtn')?.addEventListener('click', () => {
+      this.compressedImages = [];
+      imagesContainer.innerHTML = '';
+      downloadAllContainer.style.display = 'none';
+    });
+
+    // Download all as ZIP
+    document.getElementById('downloadAllBtn')?.addEventListener('click', async () => {
+      if (this.compressedImages.length === 0) return;
+      await this.downloadAllAsZip();
+    });
+  }
+
+  async processImages(files) {
+    const quality = document.getElementById('qualitySlider').value / 100;
+    const format = document.getElementById('formatSelect').value;
+    const imagesContainer = document.getElementById('imagesContainer');
+    const downloadAllContainer = document.getElementById('downloadAllContainer');
+
+    for (const file of files) {
+      if (!file.type.startsWith('image/')) continue;
+
+      try {
+        const result = await this.compressImage(file, quality, format);
+        this.compressedImages.push(result);
+        this.renderImageCard(result, imagesContainer);
+        this.updateTotalStats();
+        downloadAllContainer.style.display = 'block';
+      } catch (error) {
+        console.error('Compression error:', error);
+        notifications.error(`Errore: ${file.name}`);
+      }
+    }
+  }
+
+  compressImage(file, quality, format) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          // Create canvas
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+
+          // Compress
+          canvas.toBlob((blob) => {
+            if (!blob) {
+              reject(new Error('Compression failed'));
+              return;
+            }
+
+            const extension = format === 'image/webp' ? 'webp' : format === 'image/png' ? 'png' : 'jpg';
+            const originalName = file.name.replace(/\.[^/.]+$/, '');
+
+            resolve({
+              originalName: file.name,
+              compressedName: `${originalName}_compressed.${extension}`,
+              originalSize: file.size,
+              compressedSize: blob.size,
+              reduction: ((1 - blob.size / file.size) * 100).toFixed(1),
+              blob: blob,
+              url: URL.createObjectURL(blob)
+            });
+          }, format, quality);
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  renderImageCard(result, container) {
+    const card = document.createElement('div');
+    card.className = 'image-card';
+
+    const formatSize = (bytes) => {
+      if (bytes > 1024 * 1024) return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+      return `${(bytes / 1024).toFixed(1)} KB`;
+    };
+
+    const reductionClass = parseFloat(result.reduction) > 50 ? 'text-success' :
+      parseFloat(result.reduction) > 20 ? 'text-warning' : 'text-muted';
+
+    card.innerHTML = `
+      <img src="${result.url}" alt="${result.originalName}" class="image-preview">
+      <div class="image-info">
+        <span class="image-name">${this.escapeHtml(result.originalName)}</span>
+        <div class="image-stats">
+          <span>${formatSize(result.originalSize)} → ${formatSize(result.compressedSize)}</span>
+          <span class="${reductionClass}">-${result.reduction}%</span>
+        </div>
+      </div>
+      <div class="image-actions">
+        <button class="btn btn-sm btn-primary download-btn">${i18n.t('download')}</button>
+        <button class="btn btn-sm btn-outline remove-btn">✕</button>
+      </div>
+    `;
+
+    // Download single
+    card.querySelector('.download-btn').addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = result.url;
+      a.download = result.compressedName;
+      a.click();
+    });
+
+    // Remove
+    card.querySelector('.remove-btn').addEventListener('click', () => {
+      const index = this.compressedImages.findIndex(i => i.url === result.url);
+      if (index > -1) {
+        URL.revokeObjectURL(result.url);
+        this.compressedImages.splice(index, 1);
+        card.remove();
+        this.updateTotalStats();
+        if (this.compressedImages.length === 0) {
+          document.getElementById('downloadAllContainer').style.display = 'none';
+        }
+      }
+    });
+
+    container.appendChild(card);
+  }
+
+  updateTotalStats() {
+    const totalStats = document.getElementById('totalStats');
+    if (!totalStats || this.compressedImages.length === 0) return;
+
+    const totalOriginal = this.compressedImages.reduce((sum, img) => sum + img.originalSize, 0);
+    const totalCompressed = this.compressedImages.reduce((sum, img) => sum + img.compressedSize, 0);
+    const totalReduction = ((1 - totalCompressed / totalOriginal) * 100).toFixed(1);
+
+    const formatSize = (bytes) => {
+      if (bytes > 1024 * 1024) return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+      return `${(bytes / 1024).toFixed(1)} KB`;
+    };
+
+    totalStats.textContent = `${this.compressedImages.length} ${i18n.t('images')} • ${formatSize(totalOriginal)} → ${formatSize(totalCompressed)} (-${totalReduction}%)`;
+  }
+
+  async downloadAllAsZip() {
+    // Dynamic import for JSZip (only when needed)
+    if (!window.JSZip) {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+      document.head.appendChild(script);
+      await new Promise(resolve => script.onload = resolve);
+    }
+
+    const zip = new JSZip();
+
+    for (const img of this.compressedImages) {
+      zip.file(img.compressedName, img.blob);
+    }
+
+    const content = await zip.generateAsync({ type: 'blob' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(content);
+    a.download = 'compressed_images.zip';
+    a.click();
+    URL.revokeObjectURL(a.href);
+
+    notifications.success(i18n.t('downloadStarted'));
   }
 }
 

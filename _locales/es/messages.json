@@ -54,5 +54,17 @@
     "carRentalHeader": "Alquiler de Coches en Menorca",
     "selectProvider": "Selecciona Alquiler",
     "affiliateLink": "Enlace de Afiliado",
-    "carRentalNotice": "Los enlaces apuntan a las páginas de inicio de las respectivas plataformas de alquiler de coches."
+    "carRentalNotice": "Los enlaces apuntan a las páginas de inicio de las respectivas plataformas de alquiler de coches.",
+    "imageToolNav": "Imágenes",
+    "imageToolHeader": "Compresor de Imágenes",
+    "dropZoneText": "Arrastra imágenes aquí o haz clic para seleccionar",
+    "compressionQuality": "Calidad de Compresión",
+    "qualityHint": "Valores más bajos = archivos más pequeños, menor calidad",
+    "outputFormat": "Formato de Salida",
+    "imageToolNotice": "La compresión ocurre localmente en tu navegador. Las imágenes no se suben a ningún servidor.",
+    "clearAll": "Borrar Todo",
+    "downloadAll": "Descargar Todo (ZIP)",
+    "download": "Descargar",
+    "images": "imágenes",
+    "downloadStarted": "¡Descarga iniciada!"
 }

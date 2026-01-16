@@ -54,5 +54,17 @@
     "carRentalHeader": "Noleggio Auto a Minorca",
     "selectProvider": "Seleziona Noleggio",
     "affiliateLink": "Link Affiliato",
-    "carRentalNotice": "I link puntano alle homepage delle rispettive piattaforme di noleggio auto."
+    "carRentalNotice": "I link puntano alle homepage delle rispettive piattaforme di noleggio auto.",
+    "imageToolNav": "Immagini",
+    "imageToolHeader": "Compressore di Immagini",
+    "dropZoneText": "Trascina qui le immagini o clicca per selezionarle",
+    "compressionQuality": "Qualità Compressione",
+    "qualityHint": "Valori più bassi = file più piccoli, qualità ridotta",
+    "outputFormat": "Formato Output",
+    "imageToolNotice": "La compressione avviene localmente nel browser. Le immagini non vengono caricate su nessun server.",
+    "clearAll": "Cancella Tutto",
+    "downloadAll": "Scarica Tutto (ZIP)",
+    "download": "Scarica",
+    "images": "immagini",
+    "downloadStarted": "Download avviato!"
 }

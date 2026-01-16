@@ -54,5 +54,17 @@
     "carRentalHeader": "Mietwagen auf Menorca",
     "selectProvider": "Anbieter auswählen",
     "affiliateLink": "Affiliate-Link",
-    "carRentalNotice": "Die Links führen zu den Startseiten der jeweiligen Autovermietungsplattformen."
+    "carRentalNotice": "Die Links führen zu den Startseiten der jeweiligen Autovermietungsplattformen.",
+    "imageToolNav": "Bilder",
+    "imageToolHeader": "Bildkompressor",
+    "dropZoneText": "Bilder hierher ziehen oder klicken zum Auswählen",
+    "compressionQuality": "Kompressionsqualität",
+    "qualityHint": "Niedrigere Werte = kleinere Dateien, geringere Qualität",
+    "outputFormat": "Ausgabeformat",
+    "imageToolNotice": "Die Komprimierung erfolgt lokal in Ihrem Browser. Bilder werden nicht auf einen Server hochgeladen.",
+    "clearAll": "Alles Löschen",
+    "downloadAll": "Alles Herunterladen (ZIP)",
+    "download": "Herunterladen",
+    "images": "Bilder",
+    "downloadStarted": "Download gestartet!"
 }

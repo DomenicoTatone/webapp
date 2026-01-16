@@ -54,5 +54,17 @@
     "carRentalHeader": "Car Rental in Menorca",
     "selectProvider": "Select Provider",
     "affiliateLink": "Affiliate Link",
-    "carRentalNotice": "Links point to the homepages of the respective car rental platforms."
+    "carRentalNotice": "Links point to the homepages of the respective car rental platforms.",
+    "imageToolNav": "Images",
+    "imageToolHeader": "Image Compressor",
+    "dropZoneText": "Drag images here or click to select",
+    "compressionQuality": "Compression Quality",
+    "qualityHint": "Lower values = smaller files, reduced quality",
+    "outputFormat": "Output Format",
+    "imageToolNotice": "Compression happens locally in your browser. Images are not uploaded to any server.",
+    "clearAll": "Clear All",
+    "downloadAll": "Download All (ZIP)",
+    "download": "Download",
+    "images": "images",
+    "downloadStarted": "Download started!"
 }

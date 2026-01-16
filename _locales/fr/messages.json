@@ -54,5 +54,17 @@
     "carRentalHeader": "Location de Voitures à Minorque",
     "selectProvider": "Sélectionnez un Loueur",
     "affiliateLink": "Lien d'Affiliation",
-    "carRentalNotice": "Les liens pointent vers les pages d'accueil des plateformes de location de voitures respectives."
+    "carRentalNotice": "Les liens pointent vers les pages d'accueil des plateformes de location de voitures respectives.",
+    "imageToolNav": "Images",
+    "imageToolHeader": "Compresseur d'Images",
+    "dropZoneText": "Glissez les images ici ou cliquez pour sélectionner",
+    "compressionQuality": "Qualité de Compression",
+    "qualityHint": "Valeurs plus basses = fichiers plus petits, qualité réduite",
+    "outputFormat": "Format de Sortie",
+    "imageToolNotice": "La compression se fait localement dans votre navigateur. Les images ne sont pas téléchargées sur un serveur.",
+    "clearAll": "Tout Effacer",
+    "downloadAll": "Tout Télécharger (ZIP)",
+    "download": "Télécharger",
+    "images": "images",
+    "downloadStarted": "Téléchargement lancé !"
 }
