@@ -163,6 +163,27 @@
     flex-wrap: wrap;
 }
 
+/* Form Row - Side by side fields */
+.form-row {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.form-row .form-group {
+    margin-bottom: 0;
+}
+
+.flex-1 {
+    flex: 1;
+    min-width: 100px;
+}
+
+.flex-2 {
+    flex: 2;
+    min-width: 200px;
+}
+
 .result-container {
     margin-top: var(--space-6);
     padding: var(--space-5);
@@ -405,6 +426,7 @@
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

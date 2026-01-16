@@ -634,11 +634,23 @@ class App {
       </div>
 
       <div class="card">
-        <div class="form-group">
-          <label class="form-label" data-i18n="selectProvider">Seleziona Noleggio</label>
-          <select id="carProviderSelect" class="form-select">
-            ${CAR_RENTAL_PROVIDERS.map((p, i) => `<option value="${i}">${p.name}</option>`).join('')}
-          </select>
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <label class="form-label" data-i18n="selectProvider">Seleziona Noleggio</label>
+            <select id="carProviderSelect" class="form-select">
+              ${CAR_RENTAL_PROVIDERS.map((p, i) => `<option value="${i}">${p.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <label class="form-label" data-i18n="linkLanguage">Lingua Link</label>
+            <select id="carLangSelect" class="form-select">
+              <option value="it">IT</option>
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+              <option value="fr">FR</option>
+              <option value="de">DE</option>
+            </select>
+          </div>
         </div>
 
         <div id="carLinkContainer" class="result-container">
@@ -659,18 +671,20 @@ class App {
 
   initCarRentalPage() {
     const providerSelect = document.getElementById('carProviderSelect');
+    const langSelect = document.getElementById('carLangSelect');
     const resultLink = document.getElementById('carResultLink');
 
     const updateLink = () => {
       const provider = CAR_RENTAL_PROVIDERS[providerSelect.value];
-      const lang = i18n.getLanguage();
-      // Fallback to 'en' if language not available
+      const lang = langSelect.value;
+      // Fallback to 'en' if language not available for this provider
       const url = provider.urls[lang] || provider.urls['en'] || Object.values(provider.urls)[0];
       resultLink.href = url;
       resultLink.textContent = url;
     };
 
     providerSelect.addEventListener('change', updateLink);
+    langSelect.addEventListener('change', updateLink);
     updateLink(); // Initial load
 
     document.getElementById('carCopyBtn')?.addEventListener('click', async () => {
