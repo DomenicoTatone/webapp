@@ -1172,26 +1172,28 @@ class App {
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const formData = new FormData(form);
+      // Get form values
+      const name = document.getElementById('feedbackName').value;
+      const email = document.getElementById('feedbackEmail').value;
+      const platform = document.getElementById('feedbackPlatform').value;
+      const message = document.getElementById('feedbackMessage').value;
 
-      try {
-        const response = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData).toString()
-        });
+      // Build mailto link
+      const subject = encodeURIComponent(`[DeepLink Pro] Feedback - ${platform}`);
+      const body = encodeURIComponent(
+        `Nome: ${name}\n` +
+        `Email: ${email}\n` +
+        `Piattaforma: ${platform}\n\n` +
+        `Messaggio:\n${message}`
+      );
 
-        if (response.ok) {
-          form.style.display = 'none';
-          successMessage.style.display = 'block';
-          notifications.success(i18n.t('messageSent'));
-        } else {
-          throw new Error('Form submission failed');
-        }
-      } catch (error) {
-        console.error('Form error:', error);
-        notifications.error(i18n.t('sendError'));
-      }
+      // Open email client
+      window.location.href = `mailto:domenico.tatone@gmail.com?subject=${subject}&body=${body}`;
+
+      // Show success message
+      form.style.display = 'none';
+      successMessage.style.display = 'block';
+      notifications.success(i18n.t('messageSent'));
     });
 
     document.getElementById('newFeedbackBtn')?.addEventListener('click', () => {
