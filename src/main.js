@@ -95,18 +95,29 @@ class App {
       </div>
       
       <div class="card">
-        <div class="form-group">
-          <label class="form-label" data-i18n="pageType">Tipo Pagina</label>
-          <select id="pageTypeSelect" class="form-select">
-            <option value="cityPage" data-i18n="cityPage">Pagina Città</option>
-            <option value="hotelPage" data-i18n="hotelPage">Pagina Hotel</option>
-            <option value="airportPage" data-i18n="airportPage">Pagina Aeroporto</option>
-            <option value="districtPage" data-i18n="districtPage">Pagina Quartiere</option>
-            <option value="islandPage" data-i18n="islandPage">Pagina Isola</option>
-            <option value="landmarkPage" data-i18n="landmarkPage">Pagina Luogo</option>
-            <option value="regionPage" data-i18n="regionPage">Pagina Regione</option>
-            <option value="genericLandingPages" data-i18n="genericLandingPages">Pagina Generica</option>
-          </select>
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <label class="form-label" data-i18n="pageType">Tipo Pagina</label>
+            <select id="pageTypeSelect" class="form-select">
+              <option value="cityPage" data-i18n="cityPage">Pagina Città</option>
+              <option value="hotelPage" data-i18n="hotelPage">Pagina Hotel</option>
+              <option value="airportPage" data-i18n="airportPage">Pagina Aeroporto</option>
+              <option value="districtPage" data-i18n="districtPage">Pagina Quartiere</option>
+              <option value="islandPage" data-i18n="islandPage">Pagina Isola</option>
+              <option value="landmarkPage" data-i18n="landmarkPage">Pagina Luogo</option>
+              <option value="regionPage" data-i18n="regionPage">Pagina Regione</option>
+              <option value="genericLandingPages" data-i18n="genericLandingPages">Pagina Generica</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <label class="form-label" data-i18n="linkLanguage">Lingua Link</label>
+            <select id="bookingLangSelect" class="form-select">
+              <option value="it">IT</option>
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+              <option value="fr">FR</option>
+            </select>
+          </div>
         </div>
 
         <div class="form-group" id="subTypeGroup">
@@ -202,9 +213,17 @@ class App {
       await this.loadBookingData();
     };
 
+    // Handle language change
+    const bookingLangSelect = document.getElementById('bookingLangSelect');
+    const handleLangChange = async () => {
+      this.bookingState.data = null; // Clear cached data for new language
+      await this.loadBookingData();
+    };
+
     // Attach event listeners
     pageTypeSelect.addEventListener('change', handlePageTypeChange);
     searchInput.addEventListener('input', handleSearch);
+    bookingLangSelect.addEventListener('change', handleLangChange);
     document.querySelectorAll('input[name="subType"]').forEach(radio => {
       radio.addEventListener('change', handleSubTypeChange);
     });
@@ -218,7 +237,8 @@ class App {
     const pageType = document.getElementById('pageTypeSelect').value;
     if (pageType === 'genericLandingPages') return;
 
-    const language = i18n.getLanguage();
+    // Use the language selector value, not UI language
+    const language = document.getElementById('bookingLangSelect')?.value || 'it';
     const subTypeRadio = document.querySelector('input[name="subType"]:checked');
     const subType = subTypeRadio?.value === 'landing' ? 'landing' : null;
 
