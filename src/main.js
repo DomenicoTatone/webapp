@@ -501,7 +501,35 @@ class App {
         <h2 data-i18n="GetYourGuideLink">Deep Link GetYourGuide</h2>
       </div>
 
+      <!-- Homepage Links Section -->
       <div class="card">
+        <h3 class="section-title" data-i18n="homepageLinks">Link Homepage</h3>
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label class="form-label" data-i18n="linkLanguage">Lingua Link</label>
+            <select id="gygLangSelect" class="form-select">
+              <option value="it">IT</option>
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+              <option value="fr">FR</option>
+            </select>
+          </div>
+        </div>
+        <div id="gygHomepageResult" class="result-container">
+          <label class="form-label" data-i18n="affiliateLink">Link Affiliato</label>
+          <div class="result-box">
+            <a id="gygHomepageLink" href="#" target="_blank" class="result-link"></a>
+          </div>
+          <div class="button-group mt-4">
+            <button id="gygHomepageCopyBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
+            <button id="gygHomepageOpenBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- URL Transformer Section -->
+      <div class="card mt-6">
+        <h3 class="section-title" data-i18n="generateDeepLinkSection">Genera Deep Link</h3>
         <div class="form-group">
           <label class="form-label" data-i18n="insertGetYourGuideLink">Inserisci il link</label>
           <input type="text" id="gygInput" class="form-control" placeholder="https://www.getyourguide.com/...">
@@ -526,6 +554,36 @@ class App {
   }
 
   initGetYourGuidePage() {
+    // Homepage links
+    const gygHomepageLinks = {
+      it: "https://www.getyourguide.it/?partner_id=Q5TFESQ&utm_medium=online_publisher",
+      es: "https://www.getyourguide.es/?partner_id=Q5TFESQ&utm_medium=online_publisher",
+      en: "https://www.getyourguide.com/?partner_id=Q5TFESQ&utm_medium=online_publisher",
+      fr: "https://www.getyourguide.fr/?partner_id=Q5TFESQ&utm_medium=online_publisher"
+    };
+
+    const langSelect = document.getElementById('gygLangSelect');
+    const homepageLink = document.getElementById('gygHomepageLink');
+
+    const updateHomepageLink = () => {
+      const url = gygHomepageLinks[langSelect.value] || gygHomepageLinks['en'];
+      homepageLink.href = url;
+      homepageLink.textContent = url;
+    };
+
+    langSelect.addEventListener('change', updateHomepageLink);
+    updateHomepageLink();
+
+    document.getElementById('gygHomepageCopyBtn')?.addEventListener('click', async () => {
+      const success = await linkGenerator.copyToClipboard(homepageLink.href);
+      notifications[success ? 'success' : 'error'](i18n.t(success ? 'deepLinkCopied' : 'copyError'));
+    });
+
+    document.getElementById('gygHomepageOpenBtn')?.addEventListener('click', () => {
+      linkGenerator.openLink(homepageLink.href);
+    });
+
+    // URL Transformer
     const input = document.getElementById('gygInput');
     const generateBtn = document.getElementById('gygGenerateBtn');
     const resultContainer = document.getElementById('gygResult');
@@ -567,7 +625,35 @@ class App {
         <h2 data-i18n="CivitatisLink">Deep Link Civitatis</h2>
       </div>
 
+      <!-- Homepage Links Section -->
       <div class="card">
+        <h3 class="section-title" data-i18n="homepageLinks">Link Homepage</h3>
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label class="form-label" data-i18n="linkLanguage">Lingua Link</label>
+            <select id="civLangSelect" class="form-select">
+              <option value="it">IT</option>
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+              <option value="fr">FR</option>
+            </select>
+          </div>
+        </div>
+        <div id="civHomepageResult" class="result-container">
+          <label class="form-label" data-i18n="affiliateLink">Link Affiliato</label>
+          <div class="result-box">
+            <a id="civHomepageLink" href="#" target="_blank" class="result-link"></a>
+          </div>
+          <div class="button-group mt-4">
+            <button id="civHomepageCopyBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
+            <button id="civHomepageOpenBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- URL Transformer Section -->
+      <div class="card mt-6">
+        <h3 class="section-title" data-i18n="generateDeepLinkSection">Genera Deep Link</h3>
         <div class="form-group">
           <label class="form-label" data-i18n="insertCivitatisLink">Inserisci il link</label>
           <input type="text" id="civInput" class="form-control" placeholder="https://www.civitatis.com/...">
@@ -592,6 +678,36 @@ class App {
   }
 
   initCivitatisPage() {
+    // Homepage links
+    const civHomepageLinks = {
+      it: "https://www.civitatis.com/it/?aid=5488",
+      es: "https://www.civitatis.com/es/?aid=5488",
+      en: "https://www.civitatis.com/en/?aid=5488",
+      fr: "https://www.civitatis.com/fr/?aid=5488"
+    };
+
+    const langSelect = document.getElementById('civLangSelect');
+    const homepageLink = document.getElementById('civHomepageLink');
+
+    const updateHomepageLink = () => {
+      const url = civHomepageLinks[langSelect.value] || civHomepageLinks['en'];
+      homepageLink.href = url;
+      homepageLink.textContent = url;
+    };
+
+    langSelect.addEventListener('change', updateHomepageLink);
+    updateHomepageLink();
+
+    document.getElementById('civHomepageCopyBtn')?.addEventListener('click', async () => {
+      const success = await linkGenerator.copyToClipboard(homepageLink.href);
+      notifications[success ? 'success' : 'error'](i18n.t(success ? 'deepLinkCopied' : 'copyError'));
+    });
+
+    document.getElementById('civHomepageOpenBtn')?.addEventListener('click', () => {
+      linkGenerator.openLink(homepageLink.href);
+    });
+
+    // URL Transformer
     const input = document.getElementById('civInput');
     const generateBtn = document.getElementById('civGenerateBtn');
     const resultContainer = document.getElementById('civResult');
