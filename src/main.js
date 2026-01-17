@@ -1301,7 +1301,11 @@ class App {
   initFeedbackPage() {
     const form = document.getElementById('feedbackForm');
     const successMessage = document.getElementById('feedbackSuccess');
+    const platformSelect = document.getElementById('feedbackPlatform');
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgggwek';
+
+    // Initialize Custom Select dropdown
+    if (platformSelect) new CustomSelect(platformSelect);
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
