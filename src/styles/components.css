@@ -219,7 +219,8 @@
         align-items: stretch;
     }
 
-    .integrated-actions .form-select-sm {
+    .integrated-actions .form-select-sm,
+    .integrated-actions .custom-select {
         width: 100%;
     }
 
