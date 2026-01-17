@@ -475,7 +475,6 @@ class App {
               <input type="text" id="inputUrl" class="form-control" placeholder="https://www.edreams.it/..." data-i18n-placeholder="urlPlaceholder">
               <button id="generateBtn" class="btn btn-primary" data-i18n="generateLink">Genera</button>
             </div>
-            <div id="partnerFeedback" class="td-partner-feedback" style="display:none;"></div>
             <div id="resultContainer" class="td-result-section" style="display:none;">
               <div class="result-box">
                 <a id="resultLink" href="#" target="_blank" class="result-link"></a>
@@ -506,7 +505,6 @@ class App {
     const resultContainer = document.getElementById('resultContainer');
     const resultLink = document.getElementById('resultLink');
     const programCardsContainer = document.getElementById('programCardsContainer');
-    const partnerFeedback = document.getElementById('partnerFeedback');
 
     // Initialize Custom Select dropdown
     if (islandSelect) new CustomSelect(islandSelect);
@@ -568,49 +566,11 @@ class App {
       });
     };
 
-    // Update partner feedback on URL input
-    const updatePartnerFeedback = () => {
-      const code = islandSelect.value;
-      const url = inputUrl.value.trim();
-
-      if (!code || !url) {
-        partnerFeedback.style.display = 'none';
-        return;
-      }
-
-      const detected = linkGenerator.detectPartnerFromUrl(url, code);
-
-      if (detected) {
-        partnerFeedback.innerHTML = `
-          <div class="feedback-success">
-            <span class="feedback-icon">✓</span>
-            <span class="feedback-text">
-              <strong>${detected.partner}</strong>
-              <span class="feedback-meta">${detected.category} | ID: ${detected.programId || '—'}</span>
-            </span>
-          </div>
-        `;
-        partnerFeedback.style.display = 'block';
-      } else {
-        partnerFeedback.innerHTML = `
-          <div class="feedback-error">
-            <span class="feedback-icon">✗</span>
-            <span class="feedback-text">${i18n.t('partnerNotRecognized') || 'Programma non riconosciuto per questo sito'}</span>
-          </div>
-        `;
-        partnerFeedback.style.display = 'block';
-      }
-    };
-
     islandSelect.addEventListener('change', () => {
       const code = islandSelect.value;
       renderProgramCards(code);
-      updatePartnerFeedback();
       resultContainer.style.display = 'none';
     });
-
-    // Real-time detection on URL input
-    inputUrl.addEventListener('input', updatePartnerFeedback);
 
     generateBtn.addEventListener('click', () => {
       const code = islandSelect.value;

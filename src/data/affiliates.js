@@ -56,8 +56,8 @@ export const PROGRAM_IDS = {
 
 // Program categories from Tradedoubler screenshots
 export const PROGRAM_CATEGORIES = {
-  // Formentera (3220593) - eDreams has VIAGGI + 2 OTHERS
-  "eDreams": "VIAGGI",
+  // Formentera (3220593) - eDreams has VIAGGI + SHOPPING & RETAIL + AUTOMOTIVE
+  "eDreams": "VIAGGI, SHOPPING & RETAIL, AUTOMOTIVE",
 
   // Lanzarote (3337668)
   "Direct Ferries IT": "VIAGGI",
@@ -65,8 +65,8 @@ export const PROGRAM_CATEGORIES = {
   // Minorca IT (1639250) - from screenshot 180325
   "Allianz Partners": "ASSICURAZIONI, VIAGGI",
   "AXA Assistance": "ASSICURAZIONI",
-  "Barceló Hotels & Resorts": "ASSICURAZIONI, VIAGGI",
-  "Columbus Assicurazioni": "FINANZA",
+  "Barceló Hotels & Resorts": "VIAGGI",
+  "Columbus Assicurazioni": "FINANZA, FAMIGLIA, ASSICURAZIONI",
   "Veratour": "VIAGGI",
   "Viaggisicuri": "ASSICURAZIONI",
   "Yalla Yalla": "VIAGGI",
