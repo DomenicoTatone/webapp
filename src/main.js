@@ -170,9 +170,10 @@ class App {
       <div id="page-status" class="page-status"></div>
       
       <div class="card booking-unified-card">
-        <!-- Top Controls Row -->
-        <div class="booking-controls">
-          <div class="booking-control-group">
+        <!-- Labeled Controls -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label form-label-sm" data-i18n="pageTypeLabel">Tipo Pagina</label>
             <select id="pageTypeSelect" class="form-select form-select-sm">
               <option value="cityPage" data-i18n="cityPage">Pagina Città</option>
               <option value="hotelPage" data-i18n="hotelPage">Pagina Hotel</option>
@@ -183,6 +184,9 @@ class App {
               <option value="regionPage" data-i18n="regionPage">Pagina Regione</option>
               <option value="genericLandingPages" data-i18n="genericLandingPages">Pagina Generica</option>
             </select>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="form-label form-label-sm" data-i18n="languageLabel">Lingua</label>
             <select id="bookingLangSelect" class="form-select form-select-sm">
               <option value="it">IT</option>
               <option value="es">ES</option>
@@ -190,9 +194,12 @@ class App {
               <option value="fr">FR</option>
             </select>
           </div>
-          <input type="text" id="searchInput" class="form-control" 
-                 data-i18n-placeholder="searchPlaceholder" 
-                 placeholder="Cerca...">
+          <div class="form-group form-group-grow">
+            <label class="form-label form-label-sm" data-i18n="searchLabel">Cerca</label>
+            <input type="text" id="searchInput" class="form-control" 
+                   data-i18n-placeholder="searchPlaceholder" 
+                   placeholder="Cerca...">
+          </div>
         </div>
 
         <!-- Sub Type Radio (when applicable) -->

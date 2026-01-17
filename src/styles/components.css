@@ -100,6 +100,29 @@
     margin-bottom: var(--space-4);
 }
 
+/* Form Row - Horizontal layout for controls */
+.form-row {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-4);
+}
+
+.form-row .form-group {
+    margin-bottom: 0;
+}
+
+.form-group-sm {
+    flex: 0 0 auto;
+    min-width: 80px;
+}
+
+.form-group-grow {
+    flex: 1;
+    min-width: 200px;
+}
+
 .form-label {
     display: block;
     margin-bottom: var(--space-2);
