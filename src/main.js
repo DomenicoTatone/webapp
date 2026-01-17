@@ -464,6 +464,7 @@ class App {
 
     // Initialize Custom Select dropdowns
     if (islandSelect) new CustomSelect(islandSelect);
+    let platformCustomSelect = platformSelect ? new CustomSelect(platformSelect) : null;
 
     islandSelect.addEventListener('change', () => {
       const code = islandSelect.value;
@@ -477,6 +478,10 @@ class App {
       } else {
         platformSelect.disabled = true;
       }
+
+      // Re-initialize CustomSelect with new options
+      if (platformCustomSelect) platformCustomSelect.destroy();
+      platformCustomSelect = new CustomSelect(platformSelect);
 
       partnerLinkContainer.style.display = 'none';
       resultContainer.style.display = 'none';
@@ -927,6 +932,9 @@ class App {
     const formatSelect = document.getElementById('formatSelect');
     const imagesContainer = document.getElementById('imagesContainer');
     const downloadAllContainer = document.getElementById('downloadAllContainer');
+
+    // Initialize Custom Select dropdown
+    if (formatSelect) new CustomSelect(formatSelect);
 
     // Store compressed images for batch download
     this.compressedImages = [];
