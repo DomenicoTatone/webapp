@@ -205,11 +205,11 @@ class App {
         <!-- Sub Type Radio (when applicable) -->
         <div class="form-group" id="subTypeGroup" style="display:none;">
           <div class="radio-group">
-            <label class="radio-label">
+            <label class="radio-label has-tooltip" data-tooltip="Mostra un elenco di hotel/sistemazioni nella destinazione selezionata. Ideale per offrire scelta ai lettori.">
               <input type="radio" name="subType" value="searchResults" checked>
               <span data-i18n="searchResultsPageLabel">Pagina Risultati</span>
             </label>
-            <label class="radio-label">
+            <label class="radio-label has-tooltip" data-tooltip="Pagina informativa sulla destinazione con info turistiche e opzioni di alloggio. Perfetta per contenuti editoriali.">
               <input type="radio" name="subType" value="landing">
               <span data-i18n="landingPageLabel">Landing Page</span>
             </label>
