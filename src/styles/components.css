@@ -346,6 +346,101 @@
     }
 }
 
+/* ============================================
+   TRADEDOUBLER UNIFIED CARD
+   ============================================ */
+
+.td-unified-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.td-controls {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.td-control-group {
+    display: flex;
+    gap: var(--space-3);
+    flex: 1;
+}
+
+.td-control-group .form-select {
+    flex: 1;
+}
+
+.td-deeplink-section {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.section-subtitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--space-3);
+}
+
+.td-input-row {
+    display: flex;
+    gap: var(--space-3);
+    align-items: stretch;
+}
+
+.td-input-row .form-control {
+    flex: 1;
+    min-width: 0;
+}
+
+.td-input-row .btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.td-result-section {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.td-result-actions {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+}
+
+/* Mobile responsive for Tradedoubler */
+@media (max-width: 640px) {
+    .td-controls {
+        flex-direction: column;
+    }
+
+    .td-control-group {
+        flex-direction: column;
+    }
+
+    .td-control-group .form-select {
+        width: 100%;
+    }
+
+    .td-input-row {
+        flex-direction: column;
+    }
+
+    .td-input-row .btn {
+        width: 100%;
+    }
+
+    .td-result-actions {
+        flex-direction: column;
+    }
+
+    .td-result-actions .btn {
+        width: 100%;
+    }
+}
+
 @keyframes slideUp {
     from {
         opacity: 0;

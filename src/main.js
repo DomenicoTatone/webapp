@@ -452,45 +452,40 @@ class App {
         <h2 data-i18n="usefulTLinksHeader">I Programmi Attivi</h2>
       </div>
 
-      <div class="card">
-        <div class="form-group">
-          <label class="form-label">Sito</label>
-          <select id="islandSelect" class="form-select">
-            <option value="" data-i18n="selectSite">Seleziona un sito</option>
-            ${islands.map(i => `<option value="${i.code}">${i.displayName}</option>`).join('')}
-          </select>
+      <div class="card td-unified-card">
+        <!-- Control Bar: Site + Platform -->
+        <div class="td-controls">
+          <div class="td-control-group">
+            <select id="islandSelect" class="form-select">
+              <option value="" data-i18n="selectSite">Seleziona un sito</option>
+              ${islands.map(i => `<option value="${i.code}">${i.displayName}</option>`).join('')}
+            </select>
+            <select id="platformSelect" class="form-select" disabled>
+              <option value="" data-i18n="selectPlatform">Seleziona una piattaforma</option>
+            </select>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Piattaforma</label>
-          <select id="platformSelect" class="form-select" disabled>
-            <option value="" data-i18n="selectPlatform">Seleziona una piattaforma</option>
-          </select>
-        </div>
-
+        <!-- Partner Link Alert -->
         <div id="partnerLinkContainer" class="alert alert-info" style="display:none;">
           <span id="partnerLink"></span>
         </div>
 
-        <hr class="divider">
-
-        <h3 class="section-title" data-i18n="generateDeepLinkSection">Genera Deep Link</h3>
-        
-        <div class="form-group">
-          <label class="form-label" data-i18n="urlToTransform">URL da trasformare</label>
-          <input type="text" id="inputUrl" class="form-control" placeholder="https://...">
+        <!-- Deep Link Generator Section -->
+        <div class="td-deeplink-section">
+          <h4 class="section-subtitle" data-i18n="generateDeepLinkSection">Genera Deep Link</h4>
+          <div class="td-input-row">
+            <input type="text" id="inputUrl" class="form-control" placeholder="https://..." data-i18n-placeholder="urlPlaceholder">
+            <button id="generateBtn" class="btn btn-primary" data-i18n="generateLink">Genera Link</button>
+          </div>
         </div>
 
-        <div class="button-group">
-          <button id="generateBtn" class="btn btn-primary" data-i18n="generateLink">Genera Link</button>
-        </div>
-
-        <div id="resultContainer" class="result-container" style="display:none;">
-          <label class="form-label" data-i18n="generatedDeepLink">Deep Link Generato</label>
+        <!-- Result Section -->
+        <div id="resultContainer" class="td-result-section" style="display:none;">
           <div class="result-box">
             <a id="resultLink" href="#" target="_blank" class="result-link"></a>
           </div>
-          <div class="button-group mt-4">
+          <div class="td-result-actions">
             <button id="copyResultBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
             <button id="openResultBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
           </div>
