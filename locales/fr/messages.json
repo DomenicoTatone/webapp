@@ -82,5 +82,12 @@
     "messageReceived": "Votre message a été reçu. Nous vous répondrons bientôt.",
     "sendAnother": "Envoyer un autre",
     "messageSent": "Message envoyé !",
-    "sendError": "Erreur d'envoi. Veuillez réessayer."
+    "sendError": "Erreur d'envoi. Veuillez réessayer.",
+    "formatJpeg": "JPEG (recommandé)",
+    "formatWebp": "WebP (moderne)",
+    "formatPng": "PNG (sans perte)",
+    "programsActive": "programmes actifs",
+    "urlPlaceholder": "https://www.edreams.it/...",
+    "autoDetectNote": "Collez une URL et le programme sera détecté automatiquement",
+    "selectSiteToViewPrograms": "Sélectionnez un site pour voir les programmes actifs"
 }
