@@ -200,8 +200,8 @@
 .integrated-actions {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: var(--space-3);
-    flex-wrap: wrap;
 }
 
 .integrated-actions .form-select-sm {
@@ -211,7 +211,6 @@
 .integrated-actions .button-group {
     display: flex;
     gap: var(--space-2);
-    flex-wrap: wrap;
 }
 
 @media (max-width: 640px) {
