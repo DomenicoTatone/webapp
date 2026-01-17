@@ -65,7 +65,7 @@ export const PROGRAM_CATEGORIES = {
   // Minorca IT (1639250) - from screenshot 180325
   "Allianz Partners": "ASSICURAZIONI, VIAGGI",
   "AXA Assistance": "ASSICURAZIONI",
-  "Barceló Hotels & Resorts": "VIAGGI",
+  "Barceló Hotels & Resorts": "ASSICURAZIONI, VIAGGI",
   "Columbus Assicurazioni": "FINANZA",
   "Veratour": "VIAGGI",
   "Viaggisicuri": "ASSICURAZIONI",
