@@ -75,32 +75,93 @@
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Language Selector */
-.language-selector {
-    display: flex;
-    gap: var(--space-1);
+/* Language Dropdown */
+.language-dropdown {
+    position: relative;
 }
 
-.language-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid transparent;
+.lang-trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
     color: white;
-    font-weight: 700;
+    font-weight: 600;
     font-size: var(--font-size-sm);
     cursor: pointer;
     transition: all var(--transition-fast);
 }
 
-.language-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+.lang-trigger:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
-.language-btn.active {
+.lang-flag {
+    font-size: 16px;
+}
+
+.lang-code {
+    font-weight: 700;
+}
+
+.lang-arrow {
+    font-size: 10px;
+    opacity: 0.7;
+    transition: transform var(--transition-fast);
+}
+
+.language-dropdown.is-open .lang-arrow {
+    transform: rotate(180deg);
+}
+
+.lang-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 140px;
     background: white;
-    color: var(--color-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all var(--transition-normal);
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.language-dropdown.is-open .lang-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: none;
+    border: none;
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.lang-option:hover {
+    background: var(--color-bg-subtle);
+}
+
+.lang-option.active {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    color: white;
 }
 
 /* Main Content */

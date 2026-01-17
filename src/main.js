@@ -47,22 +47,69 @@ class App {
   }
 
   setupLanguageSelector() {
+    const dropdown = document.querySelector('.language-dropdown');
+    const trigger = document.getElementById('langTrigger');
+    const menu = document.getElementById('langMenu');
+    const options = document.querySelectorAll('.lang-option');
+
+    const langData = {
+      it: { flag: '🇮🇹', code: 'IT' },
+      en: { flag: '🇬🇧', code: 'EN' },
+      es: { flag: '🇪🇸', code: 'ES' },
+      fr: { flag: '🇫🇷', code: 'FR' },
+      de: { flag: '🇩🇪', code: 'DE' }
+    };
+
+    // Set initial active state
     const currentLang = i18n.getLanguage();
+    this.updateLangTrigger(trigger, langData[currentLang]);
     document.querySelector(`[data-lang="${currentLang}"]`)?.classList.add('active');
 
-    document.querySelectorAll('.language-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const lang = btn.dataset.lang;
-        document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    // Toggle dropdown on trigger click
+    trigger?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', dropdown.classList.contains('is-open'));
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!dropdown?.contains(e.target)) {
+        dropdown?.classList.remove('is-open');
+        trigger?.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Handle language selection
+    options.forEach(option => {
+      option.addEventListener('click', async () => {
+        const lang = option.dataset.lang;
+
+        // Update active state
+        options.forEach(o => o.classList.remove('active'));
+        option.classList.add('active');
+
+        // Update trigger display
+        this.updateLangTrigger(trigger, langData[lang]);
+
+        // Close dropdown
+        dropdown.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+
+        // Apply language
         await i18n.setLanguage(lang);
-        // Clear booking cache when language changes
         bookingData.clearCache();
         this.bookingState.data = null;
         this.loadPage(this.currentPage);
         notifications.success(i18n.t('languageChanged'));
       });
     });
+  }
+
+  updateLangTrigger(trigger, langInfo) {
+    if (!trigger || !langInfo) return;
+    trigger.querySelector('.lang-flag').textContent = langInfo.flag;
+    trigger.querySelector('.lang-code').textContent = langInfo.code;
   }
 
   loadPage(pageName) {
