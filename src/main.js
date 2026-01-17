@@ -461,18 +461,10 @@ class App {
           </select>
         </div>
 
-        <!-- Program Cards Grid -->
-        <div id="programCardsContainer" class="program-cards-grid">
-          <div class="program-cards-empty">
-            <span class="empty-icon">📋</span>
-            <p data-i18n="selectSiteToViewPrograms">Seleziona un sito per vedere i programmi attivi</p>
-          </div>
-        </div>
-
         <!-- Deep Link Generator (Collapsible) -->
         <details class="td-deeplink-details">
-          <summary class="td-deeplink-summary" data-i18n="generateDeepLinkSection">
-            <span>🔗 Genera Deep Link Personalizzato</span>
+          <summary class="td-deeplink-summary">
+            <span data-i18n="generateDeepLinkSection">Genera Deep Link Personalizzato</span>
           </summary>
           <div class="td-deeplink-content">
             <div class="td-platform-row">
@@ -498,6 +490,14 @@ class App {
             </div>
           </div>
         </details>
+
+        <!-- Program Cards Grid -->
+        <div id="programCardsContainer" class="program-cards-grid">
+          <div class="program-cards-empty">
+            <span class="empty-icon">📋</span>
+            <p data-i18n="selectSiteToViewPrograms">Seleziona un sito per vedere i programmi attivi</p>
+          </div>
+        </div>
       </div>
     `;
   }
