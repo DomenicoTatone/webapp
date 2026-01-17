@@ -1,6 +1,6 @@
 /**
  * Booking Data Service PRO
- * Handles async data loading, caching, and search for Booking affiliate links
+ * Handles async data loading with IndexedDB caching for Booking affiliate links
  */
 
 const S3_BASE_URL = 'https://allspainbookinglinks.s3.eu-west-3.amazonaws.com';
@@ -72,8 +72,44 @@ class BookingDataService {
     constructor() {
         this.dataCache = new Map();
         this.loadingPromises = new Map();
-        this.STORAGE_PREFIX = 'bookingData_';
+        this.DB_NAME = 'DeepLinkPro';
+        this.DB_VERSION = 1;
+        this.STORE_NAME = 'bookingData';
         this.CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
+        this.db = null;
+        this.dbReady = this._initDB();
+    }
+
+    /**
+     * Initialize IndexedDB connection
+     */
+    async _initDB() {
+        if (!window.indexedDB) {
+            console.warn('[BookingData] IndexedDB not supported, using memory-only cache');
+            return;
+        }
+
+        try {
+            this.db = await new Promise((resolve, reject) => {
+                const request = indexedDB.open(this.DB_NAME, this.DB_VERSION);
+
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => resolve(request.result);
+
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains(this.STORE_NAME)) {
+                        const store = db.createObjectStore(this.STORE_NAME, { keyPath: 'key' });
+                        store.createIndex('timestamp', 'timestamp', { unique: false });
+                        console.log('[BookingData] IndexedDB store created');
+                    }
+                };
+            });
+            console.log('[BookingData] IndexedDB connected');
+        } catch (e) {
+            console.warn('[BookingData] IndexedDB init failed:', e);
+            this.db = null;
+        }
     }
 
     /**
@@ -84,69 +120,101 @@ class BookingDataService {
     }
 
     /**
-     * Try to get data from localStorage
+     * Get data from IndexedDB
      */
-    getFromStorage(cacheKey) {
+    async getFromStorage(cacheKey) {
+        await this.dbReady;
+        if (!this.db) return null;
+
         try {
-            const stored = localStorage.getItem(this.STORAGE_PREFIX + cacheKey);
-            if (!stored) return null;
+            const result = await new Promise((resolve, reject) => {
+                const tx = this.db.transaction(this.STORE_NAME, 'readonly');
+                const store = tx.objectStore(this.STORE_NAME);
+                const request = store.get(cacheKey);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
 
-            const { data, timestamp } = JSON.parse(stored);
-            const age = Date.now() - timestamp;
+            if (!result) return null;
 
+            const age = Date.now() - result.timestamp;
             if (age > this.CACHE_EXPIRY_MS) {
-                localStorage.removeItem(this.STORAGE_PREFIX + cacheKey);
-                console.log(`[BookingData] Storage expired for ${cacheKey}`);
+                this._deleteFromStorage(cacheKey);
+                console.log(`[BookingData] IndexedDB expired: ${cacheKey}`);
                 return null;
             }
 
-            console.log(`[BookingData] Storage hit for ${cacheKey} (age: ${Math.round(age / 60000)}min)`);
-            return data;
+            console.log(`[BookingData] IndexedDB hit: ${cacheKey} (age: ${Math.round(age / 60000)}min)`);
+            return result.data;
         } catch (e) {
-            console.warn('[BookingData] Storage read error:', e);
+            console.warn('[BookingData] IndexedDB read error:', e);
             return null;
         }
     }
 
     /**
-     * Save data to localStorage
+     * Save data to IndexedDB
      */
-    saveToStorage(cacheKey, data) {
+    async saveToStorage(cacheKey, data) {
+        await this.dbReady;
+        if (!this.db) return;
+
         try {
-            const payload = JSON.stringify({
-                data,
-                timestamp: Date.now()
+            await new Promise((resolve, reject) => {
+                const tx = this.db.transaction(this.STORE_NAME, 'readwrite');
+                const store = tx.objectStore(this.STORE_NAME);
+                const request = store.put({
+                    key: cacheKey,
+                    data: data,
+                    timestamp: Date.now()
+                });
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
             });
-            localStorage.setItem(this.STORAGE_PREFIX + cacheKey, payload);
-            console.log(`[BookingData] Saved to storage: ${cacheKey}`);
+            console.log(`[BookingData] IndexedDB saved: ${cacheKey} (${data.length} items)`);
         } catch (e) {
-            console.warn('[BookingData] Storage write error:', e);
+            console.warn('[BookingData] IndexedDB write error:', e);
+        }
+    }
+
+    /**
+     * Delete entry from IndexedDB
+     */
+    async _deleteFromStorage(cacheKey) {
+        if (!this.db) return;
+
+        try {
+            const tx = this.db.transaction(this.STORE_NAME, 'readwrite');
+            const store = tx.objectStore(this.STORE_NAME);
+            store.delete(cacheKey);
+        } catch (e) {
+            console.warn('[BookingData] IndexedDB delete error:', e);
         }
     }
 
     /**
      * Load data for a page type with caching
-     * Priority: Memory Cache → LocalStorage → Network
+     * Priority: Memory Cache → IndexedDB → Network
      */
     async loadData(pageType, language, subType = null) {
         const cacheKey = this.getCacheKey(pageType, language, subType);
 
         // 1. Check memory cache (fastest)
         if (this.dataCache.has(cacheKey)) {
-            console.log(`[BookingData] Memory cache hit for ${cacheKey}`);
+            console.log(`[BookingData] Memory hit: ${cacheKey}`);
             return this.dataCache.get(cacheKey);
         }
 
-        // 2. Check localStorage (survives reload)
-        const storedData = this.getFromStorage(cacheKey);
+        // 2. Check IndexedDB (survives reload)
+        const storedData = await this.getFromStorage(cacheKey);
         if (storedData) {
-            this.dataCache.set(cacheKey, storedData); // Populate memory cache
+            this.dataCache.set(cacheKey, storedData);
             return storedData;
         }
 
         // 3. Return existing loading promise if already loading
         if (this.loadingPromises.has(cacheKey)) {
-            console.log(`[BookingData] Waiting for existing load: ${cacheKey}`);
+            console.log(`[BookingData] Waiting for load: ${cacheKey}`);
             return this.loadingPromises.get(cacheKey);
         }
 
@@ -157,8 +225,8 @@ class BookingDataService {
         try {
             const data = await loadPromise;
             this.dataCache.set(cacheKey, data);
-            this.saveToStorage(cacheKey, data); // Persist to localStorage
-            console.log(`[BookingData] Loaded ${data.length} items for ${cacheKey}`);
+            this.saveToStorage(cacheKey, data); // Persist to IndexedDB (async)
+            console.log(`[BookingData] Loaded ${data.length} items: ${cacheKey}`);
             return data;
         } finally {
             this.loadingPromises.delete(cacheKey);
@@ -167,7 +235,6 @@ class BookingDataService {
 
     /**
      * Fetch data from S3 using script injection (bypasses CORS)
-     * Legacy files define global variables which we extract after loading
      */
     async _fetchData(pageType, language, subType) {
         const config = PAGE_TYPE_CONFIG[pageType];
@@ -179,19 +246,16 @@ class BookingDataService {
         const variableName = config.variableName(language, subType);
         const url = `${S3_BASE_URL}/${fileName}`;
 
-        console.log(`[BookingData] Loading script: ${url}`);
-        console.log(`[BookingData] Expected variable: ${variableName}`);
+        console.log(`[BookingData] Loading: ${url}`);
 
         // Check if already loaded
         if (window[variableName] && Array.isArray(window[variableName])) {
-            console.log(`[BookingData] Variable already exists, using cached data`);
             return window[variableName];
         }
 
         // Check if script already exists
         const existingScript = document.querySelector(`script[src="${url}"]`);
         if (existingScript) {
-            // Script exists, wait a bit and check for variable
             await this._waitForVariable(variableName, 2000);
             if (window[variableName]) {
                 return window[variableName];
@@ -206,28 +270,19 @@ class BookingDataService {
             script.className = 'booking-data-script';
 
             script.onload = async () => {
-                console.log(`[BookingData] Script loaded: ${fileName}`);
-
-                // Wait for the variable to be defined
                 try {
                     await this._waitForVariable(variableName, 3000);
-
                     if (window[variableName] && Array.isArray(window[variableName])) {
-                        console.log(`[BookingData] Found ${window[variableName].length} items`);
                         resolve(window[variableName]);
                     } else {
-                        reject(new Error(`Variable ${variableName} not found after script load`));
+                        reject(new Error(`Variable ${variableName} not found`));
                     }
                 } catch (error) {
                     reject(error);
                 }
             };
 
-            script.onerror = () => {
-                console.error(`[BookingData] Failed to load script: ${url}`);
-                reject(new Error(`Failed to load ${fileName}`));
-            };
-
+            script.onerror = () => reject(new Error(`Failed to load ${fileName}`));
             document.body.appendChild(script);
         });
     }
@@ -238,7 +293,6 @@ class BookingDataService {
     _waitForVariable(variableName, timeout = 3000) {
         return new Promise((resolve, reject) => {
             const startTime = Date.now();
-
             const check = () => {
                 if (window[variableName] !== undefined) {
                     resolve();
@@ -248,7 +302,6 @@ class BookingDataService {
                     setTimeout(check, 50);
                 }
             };
-
             check();
         });
     }
@@ -265,25 +318,16 @@ class BookingDataService {
 
     /**
      * Search data array with normalized matching
-     * @param {string} query - Search term
-     * @param {Array} data - Data array to search
-     * @param {number} limit - Max results (default 50)
-     * @returns {Array} Filtered results
      */
     search(query, data, limit = 50) {
-        if (!query || query.length < 3) {
-            return [];
-        }
+        if (!query || query.length < 3) return [];
 
         const normalizedQuery = this.normalizeText(query);
         const results = [];
 
         for (const item of data) {
             if (results.length >= limit) break;
-
-            // Item structure: [name, city/code, url] or [name, url] etc.
             const searchableText = this.normalizeText(item[0] || '');
-
             if (searchableText.includes(normalizedQuery)) {
                 results.push(item);
             }
@@ -294,51 +338,24 @@ class BookingDataService {
 
     /**
      * Format a result item for display
-     * @param {Array} item - Raw data item
-     * @param {string} pageType - Type of page
-     * @returns {Object} Formatted result { name, subtitle, url }
      */
     formatResult(item, pageType) {
-        const url = item[item.length - 1]; // URL is always last
+        const url = item[item.length - 1];
 
         switch (pageType) {
             case 'hotelPage':
-                // [hotelName, city, url]
-                return {
-                    name: item[0],
-                    subtitle: item[1] || '',
-                    url
-                };
+                return { name: item[0], subtitle: item[1] || '', url };
             case 'airportPage':
-                // [airportName, IATA, city, region, url]
-                return {
-                    name: item[0],
-                    subtitle: item[1] || '', // IATA code
-                    url
-                };
+                return { name: item[0], subtitle: item[1] || '', url };
             case 'districtPage':
-                // [districtName, city, code, url]
-                return {
-                    name: item[0],
-                    subtitle: item[1] || '',
-                    url
-                };
-            case 'cityPage':
-            case 'islandPage':
-            case 'landmarkPage':
-            case 'regionPage':
+                return { name: item[0], subtitle: item[1] || '', url };
             default:
-                // [name, ...other, url]
-                return {
-                    name: item[0],
-                    subtitle: item.length > 2 ? item[1] : '',
-                    url
-                };
+                return { name: item[0], subtitle: item.length > 2 ? item[1] : '', url };
         }
     }
 
     /**
-     * Check if a page type has sub-type options (landing vs search results)
+     * Check if a page type has sub-type options
      */
     hasSubType(pageType) {
         return PAGE_TYPE_CONFIG[pageType]?.hasSubType || false;
@@ -349,7 +366,7 @@ class BookingDataService {
      */
     clearCache() {
         this.dataCache.clear();
-        console.log('[BookingData] Cache cleared');
+        console.log('[BookingData] Memory cache cleared');
     }
 }
 
