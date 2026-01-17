@@ -54,6 +54,44 @@ export const PROGRAM_IDS = {
   "Viaggi in crociera": "341133"
 };
 
+// Program categories from Tradedoubler
+export const PROGRAM_CATEGORIES = {
+  // Viaggi
+  "eDreams": "VIAGGI",
+  "Direct Ferries IT": "VIAGGI",
+  "Direct Ferries ES": "VIAGGI",
+  "Direct Ferries UK": "VIAGGI",
+  "Vueling IT": "VIAGGI",
+  "Vueling UK": "VIAGGI",
+  "Veratour": "VIAGGI",
+  "Yalla Yalla": "VIAGGI",
+  "Eurowings IT": "VIAGGI",
+  "Grandi Navi Veloci IT": "VIAGGI",
+  "Viaggi in crociera": "VIAGGI",
+  "Vayacruceros ES": "VIAGGI",
+  "Airport Parking Luton": "VIAGGI",
+  "Airport Parking Manchester": "VIAGGI",
+  "Airport Parking With Us": "VIAGGI",
+  "Bee Parking": "VIAGGI",
+  "Compare Cheap Parking Prices At M...": "VIAGGI",
+  "Compare Parking Prices": "VIAGGI",
+  "Compare Your Parking Deals": "VIAGGI",
+
+  // Assicurazioni
+  "Allianz Partners": "ASSICURAZIONI",
+  "AXA Assistance": "ASSICURAZIONI",
+  "AXA Seguros de Viaje": "ASSICURAZIONI",
+  "Columbus Assicurazioni": "FINANZA",
+  "Viaggisicuri": "ASSICURAZIONI",
+  "InterMundial": "ASSICURAZIONI",
+
+  // Hotels
+  "Barceló Hotels & Resorts": "VIAGGI",
+
+  // No Profit
+  "Muslim Aid": "ORGANIZZAZIONI NO PROFIT"
+};
+
 export const AFFILIATE_PARTNERS = {
   // Formentera - 3220593 (1 program)
   "3220593": [

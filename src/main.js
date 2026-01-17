@@ -14,7 +14,7 @@ import { i18n } from './services/I18nService.js';
 import { linkGenerator } from './services/LinkGeneratorService.js';
 import { notifications } from './services/NotificationService.js';
 import { bookingData } from './services/BookingDataService.js';
-import { AFFILIATE_PARTNERS, CAR_RENTAL_PROVIDERS } from './data/affiliates.js';
+import { AFFILIATE_PARTNERS, CAR_RENTAL_PROVIDERS, PROGRAM_IDS, PROGRAM_CATEGORIES } from './data/affiliates.js';
 
 class App {
   constructor() {
@@ -533,9 +533,15 @@ class App {
 
       const cardsHTML = partners.map(partner => {
         const baseLink = linkGenerator.getPartnerBaseLink(siteCode, partner);
+        const programId = PROGRAM_IDS[partner] || '—';
+        const category = PROGRAM_CATEGORIES[partner] || 'ALTRO';
         return `
           <div class="program-card">
             <div class="program-card-body">
+              <div class="program-card-meta">
+                <span class="program-badge program-badge--${category.toLowerCase().replace(/\s+/g, '-')}">${category}</span>
+                <span class="program-id">ID: ${programId}</span>
+              </div>
               <h4 class="program-card-title">${this.escapeHtml(partner)}</h4>
               <p class="program-card-link">${baseLink ? new URL(baseLink).hostname : 'tradedoubler.com'}</p>
             </div>
