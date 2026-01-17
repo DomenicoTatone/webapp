@@ -187,6 +187,53 @@
     outline: none;
 }
 
+/* Small variant for inline usage */
+.form-select-sm {
+    width: auto;
+    min-width: 100px;
+    padding: var(--space-2) var(--space-3);
+    padding-right: var(--space-8);
+    font-size: var(--font-size-sm);
+}
+
+/* Integrated Actions Layout */
+.integrated-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
+.integrated-actions .form-select-sm {
+    flex-shrink: 0;
+}
+
+.integrated-actions .button-group {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+    .integrated-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .integrated-actions .form-select-sm {
+        width: 100%;
+    }
+
+    .integrated-actions .button-group {
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    .integrated-actions .button-group .btn {
+        flex: 1;
+    }
+}
+
 /* Alerts */
 .alert {
     padding: var(--space-4) var(--space-5);

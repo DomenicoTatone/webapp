@@ -545,25 +545,22 @@ class App {
       <!-- Homepage Links Section -->
       <div class="card">
         <h3 class="section-title" data-i18n="homepageLinks">Link Homepage</h3>
-        <div class="form-row">
-          <div class="form-group flex-1">
-            <label class="form-label" data-i18n="linkLanguage">Lingua Link</label>
-            <select id="gygLangSelect" class="form-select">
-              <option value="it">IT</option>
-              <option value="es">ES</option>
-              <option value="en">EN</option>
-              <option value="fr">FR</option>
-            </select>
-          </div>
-        </div>
         <div id="gygHomepageResult" class="result-container">
           <label class="form-label" data-i18n="affiliateLink">Link Affiliato</label>
           <div class="result-box">
             <a id="gygHomepageLink" href="#" target="_blank" class="result-link"></a>
           </div>
-          <div class="button-group mt-4">
-            <button id="gygHomepageCopyBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
-            <button id="gygHomepageOpenBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
+          <div class="integrated-actions mt-4">
+            <select id="gygLangSelect" class="form-select form-select-sm">
+              <option value="it">🇮🇹 IT</option>
+              <option value="es">🇪🇸 ES</option>
+              <option value="en">🇬🇧 EN</option>
+              <option value="fr">🇫🇷 FR</option>
+            </select>
+            <div class="button-group">
+              <button id="gygHomepageCopyBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
+              <button id="gygHomepageOpenBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
+            </div>
           </div>
         </div>
       </div>
@@ -672,25 +669,22 @@ class App {
       <!-- Homepage Links Section -->
       <div class="card">
         <h3 class="section-title" data-i18n="homepageLinks">Link Homepage</h3>
-        <div class="form-row">
-          <div class="form-group flex-1">
-            <label class="form-label" data-i18n="linkLanguage">Lingua Link</label>
-            <select id="civLangSelect" class="form-select">
-              <option value="it">IT</option>
-              <option value="es">ES</option>
-              <option value="en">EN</option>
-              <option value="fr">FR</option>
-            </select>
-          </div>
-        </div>
         <div id="civHomepageResult" class="result-container">
           <label class="form-label" data-i18n="affiliateLink">Link Affiliato</label>
           <div class="result-box">
             <a id="civHomepageLink" href="#" target="_blank" class="result-link"></a>
           </div>
-          <div class="button-group mt-4">
-            <button id="civHomepageCopyBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
-            <button id="civHomepageOpenBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
+          <div class="integrated-actions mt-4">
+            <select id="civLangSelect" class="form-select form-select-sm">
+              <option value="it">🇮🇹 IT</option>
+              <option value="es">🇪🇸 ES</option>
+              <option value="en">🇬🇧 EN</option>
+              <option value="fr">🇫🇷 FR</option>
+            </select>
+            <div class="button-group">
+              <button id="civHomepageCopyBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
+              <button id="civHomepageOpenBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
+            </div>
           </div>
         </div>
       </div>
@@ -797,33 +791,30 @@ class App {
       </div>
 
       <div class="card">
-        <div class="form-row">
-          <div class="form-group flex-2">
-            <label class="form-label" data-i18n="selectProvider">Seleziona Noleggio</label>
-            <select id="carProviderSelect" class="form-select">
-              ${CAR_RENTAL_PROVIDERS.map((p, i) => `<option value="${i}">${p.name}</option>`).join('')}
-            </select>
-          </div>
-          <div class="form-group flex-1">
-            <label class="form-label" data-i18n="linkLanguage">Lingua Link</label>
-            <select id="carLangSelect" class="form-select">
-              <option value="it">IT</option>
-              <option value="es">ES</option>
-              <option value="en">EN</option>
-              <option value="fr">FR</option>
-              <option value="de">DE</option>
-            </select>
-          </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="selectProvider">Seleziona Noleggio</label>
+          <select id="carProviderSelect" class="form-select">
+            ${CAR_RENTAL_PROVIDERS.map((p, i) => `<option value="${i}">${p.name}</option>`).join('')}
+          </select>
         </div>
 
-        <div id="carLinkContainer" class="result-container">
+        <div id="carLinkContainer" class="result-container mt-6">
           <label class="form-label" data-i18n="affiliateLink">Link Affiliato</label>
           <div class="result-box">
             <a id="carResultLink" href="#" target="_blank" class="result-link"></a>
           </div>
-          <div class="button-group mt-4">
-            <button id="carCopyBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
-            <button id="carOpenBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
+          <div class="integrated-actions mt-4">
+            <select id="carLangSelect" class="form-select form-select-sm">
+              <option value="it">🇮🇹 IT</option>
+              <option value="es">🇪🇸 ES</option>
+              <option value="en">🇬🇧 EN</option>
+              <option value="fr">🇫🇷 FR</option>
+              <option value="de">🇩🇪 DE</option>
+            </select>
+            <div class="button-group">
+              <button id="carCopyBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
+              <button id="carOpenBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
+            </div>
           </div>
         </div>
 
