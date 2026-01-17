@@ -98,22 +98,34 @@ class App {
         <span class="badge badge-warning" data-i18n="spainIslandsOnly">⚠️ Solo Spagna e Isole</span>
       </div>
       
-      <div class="card">
-        <div class="form-group">
-          <label class="form-label" data-i18n="pageType">Tipo Pagina</label>
-          <select id="pageTypeSelect" class="form-select">
-            <option value="cityPage" data-i18n="cityPage">Pagina Città</option>
-            <option value="hotelPage" data-i18n="hotelPage">Pagina Hotel</option>
-            <option value="airportPage" data-i18n="airportPage">Pagina Aeroporto</option>
-            <option value="districtPage" data-i18n="districtPage">Pagina Quartiere</option>
-            <option value="islandPage" data-i18n="islandPage">Pagina Isola</option>
-            <option value="landmarkPage" data-i18n="landmarkPage">Pagina Luogo</option>
-            <option value="regionPage" data-i18n="regionPage">Pagina Regione</option>
-            <option value="genericLandingPages" data-i18n="genericLandingPages">Pagina Generica</option>
-          </select>
+      <div class="card booking-unified-card">
+        <!-- Top Controls Row -->
+        <div class="booking-controls">
+          <div class="booking-control-group">
+            <select id="pageTypeSelect" class="form-select form-select-sm">
+              <option value="cityPage" data-i18n="cityPage">Pagina Città</option>
+              <option value="hotelPage" data-i18n="hotelPage">Pagina Hotel</option>
+              <option value="airportPage" data-i18n="airportPage">Pagina Aeroporto</option>
+              <option value="districtPage" data-i18n="districtPage">Pagina Quartiere</option>
+              <option value="islandPage" data-i18n="islandPage">Pagina Isola</option>
+              <option value="landmarkPage" data-i18n="landmarkPage">Pagina Luogo</option>
+              <option value="regionPage" data-i18n="regionPage">Pagina Regione</option>
+              <option value="genericLandingPages" data-i18n="genericLandingPages">Pagina Generica</option>
+            </select>
+            <select id="bookingLangSelect" class="form-select form-select-sm">
+              <option value="it">🇮🇹 IT</option>
+              <option value="es">🇪🇸 ES</option>
+              <option value="en">🇬🇧 EN</option>
+              <option value="fr">🇫🇷 FR</option>
+            </select>
+          </div>
+          <input type="text" id="searchInput" class="form-control" 
+                 data-i18n-placeholder="searchPlaceholder" 
+                 placeholder="Cerca...">
         </div>
 
-        <div class="form-group" id="subTypeGroup">
+        <!-- Sub Type Radio (when applicable) -->
+        <div class="form-group" id="subTypeGroup" style="display:none;">
           <div class="radio-group">
             <label class="radio-label">
               <input type="radio" name="subType" value="searchResults" checked>
@@ -126,45 +138,32 @@ class App {
           </div>
         </div>
 
-        <div class="form-group" id="searchGroup">
-          <input type="text" id="searchInput" class="form-control" 
-                 data-i18n-placeholder="searchPlaceholder" 
-                 placeholder="Cerca...">
-          <div id="searchHint" class="search-hint" data-i18n="searchMinChars">Digita almeno 3 caratteri per cercare</div>
+        <!-- Search Hint -->
+        <div id="searchHint" class="search-hint" data-i18n="searchMinChars">Digita almeno 3 caratteri per cercare</div>
+
+        <!-- Loading State (inline) -->
+        <div id="loadingState" class="loading-inline" style="display:none;">
+          <div class="loading-spinner"></div>
+          <span data-i18n="loadingData">Caricamento dati...</span>
         </div>
-      </div>
 
-      <!-- Loading State -->
-      <div id="loadingState" class="card mt-6 loading-card" style="display:none;">
-        <div class="loading-spinner"></div>
-        <span data-i18n="loadingData">Caricamento dati...</span>
-      </div>
-
-      <!-- Error State -->
-      <div id="errorState" class="card mt-6 error-card" style="display:none;">
-        <div class="error-icon">⚠️</div>
-        <p id="errorMessage" data-i18n="errorLoadingData">Errore nel caricamento</p>
-        <button id="retryBtn" class="btn btn-primary" data-i18n="retryLoad">Riprova</button>
-      </div>
-
-      <!-- Results Container -->
-      <div id="resultsCard" class="card mt-6" style="display:none;">
-        <div class="results-header">
-          <h3 class="card-title" id="resultsTitle"></h3>
-          <div class="integrated-actions">
-            <select id="bookingLangSelect" class="form-select form-select-sm">
-              <option value="it">🇮🇹 IT</option>
-              <option value="es">🇪🇸 ES</option>
-              <option value="en">🇬🇧 EN</option>
-              <option value="fr">🇫🇷 FR</option>
-            </select>
-            <span id="resultsCount" class="results-count"></span>
-          </div>
+        <!-- Error State (inline) -->
+        <div id="errorState" class="error-inline" style="display:none;">
+          <span class="error-icon">⚠️</span>
+          <span id="errorMessage" data-i18n="errorLoadingData">Errore nel caricamento</span>
+          <button id="retryBtn" class="btn btn-sm btn-primary" data-i18n="retryLoad">Riprova</button>
         </div>
+
+        <!-- Results Header -->
+        <div id="resultsHeader" class="results-header" style="display:none;">
+          <span id="resultsCount" class="results-count"></span>
+        </div>
+
+        <!-- Results Container -->
         <div id="resultsContainer" class="results-list"></div>
       </div>
 
-      <!-- Generic Landing Pages -->
+      <!-- Generic Landing Pages (separate card) -->
       <div class="card mt-6" id="landingLinksCard" style="display:none;">
         <h3 class="card-title" data-i18n="genericLandingPages">Link Generici</h3>
         <div id="landingLinks" class="link-list"></div>
