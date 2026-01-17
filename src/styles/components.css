@@ -300,8 +300,14 @@
     flex-shrink: 0;
 }
 
+.booking-control-group .custom-select {
+    width: auto;
+    min-width: fit-content;
+}
+
 .booking-controls .form-control {
     flex: 1;
+    min-width: 0;
 }
 
 /* Inline Loading State */
