@@ -6,6 +6,9 @@
 import './styles/base.css';
 import './styles/components.css';
 import './styles/app.css';
+import './styles/custom-select.css';
+
+import { CustomSelect } from './components/CustomSelect.js';
 
 import { i18n } from './services/I18nService.js';
 import { linkGenerator } from './services/LinkGeneratorService.js';
@@ -177,6 +180,15 @@ class App {
     const searchGroup = document.getElementById('searchGroup');
     const searchInput = document.getElementById('searchInput');
     const landingLinksCard = document.getElementById('landingLinksCard');
+
+    // Initialize Custom Select dropdowns for premium look
+    if (pageTypeSelect) {
+      new CustomSelect(pageTypeSelect);
+    }
+    const bookingLangSelectEl = document.getElementById('bookingLangSelect');
+    if (bookingLangSelectEl) {
+      new CustomSelect(bookingLangSelectEl);
+    }
 
     // Handle page type change
     const handlePageTypeChange = async () => {
