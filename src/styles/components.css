@@ -926,13 +926,13 @@
    ============================================ */
 
 .page-status {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--space-2);
     min-height: 44px;
     padding: 0 var(--space-4);
-    margin-bottom: var(--space-4);
+    margin: 0 auto var(--space-4);
     border-radius: var(--radius-md);
     font-size: var(--font-size-sm);
     font-weight: 500;
@@ -940,6 +940,8 @@
     border: 1px dashed var(--color-border);
     color: transparent;
     transition: all 0.25s ease;
+    width: fit-content;
+    max-width: 100%;
 }
 
 /* Empty state - subtle placeholder */
