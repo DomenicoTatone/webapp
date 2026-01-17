@@ -174,8 +174,8 @@ class App {
   async initBookingPage() {
     const pageTypeSelect = document.getElementById('pageTypeSelect');
     const subTypeGroup = document.getElementById('subTypeGroup');
-    const searchGroup = document.getElementById('searchGroup');
     const searchInput = document.getElementById('searchInput');
+    const searchHint = document.getElementById('searchHint');
     const landingLinksCard = document.getElementById('landingLinksCard');
 
     // Initialize Custom Select dropdowns for premium look
@@ -195,9 +195,11 @@ class App {
 
       // Update UI visibility
       subTypeGroup.style.display = hasSubType ? 'block' : 'none';
-      searchGroup.style.display = isGeneric ? 'none' : 'block';
+      searchInput.style.display = isGeneric ? 'none' : 'block';
+      if (searchHint) searchHint.style.display = isGeneric ? 'none' : 'block';
       landingLinksCard.style.display = isGeneric ? 'block' : 'none';
-      document.getElementById('resultsCard').style.display = 'none';
+      document.getElementById('resultsHeader').style.display = 'none';
+      document.getElementById('resultsContainer').innerHTML = '';
       document.getElementById('errorState').style.display = 'none';
 
       if (isGeneric) {
@@ -278,12 +280,14 @@ class App {
   setBookingUIState(state) {
     const loadingState = document.getElementById('loadingState');
     const errorState = document.getElementById('errorState');
-    const resultsCard = document.getElementById('resultsCard');
+    const resultsHeader = document.getElementById('resultsHeader');
+    const resultsContainer = document.getElementById('resultsContainer');
     const searchHint = document.getElementById('searchHint');
 
     loadingState.style.display = state === 'loading' ? 'flex' : 'none';
     errorState.style.display = state === 'error' ? 'flex' : 'none';
-    resultsCard.style.display = 'none';
+    resultsHeader.style.display = 'none';
+    resultsContainer.innerHTML = '';
 
     if (searchHint) {
       searchHint.style.display = state === 'ready' ? 'block' : 'none';
@@ -293,14 +297,14 @@ class App {
   performSearch(query) {
     if (!this.bookingState.data) return;
 
-    const resultsCard = document.getElementById('resultsCard');
+    const resultsHeader = document.getElementById('resultsHeader');
     const resultsContainer = document.getElementById('resultsContainer');
     const resultsCount = document.getElementById('resultsCount');
-    const resultsTitle = document.getElementById('resultsTitle');
     const searchHint = document.getElementById('searchHint');
 
     if (!query || query.length < 3) {
-      resultsCard.style.display = 'none';
+      resultsHeader.style.display = 'none';
+      resultsContainer.innerHTML = '';
       if (searchHint) searchHint.style.display = 'block';
       return;
     }
@@ -311,9 +315,8 @@ class App {
     const results = bookingData.search(query, this.bookingState.data, 50);
 
     if (results.length === 0) {
-      resultsCard.style.display = 'block';
-      resultsTitle.textContent = '';
-      resultsCount.textContent = '';
+      resultsHeader.style.display = 'flex';
+      resultsCount.textContent = i18n.t('noResultsFound');
       resultsContainer.innerHTML = `
         <div class="empty-state">
           <span class="empty-icon">🔍</span>
@@ -324,7 +327,7 @@ class App {
     }
 
     // Render results
-    resultsCard.style.display = 'block';
+    resultsHeader.style.display = 'flex';
     resultsCount.textContent = `${results.length} ${i18n.t('resultsFound')}`;
 
     resultsContainer.innerHTML = results.map(item => {
