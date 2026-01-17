@@ -20,9 +20,10 @@
 
 /* Compact variant for inline usage */
 .custom-select--compact,
-.integrated-actions .custom-select {
+.integrated-actions .custom-select,
+.booking-control-group .custom-select {
     width: auto;
-    min-width: 120px;
+    min-width: fit-content;
     flex-shrink: 0;
 }
 
@@ -96,7 +97,8 @@
     position: absolute;
     top: calc(100% + 4px);
     left: 0;
-    right: 0;
+    min-width: 100%;
+    width: max-content;
     background: var(--color-white);
     border: 2px solid var(--color-primary);
     border-radius: var(--radius-lg);
@@ -104,7 +106,7 @@
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px);
-    transition: all var(--transition-normal);
+    transition: opacity var(--transition-normal), visibility var(--transition-normal), transform var(--transition-normal);
     z-index: 9999;
     overflow: hidden;
 }
