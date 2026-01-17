@@ -54,21 +54,24 @@ export const PROGRAM_IDS = {
   "Viaggi in crociera": "341133"
 };
 
-// Program categories from Tradedoubler
+// Program categories from Tradedoubler screenshots
 export const PROGRAM_CATEGORIES = {
-  // Viaggi
+  // Formentera (3220593) - eDreams has VIAGGI + 2 OTHERS
   "eDreams": "VIAGGI",
+
+  // Lanzarote (3337668)
   "Direct Ferries IT": "VIAGGI",
-  "Direct Ferries ES": "VIAGGI",
-  "Direct Ferries UK": "VIAGGI",
-  "Vueling IT": "VIAGGI",
-  "Vueling UK": "VIAGGI",
+
+  // Minorca IT (1639250) - from screenshot 180325
+  "Allianz Partners": "ASSICURAZIONI, VIAGGI",
+  "AXA Assistance": "ASSICURAZIONI",
+  "Barceló Hotels & Resorts": "VIAGGI",
+  "Columbus Assicurazioni": "FINANZA",
   "Veratour": "VIAGGI",
+  "Viaggisicuri": "ASSICURAZIONI",
   "Yalla Yalla": "VIAGGI",
-  "Eurowings IT": "VIAGGI",
-  "Grandi Navi Veloci IT": "VIAGGI",
-  "Viaggi in crociera": "VIAGGI",
-  "Vayacruceros ES": "VIAGGI",
+
+  // Minorca EN (3349565) - from screenshot 180337
   "Airport Parking Luton": "VIAGGI",
   "Airport Parking Manchester": "VIAGGI",
   "Airport Parking With Us": "VIAGGI",
@@ -76,20 +79,19 @@ export const PROGRAM_CATEGORIES = {
   "Compare Cheap Parking Prices At M...": "VIAGGI",
   "Compare Parking Prices": "VIAGGI",
   "Compare Your Parking Deals": "VIAGGI",
+  "Direct Ferries UK": "VIAGGI",
+  "Muslim Aid": "ORGANIZZAZIONI NO PROFIT",
 
-  // Assicurazioni
-  "Allianz Partners": "ASSICURAZIONI",
-  "AXA Assistance": "ASSICURAZIONI",
-  "AXA Seguros de Viaje": "ASSICURAZIONI",
-  "Columbus Assicurazioni": "FINANZA",
-  "Viaggisicuri": "ASSICURAZIONI",
-  "InterMundial": "ASSICURAZIONI",
+  // Minorca ES (3349567) - from screenshot 180345
+  "AXA Seguros de Viaje": "VIAGGI",
+  "Direct Ferries ES": "VIAGGI",
+  "InterMundial": "ASSICURAZIONI, VIAGGI",
+  "Vayacruceros ES": "VIAGGI",
 
-  // Hotels
-  "Barceló Hotels & Resorts": "VIAGGI",
-
-  // No Profit
-  "Muslim Aid": "ORGANIZZAZIONI NO PROFIT"
+  // Vacanze nel Mediterraneo (3335968) - from screenshot 180352
+  "Eurowings IT": "VIAGGI",
+  "Grandi Navi Veloci IT": "VIAGGI",
+  "Viaggi in crociera": "VIAGGI"
 };
 
 export const AFFILIATE_PARTNERS = {
