@@ -72,6 +72,8 @@ class BookingDataService {
     constructor() {
         this.dataCache = new Map();
         this.loadingPromises = new Map();
+        this.STORAGE_PREFIX = 'bookingData_';
+        this.CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
     }
 
     /**
@@ -82,31 +84,80 @@ class BookingDataService {
     }
 
     /**
+     * Try to get data from localStorage
+     */
+    getFromStorage(cacheKey) {
+        try {
+            const stored = localStorage.getItem(this.STORAGE_PREFIX + cacheKey);
+            if (!stored) return null;
+
+            const { data, timestamp } = JSON.parse(stored);
+            const age = Date.now() - timestamp;
+
+            if (age > this.CACHE_EXPIRY_MS) {
+                localStorage.removeItem(this.STORAGE_PREFIX + cacheKey);
+                console.log(`[BookingData] Storage expired for ${cacheKey}`);
+                return null;
+            }
+
+            console.log(`[BookingData] Storage hit for ${cacheKey} (age: ${Math.round(age / 60000)}min)`);
+            return data;
+        } catch (e) {
+            console.warn('[BookingData] Storage read error:', e);
+            return null;
+        }
+    }
+
+    /**
+     * Save data to localStorage
+     */
+    saveToStorage(cacheKey, data) {
+        try {
+            const payload = JSON.stringify({
+                data,
+                timestamp: Date.now()
+            });
+            localStorage.setItem(this.STORAGE_PREFIX + cacheKey, payload);
+            console.log(`[BookingData] Saved to storage: ${cacheKey}`);
+        } catch (e) {
+            console.warn('[BookingData] Storage write error:', e);
+        }
+    }
+
+    /**
      * Load data for a page type with caching
-     * Returns a promise that resolves to the data array
+     * Priority: Memory Cache → LocalStorage → Network
      */
     async loadData(pageType, language, subType = null) {
         const cacheKey = this.getCacheKey(pageType, language, subType);
 
-        // Return cached data if available
+        // 1. Check memory cache (fastest)
         if (this.dataCache.has(cacheKey)) {
-            console.log(`[BookingData] Cache hit for ${cacheKey}`);
+            console.log(`[BookingData] Memory cache hit for ${cacheKey}`);
             return this.dataCache.get(cacheKey);
         }
 
-        // Return existing loading promise if already loading
+        // 2. Check localStorage (survives reload)
+        const storedData = this.getFromStorage(cacheKey);
+        if (storedData) {
+            this.dataCache.set(cacheKey, storedData); // Populate memory cache
+            return storedData;
+        }
+
+        // 3. Return existing loading promise if already loading
         if (this.loadingPromises.has(cacheKey)) {
             console.log(`[BookingData] Waiting for existing load: ${cacheKey}`);
             return this.loadingPromises.get(cacheKey);
         }
 
-        // Start new load
+        // 4. Fetch from network
         const loadPromise = this._fetchData(pageType, language, subType);
         this.loadingPromises.set(cacheKey, loadPromise);
 
         try {
             const data = await loadPromise;
             this.dataCache.set(cacheKey, data);
+            this.saveToStorage(cacheKey, data); // Persist to localStorage
             console.log(`[BookingData] Loaded ${data.length} items for ${cacheKey}`);
             return data;
         } finally {
