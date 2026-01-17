@@ -361,13 +361,19 @@
     border-radius: var(--radius-full);
 }
 
+/* Results Card - flex container for full height */
+#resultsCard {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
 /* Results List */
 .results-list {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
-    min-height: 300px;
-    max-height: 500px;
+    flex: 1;
     overflow-y: auto;
 }
 
