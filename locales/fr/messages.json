@@ -1,6 +1,7 @@
 {
     "appName": "DeepLink Pro",
     "bookingHeader": "Rechercher le Deep Link de Booking",
+    "spainIslandsOnly": "⚠️ Espagne et Îles uniquement",
     "usefulTLinksHeader": "Programmes Actifs",
     "pageType": "Type de Page",
     "searchPlaceholder": "Rechercher...",
