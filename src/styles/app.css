@@ -572,16 +572,162 @@
     opacity: 1;
 }
 
+/* ============================================
+   MOBILE RESPONSIVE - PRO DESIGN
+   ============================================ */
+
 @media (max-width: 768px) {
+
+    /* Header - Compact layout */
+    .app-header {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .logo {
+        font-size: var(--font-size-lg);
+    }
+
+    .logo-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+
+    /* Navigation - Horizontal scroll */
+    .header-nav {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        justify-content: flex-start;
+        padding-bottom: var(--space-2);
+    }
+
+    .header-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-link {
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--font-size-sm);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* Language selector - Compact */
+    .language-selector {
+        order: -1;
+    }
+
+    .language-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    /* Main content - Reduced padding */
+    .app-main {
+        padding: var(--space-4);
+    }
+
+    /* Page header - Smaller */
+    .page-header h2 {
+        font-size: var(--font-size-xl);
+    }
+
+    .page-header .badge {
+        font-size: 10px;
+        padding: var(--space-1) var(--space-2);
+    }
+
+    /* Cards - Reduced padding */
+    .card {
+        padding: var(--space-4);
+    }
+
+    /* Booking controls - Stacked */
+    .booking-controls {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .booking-control-group {
+        width: 100%;
+    }
+
+    .booking-control-group .custom-select {
+        flex: 1;
+    }
+
+    .booking-controls .form-control {
+        width: 100%;
+    }
+
+    /* Radio buttons - Stacked */
+    .radio-group {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    /* Result cards - Compact */
+    .result-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+
+    .result-actions {
+        width: 100%;
+        display: flex;
+        gap: var(--space-2);
+    }
+
+    .result-actions .btn {
+        flex: 1;
+    }
+
+    /* Footer - Compact */
+    .app-footer {
+        padding: var(--space-4);
+        font-size: var(--font-size-xs);
+    }
+
+    /* FAB - Bottom right but higher than footer */
     .fab {
-        bottom: 20px;
-        right: 20px;
-        width: 56px;
-        height: 56px;
-        font-size: 24px;
+        bottom: 80px;
+        right: 16px;
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
     }
 
     .fab::after {
         display: none;
+    }
+
+    /* Integrated actions - Stacked on mobile */
+    .integrated-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: var(--space-2);
+    }
+
+    .integrated-actions .custom-select {
+        width: 100%;
+    }
+
+    /* Form row - Stacked */
+    .form-row {
+        flex-direction: column;
+    }
+
+    /* Unified card min-height reduced */
+    .booking-unified-card {
+        min-height: 400px;
     }
 }
