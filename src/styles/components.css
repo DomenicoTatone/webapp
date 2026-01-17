@@ -882,3 +882,111 @@
 .result-link:hover {
     text-decoration: underline;
 }
+
+/* ============================================
+   PAGE STATUS BAR - Fixed Reserved Space
+   ============================================ */
+
+.page-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    padding: 0 var(--space-4);
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    background: var(--color-gray-100);
+    border: 1px dashed var(--color-border);
+    color: transparent;
+    transition: all 0.25s ease;
+}
+
+/* Empty state - subtle placeholder */
+.page-status:empty,
+.page-status:not(.page-status--visible) {
+    background: transparent;
+    border-color: transparent;
+}
+
+/* Visible with message */
+.page-status--visible {
+    color: inherit;
+}
+
+.page-status__icon {
+    font-size: var(--font-size-base);
+    flex-shrink: 0;
+}
+
+.page-status__message {
+    flex: 1;
+    text-align: center;
+}
+
+/* Status types */
+.page-status--success {
+    background: var(--color-success-light);
+    color: #14532d;
+    border: 1px solid var(--color-success);
+}
+
+.page-status--error {
+    background: var(--color-danger-light);
+    color: #7f1d1d;
+    border: 1px solid var(--color-danger);
+}
+
+.page-status--warning {
+    background: var(--color-warning-light);
+    color: #713f12;
+    border: 1px solid var(--color-warning);
+}
+
+.page-status--info {
+    background: #e0f2fe;
+    color: #0c4a6e;
+    border: 1px solid var(--color-secondary);
+}
+
+/* ============================================
+   IMAGE TOOL CONTROLS - Flex Row Layout
+   ============================================ */
+
+.image-controls {
+    display: flex;
+    gap: var(--space-6);
+    align-items: flex-start;
+    margin-top: var(--space-6);
+}
+
+.image-controls__quality {
+    flex: 2;
+    min-width: 0;
+}
+
+.image-controls__format {
+    flex: 1;
+    min-width: 180px;
+}
+
+.image-controls__format .form-select {
+    width: 100%;
+}
+
+/* Mobile: Stack vertically */
+@media (max-width: 768px) {
+    .image-controls {
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .image-controls__quality,
+    .image-controls__format {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+    }
+}

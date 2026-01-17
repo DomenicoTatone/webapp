@@ -1,80 +1,71 @@
 /**
- * Notification Service - Toast notifications
+ * Notification Service - Inline Status Bar
+ * Shows contextual messages above each page's main card
  */
 
 class NotificationService {
     constructor() {
-        this.container = null;
+        this.currentTimeout = null;
     }
 
-    init() {
-        if (this.container) return;
+    /**
+     * Show an inline status message in the page's status bar
+     * @param {string} message - The message to display
+     * @param {string} type - success | error | warning | info
+     * @param {number} duration - Auto-dismiss duration in ms (0 = no auto-dismiss)
+     */
+    show(message, type = 'info', duration = 4000) {
+        // Find the page status container (should exist in rendered page)
+        let statusBar = document.getElementById('page-status');
 
-        this.container = document.createElement('div');
-        this.container.id = 'notification-container';
-        this.container.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-width: 400px;
-    `;
-        document.body.appendChild(this.container);
-
-        // Add animation styles
-        if (!document.getElementById('toast-styles')) {
-            const style = document.createElement('style');
-            style.id = 'toast-styles';
-            style.textContent = `
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
-      `;
-            document.head.appendChild(style);
+        // Fallback: create one if not found (legacy behavior)
+        if (!statusBar) {
+            const pageContent = document.getElementById('page-content');
+            if (pageContent) {
+                statusBar = document.createElement('div');
+                statusBar.id = 'page-status';
+                statusBar.className = 'page-status';
+                pageContent.insertBefore(statusBar, pageContent.firstChild);
+            } else {
+                console.warn('No page-status element found');
+                return;
+            }
         }
-    }
 
-    show(message, type = 'info', duration = 3000) {
-        this.init();
+        // Clear any existing timeout
+        if (this.currentTimeout) {
+            clearTimeout(this.currentTimeout);
+        }
 
-        const toast = document.createElement('div');
         const icons = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
-        const colors = {
-            success: { bg: '#d4edda', border: '#28a745', text: '#155724' },
-            error: { bg: '#f8d7da', border: '#dc3545', text: '#721c24' },
-            warning: { bg: '#fff3cd', border: '#ffc107', text: '#856404' },
-            info: { bg: '#d1ecf1', border: '#17a2b8', text: '#0c5460' }
-        };
-        const color = colors[type] || colors.info;
 
-        toast.style.cssText = `
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 20px;
-      background-color: ${color.bg};
-      border-left: 4px solid ${color.border};
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      color: ${color.text};
-      font-size: 14px; font-weight: 500;
-      animation: slideIn 0.3s ease;
-      cursor: pointer;
-    `;
+        // Set content and styling
+        statusBar.innerHTML = `
+            <span class="page-status__icon">${icons[type] || icons.info}</span>
+            <span class="page-status__message">${message}</span>
+        `;
+        statusBar.className = `page-status page-status--${type} page-status--visible`;
 
-        toast.innerHTML = `<span style="font-size: 18px;">${icons[type]}</span><span>${message}</span>`;
-        toast.addEventListener('click', () => this.dismiss(toast));
-        this.container.appendChild(toast);
-
+        // Auto-dismiss after duration
         if (duration > 0) {
-            setTimeout(() => this.dismiss(toast), duration);
+            this.currentTimeout = setTimeout(() => {
+                this.dismiss();
+            }, duration);
         }
-        return toast;
     }
 
-    dismiss(toast) {
-        toast.style.animation = 'slideOut 0.3s ease forwards';
-        setTimeout(() => toast.remove(), 300);
+    dismiss() {
+        const statusBar = document.getElementById('page-status');
+        if (statusBar) {
+            statusBar.classList.remove('page-status--visible');
+            // Clear content after fade animation (fixed space remains)
+            setTimeout(() => {
+                if (!statusBar.classList.contains('page-status--visible')) {
+                    statusBar.innerHTML = '';
+                    statusBar.className = 'page-status';
+                }
+            }, 250);
+        }
     }
 
     success(message, duration) { return this.show(message, 'success', duration); }
@@ -85,3 +76,4 @@ class NotificationService {
 
 export const notifications = new NotificationService();
 export default notifications;
+

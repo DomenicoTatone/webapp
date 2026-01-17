@@ -82,5 +82,12 @@
     "messageReceived": "Il tuo messaggio è stato ricevuto. Ti risponderemo presto.",
     "sendAnother": "Invia un altro",
     "messageSent": "Messaggio inviato!",
-    "sendError": "Errore nell'invio. Per favore riprova."
+    "sendError": "Errore nell'invio. Per favore riprova.",
+    "formatJpeg": "JPEG (consigliato)",
+    "formatWebp": "WebP (moderno)",
+    "formatPng": "PNG (lossless)",
+    "programsActive": "programmi attivi",
+    "urlPlaceholder": "https://www.edreams.it/...",
+    "autoDetectNote": "Incolla un URL e il programma verrà riconosciuto automaticamente",
+    "selectSiteToViewPrograms": "Seleziona un sito per vedere i programmi attivi"
 }

@@ -120,18 +120,41 @@ class App {
       link.classList.toggle('active', link.dataset.page === pageName);
     });
 
-    const pages = {
-      booking: () => { content.innerHTML = this.renderBookingPage(); this.initBookingPage(); },
-      tradedoubler: () => { content.innerHTML = this.renderTradedoublerPage(); this.initTradedoublerPage(); },
-      getyourguide: () => { content.innerHTML = this.renderGetYourGuidePage(); this.initGetYourGuidePage(); },
-      civitatis: () => { content.innerHTML = this.renderCivitatisPage(); this.initCivitatisPage(); },
-      carrental: () => { content.innerHTML = this.renderCarRentalPage(); this.initCarRentalPage(); },
-      imgtool: () => { content.innerHTML = this.renderImageToolPage(); this.initImageToolPage(); },
-      feedback: () => { content.innerHTML = this.renderFeedbackPage(); this.initFeedbackPage(); }
+    // Render phase: set innerHTML with data-i18n attributes
+    const renderers = {
+      booking: () => this.renderBookingPage(),
+      tradedoubler: () => this.renderTradedoublerPage(),
+      getyourguide: () => this.renderGetYourGuidePage(),
+      civitatis: () => this.renderCivitatisPage(),
+      carrental: () => this.renderCarRentalPage(),
+      imgtool: () => this.renderImageToolPage(),
+      feedback: () => this.renderFeedbackPage()
     };
 
-    (pages[pageName] || (() => { content.innerHTML = '<p>Page not found</p>'; }))();
+    const renderer = renderers[pageName];
+    if (renderer) {
+      content.innerHTML = renderer();
+    } else {
+      content.innerHTML = '<p>Page not found</p>';
+      return;
+    }
+
+    // Translate FIRST so CustomSelect sees localized text
     i18n.translatePage();
+
+    // Init phase: attach event listeners and CustomSelect AFTER translation
+    const initializers = {
+      booking: () => this.initBookingPage(),
+      tradedoubler: () => this.initTradedoublerPage(),
+      getyourguide: () => this.initGetYourGuidePage(),
+      civitatis: () => this.initCivitatisPage(),
+      carrental: () => this.initCarRentalPage(),
+      imgtool: () => this.initImageToolPage(),
+      feedback: () => this.initFeedbackPage()
+    };
+
+    const initializer = initializers[pageName];
+    if (initializer) initializer();
   }
 
   // ============================================
@@ -144,6 +167,8 @@ class App {
         <h2 data-i18n="bookingHeader">Cerca il Deep Link di Booking</h2>
         <span class="badge badge-warning" data-i18n="spainIslandsOnly">⚠️ Solo Spagna e Isole</span>
       </div>
+      
+      <div id="page-status" class="page-status"></div>
       
       <div class="card booking-unified-card">
         <!-- Top Controls Row -->
@@ -452,6 +477,8 @@ class App {
         <h2 data-i18n="usefulTLinksHeader">I Programmi Attivi</h2>
       </div>
 
+      <div id="page-status" class="page-status"></div>
+
       <div class="card td-unified-card">
         <!-- Site Selector -->
         <div class="td-site-selector">
@@ -612,6 +639,8 @@ class App {
         <h2 data-i18n="GetYourGuideLink">Deep Link GetYourGuide</h2>
       </div>
 
+      <div id="page-status" class="page-status"></div>
+
       <!-- Homepage Links Section -->
       <div class="card">
         <h3 class="section-title" data-i18n="homepageLinks">Link Homepage</h3>
@@ -735,6 +764,8 @@ class App {
       <div class="page-header">
         <h2 data-i18n="CivitatisLink">Deep Link Civitatis</h2>
       </div>
+
+      <div id="page-status" class="page-status"></div>
 
       <!-- Homepage Links Section -->
       <div class="card">
@@ -860,6 +891,8 @@ class App {
         <h2 data-i18n="carRentalHeader">Noleggio Auto a Minorca</h2>
       </div>
 
+      <div id="page-status" class="page-status"></div>
+
       <div class="card">
         <div class="form-group">
           <label class="form-label" data-i18n="selectProvider">Seleziona Noleggio</label>
@@ -935,6 +968,8 @@ class App {
         <h2 data-i18n="imageToolHeader">Compressore di Immagini</h2>
       </div>
 
+      <div id="page-status" class="page-status"></div>
+
       <div class="card">
         <div id="dropZone" class="drop-zone">
           <div class="drop-zone-content">
@@ -948,22 +983,24 @@ class App {
           </div>
         </div>
 
-        <div class="form-group mt-6">
-          <label class="form-label" data-i18n="compressionQuality">Qualità Compressione</label>
-          <div class="slider-container">
-            <input type="range" id="qualitySlider" min="10" max="95" value="75" class="slider">
-            <span id="qualityValue" class="slider-value">75%</span>
+        <div class="image-controls">
+          <div class="form-group image-controls__quality">
+            <label class="form-label" data-i18n="compressionQuality">Qualità Compressione</label>
+            <div class="slider-container">
+              <input type="range" id="qualitySlider" min="10" max="95" value="75" class="slider">
+              <span id="qualityValue" class="slider-value">75%</span>
+            </div>
+            <p class="text-muted text-sm" data-i18n="qualityHint">Valori più bassi = file più piccoli, qualità ridotta</p>
           </div>
-          <p class="text-muted text-sm" data-i18n="qualityHint">Valori più bassi = file più piccoli, qualità ridotta</p>
-        </div>
 
-        <div class="form-group">
-          <label class="form-label" data-i18n="outputFormat">Formato Output</label>
-          <select id="formatSelect" class="form-select">
-            <option value="image/jpeg">JPEG (consigliato)</option>
-            <option value="image/webp">WebP (moderno)</option>
-            <option value="image/png">PNG (lossless)</option>
-          </select>
+          <div class="form-group image-controls__format">
+            <label class="form-label" data-i18n="outputFormat">Formato Output</label>
+            <select id="formatSelect" class="form-select">
+              <option value="image/jpeg" data-i18n="formatJpeg">JPEG (consigliato)</option>
+              <option value="image/webp" data-i18n="formatWebp">WebP (moderno)</option>
+              <option value="image/png" data-i18n="formatPng">PNG (lossless)</option>
+            </select>
+          </div>
         </div>
 
         <p class="note text-muted" style="font-style: italic;" data-i18n="imageToolNotice">La compressione avviene localmente nel browser. Le immagini non vengono caricate su nessun server.</p>
@@ -1211,6 +1248,8 @@ class App {
       <div class="page-header">
         <h2 data-i18n="feedbackHeader">💡 Segnalazioni e Suggerimenti</h2>
       </div>
+
+      <div id="page-status" class="page-status"></div>
 
       <div class="card feedback-card">
         <form id="feedbackForm" name="contact" method="POST" data-netlify="true">
