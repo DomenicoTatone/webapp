@@ -1,0 +1,28 @@
+<svg viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#667eea"/>
+      <stop offset="100%" stop-color="#764ba2"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  
+  <!-- Logo Container -->
+  <rect x="475" y="180" width="120" height="120" rx="24" fill="rgba(255,255,255,0.15)"/>
+  
+  <!-- Chain Link Icon (centered) -->
+  <g transform="translate(495, 200)">
+    <path d="M33.75 41.25a10 10 0 0 0 15.08 1.08l6-6a10 10 0 0 0-14.14-14.14l-3.43 3.43" 
+          stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M46.25 38.75a10 10 0 0 0-15.08-1.08l-6 6a10 10 0 0 0 14.14 14.14l3.43-3.43" 
+          stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+  
+  <!-- App Name -->
+  <text x="600" y="380" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="64" fill="white">DeepLink Pro</text>
+  
+  <!-- Tagline -->
+  <text x="600" y="440" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="400" font-size="28" fill="rgba(255,255,255,0.8)">Affiliate Link Generator</text>
+</svg>
