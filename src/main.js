@@ -1168,32 +1168,31 @@ class App {
   initFeedbackPage() {
     const form = document.getElementById('feedbackForm');
     const successMessage = document.getElementById('feedbackSuccess');
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgggwek';
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Get form values
-      const name = document.getElementById('feedbackName').value;
-      const email = document.getElementById('feedbackEmail').value;
-      const platform = document.getElementById('feedbackPlatform').value;
-      const message = document.getElementById('feedbackMessage').value;
+      const formData = new FormData(form);
 
-      // Build mailto link
-      const subject = encodeURIComponent(`[DeepLink Pro] Feedback - ${platform}`);
-      const body = encodeURIComponent(
-        `Nome: ${name}\n` +
-        `Email: ${email}\n` +
-        `Piattaforma: ${platform}\n\n` +
-        `Messaggio:\n${message}`
-      );
+      try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
 
-      // Open email client
-      window.location.href = `mailto:domenico.tatone@gmail.com?subject=${subject}&body=${body}`;
-
-      // Show success message
-      form.style.display = 'none';
-      successMessage.style.display = 'block';
-      notifications.success(i18n.t('messageSent'));
+        if (response.ok) {
+          form.style.display = 'none';
+          successMessage.style.display = 'block';
+          notifications.success(i18n.t('messageSent'));
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (error) {
+        console.error('Form error:', error);
+        notifications.error(i18n.t('sendError'));
+      }
     });
 
     document.getElementById('newFeedbackBtn')?.addEventListener('click', () => {
