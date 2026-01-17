@@ -3,18 +3,27 @@
  * Handles deep link generation and validation for affiliate programs
  */
 
-import { PARTNER_LINKS, VALIDATION_CRITERIA, ISLAND_NAMES } from '../data/affiliates.js';
+import { PARTNER_LINKS, VALIDATION_CRITERIA, ISLAND_NAMES, PROGRAM_IDS, PROGRAM_CATEGORIES } from '../data/affiliates.js';
 
 class LinkGeneratorService {
     /**
-     * Generate a Tradedoubler deep link
+     * Generate a Tradedoubler deep link (with auto-detection)
      */
-    generateDeepLink(inputUrl, islandCode, partnerName) {
+    generateDeepLink(inputUrl, islandCode, partnerName = null) {
         let parsedUrl;
         try {
             parsedUrl = new URL(inputUrl);
         } catch (e) {
             return { success: false, error: 'invalidUrl' };
+        }
+
+        // Auto-detect partner if not provided
+        if (!partnerName) {
+            const detected = this.detectPartnerFromUrl(inputUrl, islandCode);
+            if (!detected) {
+                return { success: false, error: 'partnerNotRecognized' };
+            }
+            partnerName = detected.partner;
         }
 
         const baseLink = this.getPartnerBaseLink(islandCode, partnerName);
@@ -32,7 +41,7 @@ class LinkGeneratorService {
         const encodedUrl = encodeURIComponent(parsedUrl.href);
         const deepLink = `${baseLink}&url=${encodedUrl}`;
 
-        return { success: true, link: deepLink };
+        return { success: true, link: deepLink, partner: partnerName };
     }
 
     /**
@@ -49,6 +58,25 @@ class LinkGeneratorService {
         const criteria = VALIDATION_CRITERIA[islandCode]?.[partnerName];
         if (!criteria) return true;
         return criteria.some(allowedUrl => url.includes(allowedUrl));
+    }
+
+    /**
+     * Auto-detect partner from URL using VALIDATION_CRITERIA
+     */
+    detectPartnerFromUrl(url, siteCode) {
+        const criteria = VALIDATION_CRITERIA[siteCode];
+        if (!criteria) return null;
+
+        for (const [partner, patterns] of Object.entries(criteria)) {
+            if (patterns.some(pattern => url.includes(pattern))) {
+                return {
+                    partner,
+                    programId: PROGRAM_IDS[partner] || null,
+                    category: PROGRAM_CATEGORIES[partner] || 'ALTRO'
+                };
+            }
+        }
+        return null;
     }
 
     /**

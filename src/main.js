@@ -467,18 +467,15 @@ class App {
             <span data-i18n="generateDeepLinkSection">Genera Deep Link Personalizzato</span>
           </summary>
           <div class="td-deeplink-content">
-            <div class="td-platform-row">
-              <select id="platformSelect" class="form-select" disabled>
-                <option value="" data-i18n="selectPlatform">Seleziona una piattaforma</option>
-              </select>
-            </div>
-            <div id="partnerLinkContainer" class="alert alert-info" style="display:none;">
-              <span id="partnerLink"></span>
+            <div class="td-info-note">
+              <span class="info-icon">ℹ️</span>
+              <span data-i18n="autoDetectNote">Incolla un URL e il programma verrà riconosciuto automaticamente</span>
             </div>
             <div class="td-input-row">
-              <input type="text" id="inputUrl" class="form-control" placeholder="https://..." data-i18n-placeholder="urlPlaceholder">
+              <input type="text" id="inputUrl" class="form-control" placeholder="https://www.edreams.it/..." data-i18n-placeholder="urlPlaceholder">
               <button id="generateBtn" class="btn btn-primary" data-i18n="generateLink">Genera</button>
             </div>
+            <div id="partnerFeedback" class="td-partner-feedback" style="display:none;"></div>
             <div id="resultContainer" class="td-result-section" style="display:none;">
               <div class="result-box">
                 <a id="resultLink" href="#" target="_blank" class="result-link"></a>
@@ -504,18 +501,15 @@ class App {
 
   initTradedoublerPage() {
     const islandSelect = document.getElementById('islandSelect');
-    const platformSelect = document.getElementById('platformSelect');
-    const partnerLinkContainer = document.getElementById('partnerLinkContainer');
-    const partnerLink = document.getElementById('partnerLink');
     const generateBtn = document.getElementById('generateBtn');
     const inputUrl = document.getElementById('inputUrl');
     const resultContainer = document.getElementById('resultContainer');
     const resultLink = document.getElementById('resultLink');
     const programCardsContainer = document.getElementById('programCardsContainer');
+    const partnerFeedback = document.getElementById('partnerFeedback');
 
-    // Initialize Custom Select dropdowns
+    // Initialize Custom Select dropdown
     if (islandSelect) new CustomSelect(islandSelect);
-    let platformCustomSelect = platformSelect ? new CustomSelect(platformSelect) : null;
 
     // Render program cards when site is selected
     const renderProgramCards = (siteCode) => {
@@ -574,62 +568,65 @@ class App {
       });
     };
 
-    islandSelect.addEventListener('change', () => {
+    // Update partner feedback on URL input
+    const updatePartnerFeedback = () => {
       const code = islandSelect.value;
+      const url = inputUrl.value.trim();
 
-      // Render program cards
-      renderProgramCards(code);
-
-      // Update platform select
-      platformSelect.innerHTML = `<option value="">${i18n.t('selectPlatform')}</option>`;
-
-      if (code) {
-        (AFFILIATE_PARTNERS[code] || []).forEach(name => {
-          platformSelect.appendChild(new Option(name, name));
-        });
-        platformSelect.disabled = false;
-      } else {
-        platformSelect.disabled = true;
+      if (!code || !url) {
+        partnerFeedback.style.display = 'none';
+        return;
       }
 
-      // Re-initialize CustomSelect with new options
-      if (platformCustomSelect) platformCustomSelect.destroy();
-      platformCustomSelect = new CustomSelect(platformSelect);
+      const detected = linkGenerator.detectPartnerFromUrl(url, code);
 
-      partnerLinkContainer.style.display = 'none';
+      if (detected) {
+        partnerFeedback.innerHTML = `
+          <div class="feedback-success">
+            <span class="feedback-icon">✓</span>
+            <span class="feedback-text">
+              <strong>${detected.partner}</strong>
+              <span class="feedback-meta">${detected.category} | ID: ${detected.programId || '—'}</span>
+            </span>
+          </div>
+        `;
+        partnerFeedback.style.display = 'block';
+      } else {
+        partnerFeedback.innerHTML = `
+          <div class="feedback-error">
+            <span class="feedback-icon">✗</span>
+            <span class="feedback-text">${i18n.t('partnerNotRecognized') || 'Programma non riconosciuto per questo sito'}</span>
+          </div>
+        `;
+        partnerFeedback.style.display = 'block';
+      }
+    };
+
+    islandSelect.addEventListener('change', () => {
+      const code = islandSelect.value;
+      renderProgramCards(code);
+      updatePartnerFeedback();
       resultContainer.style.display = 'none';
     });
 
-    platformSelect.addEventListener('change', () => {
-      const code = islandSelect.value;
-      const partner = platformSelect.value;
-
-      if (code && partner) {
-        const baseLink = linkGenerator.getPartnerBaseLink(code, partner);
-        if (baseLink) {
-          partnerLink.innerHTML = `<a href="${baseLink}" target="_blank">${baseLink}</a>`;
-          partnerLinkContainer.style.display = 'block';
-        }
-      } else {
-        partnerLinkContainer.style.display = 'none';
-      }
-    });
+    // Real-time detection on URL input
+    inputUrl.addEventListener('input', updatePartnerFeedback);
 
     generateBtn.addEventListener('click', () => {
       const code = islandSelect.value;
-      const partner = platformSelect.value;
       const url = inputUrl.value.trim();
 
-      if (!code || !partner) { notifications.warning(i18n.t('selectSiteAndPlatform')); return; }
+      if (!code) { notifications.warning(i18n.t('selectSite') || 'Seleziona un sito'); return; }
       if (!url) { notifications.warning(i18n.t('enterUrl')); return; }
 
-      const result = linkGenerator.generateDeepLink(url, code, partner);
+      // Auto-detect partner (no need to pass partner name)
+      const result = linkGenerator.generateDeepLink(url, code);
 
       if (result.success) {
         resultLink.href = result.link;
         resultLink.textContent = result.link;
         resultContainer.style.display = 'block';
-        notifications.success(i18n.t('deepLinkGenerated'));
+        notifications.success(`${i18n.t('deepLinkGenerated')} (${result.partner})`);
       } else {
         notifications.error(i18n.t(result.error) || result.error);
       }

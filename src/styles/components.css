@@ -604,6 +604,67 @@
     margin-bottom: var(--space-2);
 }
 
+/* Info Note */
+.td-info-note {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    background: #e0f2fe;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    color: #0369a1;
+}
+
+.td-info-note .info-icon {
+    font-size: 16px;
+}
+
+/* Partner Feedback */
+.td-partner-feedback {
+    margin-top: var(--space-2);
+}
+
+.feedback-success,
+.feedback-error {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+}
+
+.feedback-success {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.feedback-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.feedback-icon {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.feedback-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.feedback-text strong {
+    font-weight: 600;
+}
+
+.feedback-meta {
+    font-size: var(--font-size-xs);
+    opacity: 0.8;
+}
+
 /* Mobile responsive for program cards */
 @media (max-width: 1024px) {
     .program-cards-wrapper {
