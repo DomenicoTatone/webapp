@@ -488,6 +488,7 @@ class App {
       <div class="card td-unified-card">
         <!-- Site Selector -->
         <div class="td-site-selector">
+          <label class="form-label" data-i18n="programLabel">Programma</label>
           <select id="islandSelect" class="form-select">
             <option value="" data-i18n="selectSite">Seleziona un sito</option>
             ${islands.map(i => `<option value="${i.code}">${i.displayName}</option>`).join('')}
