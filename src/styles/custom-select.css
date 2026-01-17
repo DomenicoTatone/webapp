@@ -253,3 +253,48 @@
 }
 
 /* Simple, clean animations - no staggered delay */
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+
+    /* Constrain dropdown to viewport */
+    .custom-select__dropdown {
+        max-width: calc(100vw - 32px);
+        width: 100%;
+        left: 0;
+        right: auto;
+    }
+
+    /* Trigger text truncation on mobile */
+    .custom-select__trigger {
+        max-width: 100%;
+    }
+
+    .custom-select__value {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: calc(100% - 24px);
+    }
+
+    /* Options wrap text instead of overflow */
+    .custom-select__option {
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.4;
+        padding: var(--space-3);
+    }
+
+    /* Full width custom selects on mobile */
+    .custom-select {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .custom-select__trigger {
+        width: 100%;
+    }
+}
