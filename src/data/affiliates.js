@@ -226,7 +226,7 @@ export const CAR_RENTAL_PROVIDERS = [
 
 export const VALIDATION_CRITERIA = {
   "1639250": {
-    "Allianz Partners": ["https://www.allianz-assistance.it/"],
+    "Allianz Partners": ["https://www.allianz-assicurazioneviaggio.it/", "https://www.allianz-assistance.it/"],
     "AXA Assistance": ["https://www.assicurazione-viaggio.axa-assistance.it/"],
     "Barceló Hotels & Resorts": ["https://www.barcelo.com/"],
     "Columbus Assicurazioni": ["https://www.columbusassicurazioni.it/"],
