@@ -250,42 +250,4 @@
     }
 }
 
-@keyframes optionFadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-4px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.custom-select.is-open .custom-select__option {
-    animation: optionFadeIn 0.2s ease-out backwards;
-}
-
-.custom-select.is-open .custom-select__option:nth-child(1) {
-    animation-delay: 0.02s;
-}
-
-.custom-select.is-open .custom-select__option:nth-child(2) {
-    animation-delay: 0.04s;
-}
-
-.custom-select.is-open .custom-select__option:nth-child(3) {
-    animation-delay: 0.06s;
-}
-
-.custom-select.is-open .custom-select__option:nth-child(4) {
-    animation-delay: 0.08s;
-}
-
-.custom-select.is-open .custom-select__option:nth-child(5) {
-    animation-delay: 0.1s;
-}
-
-.custom-select.is-open .custom-select__option:nth-child(n+6) {
-    animation-delay: 0.12s;
-}
+/* Simple, clean animations - no staggered delay */

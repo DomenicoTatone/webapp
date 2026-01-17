@@ -373,7 +373,6 @@
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     overflow: hidden;
-    animation: slideUp 0.3s ease-out;
 }
 
 .image-preview {
