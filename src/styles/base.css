@@ -2,7 +2,7 @@
  * Base Styles - Reset and Typography
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap');
 @import './tokens.css';
 
 *,
@@ -43,7 +43,16 @@ h1 {
 }
 
 h2 {
+    font-family: var(--font-heading);
     font-size: var(--font-size-2xl);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin-bottom: var(--space-6);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
 }
 
 h3 {
