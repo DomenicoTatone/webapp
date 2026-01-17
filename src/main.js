@@ -453,43 +453,51 @@ class App {
       </div>
 
       <div class="card td-unified-card">
-        <!-- Control Bar: Site + Platform -->
-        <div class="td-controls">
-          <div class="td-control-group">
-            <select id="islandSelect" class="form-select">
-              <option value="" data-i18n="selectSite">Seleziona un sito</option>
-              ${islands.map(i => `<option value="${i.code}">${i.displayName}</option>`).join('')}
-            </select>
-            <select id="platformSelect" class="form-select" disabled>
-              <option value="" data-i18n="selectPlatform">Seleziona una piattaforma</option>
-            </select>
+        <!-- Site Selector -->
+        <div class="td-site-selector">
+          <select id="islandSelect" class="form-select">
+            <option value="" data-i18n="selectSite">Seleziona un sito</option>
+            ${islands.map(i => `<option value="${i.code}">${i.displayName}</option>`).join('')}
+          </select>
+        </div>
+
+        <!-- Program Cards Grid -->
+        <div id="programCardsContainer" class="program-cards-grid">
+          <div class="program-cards-empty">
+            <span class="empty-icon">📋</span>
+            <p data-i18n="selectSiteToViewPrograms">Seleziona un sito per vedere i programmi attivi</p>
           </div>
         </div>
 
-        <!-- Partner Link Alert -->
-        <div id="partnerLinkContainer" class="alert alert-info" style="display:none;">
-          <span id="partnerLink"></span>
-        </div>
-
-        <!-- Deep Link Generator Section -->
-        <div class="td-deeplink-section">
-          <h4 class="section-subtitle" data-i18n="generateDeepLinkSection">Genera Deep Link</h4>
-          <div class="td-input-row">
-            <input type="text" id="inputUrl" class="form-control" placeholder="https://..." data-i18n-placeholder="urlPlaceholder">
-            <button id="generateBtn" class="btn btn-primary" data-i18n="generateLink">Genera Link</button>
+        <!-- Deep Link Generator (Collapsible) -->
+        <details class="td-deeplink-details">
+          <summary class="td-deeplink-summary" data-i18n="generateDeepLinkSection">
+            <span>🔗 Genera Deep Link Personalizzato</span>
+          </summary>
+          <div class="td-deeplink-content">
+            <div class="td-platform-row">
+              <select id="platformSelect" class="form-select" disabled>
+                <option value="" data-i18n="selectPlatform">Seleziona una piattaforma</option>
+              </select>
+            </div>
+            <div id="partnerLinkContainer" class="alert alert-info" style="display:none;">
+              <span id="partnerLink"></span>
+            </div>
+            <div class="td-input-row">
+              <input type="text" id="inputUrl" class="form-control" placeholder="https://..." data-i18n-placeholder="urlPlaceholder">
+              <button id="generateBtn" class="btn btn-primary" data-i18n="generateLink">Genera</button>
+            </div>
+            <div id="resultContainer" class="td-result-section" style="display:none;">
+              <div class="result-box">
+                <a id="resultLink" href="#" target="_blank" class="result-link"></a>
+              </div>
+              <div class="td-result-actions">
+                <button id="copyResultBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
+                <button id="openResultBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <!-- Result Section -->
-        <div id="resultContainer" class="td-result-section" style="display:none;">
-          <div class="result-box">
-            <a id="resultLink" href="#" target="_blank" class="result-link"></a>
-          </div>
-          <div class="td-result-actions">
-            <button id="copyResultBtn" class="btn btn-success" data-i18n="copyLink">Copia Link</button>
-            <button id="openResultBtn" class="btn btn-outline" data-i18n="openLink">Apri Link</button>
-          </div>
-        </div>
+        </details>
       </div>
     `;
   }
@@ -503,13 +511,73 @@ class App {
     const inputUrl = document.getElementById('inputUrl');
     const resultContainer = document.getElementById('resultContainer');
     const resultLink = document.getElementById('resultLink');
+    const programCardsContainer = document.getElementById('programCardsContainer');
 
     // Initialize Custom Select dropdowns
     if (islandSelect) new CustomSelect(islandSelect);
     let platformCustomSelect = platformSelect ? new CustomSelect(platformSelect) : null;
 
+    // Render program cards when site is selected
+    const renderProgramCards = (siteCode) => {
+      const partners = AFFILIATE_PARTNERS[siteCode] || [];
+
+      if (!siteCode || partners.length === 0) {
+        programCardsContainer.innerHTML = `
+          <div class="program-cards-empty">
+            <span class="empty-icon">📋</span>
+            <p data-i18n="selectSiteToViewPrograms">Seleziona un sito per vedere i programmi attivi</p>
+          </div>
+        `;
+        return;
+      }
+
+      const cardsHTML = partners.map(partner => {
+        const baseLink = linkGenerator.getPartnerBaseLink(siteCode, partner);
+        return `
+          <div class="program-card">
+            <div class="program-card-header">
+              <span class="program-card-icon">🏷️</span>
+            </div>
+            <div class="program-card-body">
+              <h4 class="program-card-title">${this.escapeHtml(partner)}</h4>
+              <p class="program-card-link">${baseLink ? new URL(baseLink).hostname : 'tradedoubler.com'}</p>
+            </div>
+            <div class="program-card-actions">
+              <button class="btn btn-sm btn-primary" data-copy="${this.escapeHtml(baseLink || '')}" title="${i18n.t('copyLink')}">
+                📋 ${i18n.t('copyLink')}
+              </button>
+              <a href="${baseLink || '#'}" target="_blank" class="btn btn-sm btn-outline" title="${i18n.t('openLink')}">
+                🔗 ${i18n.t('openLink')}
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      programCardsContainer.innerHTML = `
+        <div class="program-cards-count">${partners.length} ${i18n.t('programsActive') || 'programmi attivi'}</div>
+        <div class="program-cards-wrapper">${cardsHTML}</div>
+      `;
+
+      // Attach copy handlers
+      programCardsContainer.querySelectorAll('[data-copy]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const link = btn.dataset.copy;
+          if (link) {
+            const success = await linkGenerator.copyToClipboard(link);
+            notifications[success ? 'success' : 'error'](i18n.t(success ? 'deepLinkCopied' : 'copyError'));
+          }
+        });
+      });
+    };
+
     islandSelect.addEventListener('change', () => {
       const code = islandSelect.value;
+
+      // Render program cards
+      renderProgramCards(code);
+
+      // Update platform select
       platformSelect.innerHTML = `<option value="">${i18n.t('selectPlatform')}</option>`;
 
       if (code) {
