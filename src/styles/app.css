@@ -118,6 +118,17 @@
     animation: fadeIn 0.4s ease-out;
 }
 
+.page-header h2 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: var(--font-size-3xl);
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 /* Page-specific */
 .link-list {
     display: flex;
@@ -152,9 +163,14 @@
 }
 
 .section-title {
-    font-size: var(--font-size-lg);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
     margin-bottom: var(--space-4);
-    color: var(--color-text-secondary);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .button-group {
