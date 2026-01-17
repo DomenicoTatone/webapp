@@ -68,14 +68,16 @@ class LinkGeneratorService {
     }
 
     /**
-     * Get all islands
+     * Get all islands (sorted alphabetically by name)
      */
     getAllIslands() {
-        return Object.entries(ISLAND_NAMES).map(([code, name]) => ({
-            code,
-            name,
-            displayName: `${name} - ${code}`
-        }));
+        return Object.entries(ISLAND_NAMES)
+            .map(([code, name]) => ({
+                code,
+                name,
+                displayName: `${name} - ${code}`
+            }))
+            .sort((a, b) => a.name.localeCompare(b.name));
     }
 
     /**
