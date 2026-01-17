@@ -89,5 +89,9 @@
     "programsActive": "programmi attivi",
     "urlPlaceholder": "https://www.edreams.it/...",
     "autoDetectNote": "Incolla un URL e il programma verrà riconosciuto automaticamente",
-    "selectSiteToViewPrograms": "Seleziona un sito per vedere i programmi attivi"
+    "selectSiteToViewPrograms": "Seleziona un sito per vedere i programmi attivi",
+    "pageTypeLabel": "Tipo Pagina",
+    "languageLabel": "Lingua",
+    "searchLabel": "Cerca",
+    "programLabel": "Programma"
 }
