@@ -95,32 +95,22 @@ class App {
     return `
       <div class="page-header">
         <h2 data-i18n="bookingHeader">Cerca il Deep Link di Booking</h2>
+        <span class="badge badge-warning" data-i18n="spainIslandsOnly">⚠️ Solo Spagna e Isole</span>
       </div>
       
       <div class="card">
-        <div class="form-row">
-          <div class="form-group flex-2">
-            <label class="form-label" data-i18n="pageType">Tipo Pagina</label>
-            <select id="pageTypeSelect" class="form-select">
-              <option value="cityPage" data-i18n="cityPage">Pagina Città</option>
-              <option value="hotelPage" data-i18n="hotelPage">Pagina Hotel</option>
-              <option value="airportPage" data-i18n="airportPage">Pagina Aeroporto</option>
-              <option value="districtPage" data-i18n="districtPage">Pagina Quartiere</option>
-              <option value="islandPage" data-i18n="islandPage">Pagina Isola</option>
-              <option value="landmarkPage" data-i18n="landmarkPage">Pagina Luogo</option>
-              <option value="regionPage" data-i18n="regionPage">Pagina Regione</option>
-              <option value="genericLandingPages" data-i18n="genericLandingPages">Pagina Generica</option>
-            </select>
-          </div>
-          <div class="form-group flex-1">
-            <label class="form-label" data-i18n="linkLanguage">Lingua Link</label>
-            <select id="bookingLangSelect" class="form-select">
-              <option value="it">IT</option>
-              <option value="es">ES</option>
-              <option value="en">EN</option>
-              <option value="fr">FR</option>
-            </select>
-          </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="pageType">Tipo Pagina</label>
+          <select id="pageTypeSelect" class="form-select">
+            <option value="cityPage" data-i18n="cityPage">Pagina Città</option>
+            <option value="hotelPage" data-i18n="hotelPage">Pagina Hotel</option>
+            <option value="airportPage" data-i18n="airportPage">Pagina Aeroporto</option>
+            <option value="districtPage" data-i18n="districtPage">Pagina Quartiere</option>
+            <option value="islandPage" data-i18n="islandPage">Pagina Isola</option>
+            <option value="landmarkPage" data-i18n="landmarkPage">Pagina Luogo</option>
+            <option value="regionPage" data-i18n="regionPage">Pagina Regione</option>
+            <option value="genericLandingPages" data-i18n="genericLandingPages">Pagina Generica</option>
+          </select>
         </div>
 
         <div class="form-group" id="subTypeGroup">
@@ -161,7 +151,15 @@ class App {
       <div id="resultsCard" class="card mt-6" style="display:none;">
         <div class="results-header">
           <h3 class="card-title" id="resultsTitle"></h3>
-          <span id="resultsCount" class="results-count"></span>
+          <div class="integrated-actions">
+            <select id="bookingLangSelect" class="form-select form-select-sm">
+              <option value="it">🇮🇹 IT</option>
+              <option value="es">🇪🇸 ES</option>
+              <option value="en">🇬🇧 EN</option>
+              <option value="fr">🇫🇷 FR</option>
+            </select>
+            <span id="resultsCount" class="results-count"></span>
+          </div>
         </div>
         <div id="resultsContainer" class="results-list"></div>
       </div>
