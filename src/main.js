@@ -339,9 +339,8 @@ class App {
       this.bookingState.data = data;
       this.bookingState.error = null;
 
-      // Show ready state
+      // Show ready state (no success notification - only show critical messages)
       this.setBookingUIState('ready');
-      notifications.success(i18n.t('dataLoaded'));
 
       // Perform initial search if there's input
       const searchValue = document.getElementById('searchInput')?.value;
