@@ -477,24 +477,17 @@
 .program-card {
     background: white;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     overflow: hidden;
-    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+    border-top: 3px solid var(--color-primary);
 }
 
 .program-card:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    transform: translateY(-2px);
+    border-color: var(--color-primary);
 }
 
 .program-card-header {
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-    padding: var(--space-3);
-    text-align: center;
-}
-
-.program-card-icon {
-    font-size: 24px;
+    display: none;
 }
 
 .program-card-body {

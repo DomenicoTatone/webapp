@@ -535,19 +535,16 @@ class App {
         const baseLink = linkGenerator.getPartnerBaseLink(siteCode, partner);
         return `
           <div class="program-card">
-            <div class="program-card-header">
-              <span class="program-card-icon">🏷️</span>
-            </div>
             <div class="program-card-body">
               <h4 class="program-card-title">${this.escapeHtml(partner)}</h4>
               <p class="program-card-link">${baseLink ? new URL(baseLink).hostname : 'tradedoubler.com'}</p>
             </div>
             <div class="program-card-actions">
               <button class="btn btn-sm btn-primary" data-copy="${this.escapeHtml(baseLink || '')}" title="${i18n.t('copyLink')}">
-                📋 ${i18n.t('copyLink')}
+                ${i18n.t('copyLink')}
               </button>
               <a href="${baseLink || '#'}" target="_blank" class="btn btn-sm btn-outline" title="${i18n.t('openLink')}">
-                🔗 ${i18n.t('openLink')}
+                ${i18n.t('openLink')}
               </a>
             </div>
           </div>
