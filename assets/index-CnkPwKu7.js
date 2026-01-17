@@ -377,22 +377,24 @@
           </div>
         </div>
 
-        <div class="form-group mt-6">
-          <label class="form-label" data-i18n="compressionQuality">Qualità Compressione</label>
-          <div class="slider-container">
-            <input type="range" id="qualitySlider" min="10" max="95" value="75" class="slider">
-            <span id="qualityValue" class="slider-value">75%</span>
+        <div class="image-controls">
+          <div class="form-group image-controls__quality">
+            <label class="form-label" data-i18n="compressionQuality">Qualità Compressione</label>
+            <div class="slider-container">
+              <input type="range" id="qualitySlider" min="10" max="95" value="75" class="slider">
+              <span id="qualityValue" class="slider-value">75%</span>
+            </div>
+            <p class="text-muted text-sm" data-i18n="qualityHint">Valori più bassi = file più piccoli, qualità ridotta</p>
           </div>
-          <p class="text-muted text-sm" data-i18n="qualityHint">Valori più bassi = file più piccoli, qualità ridotta</p>
-        </div>
 
-        <div class="form-group">
-          <label class="form-label" data-i18n="outputFormat">Formato Output</label>
-          <select id="formatSelect" class="form-select">
-            <option value="image/jpeg" data-i18n="formatJpeg">JPEG (consigliato)</option>
-            <option value="image/webp" data-i18n="formatWebp">WebP (moderno)</option>
-            <option value="image/png" data-i18n="formatPng">PNG (lossless)</option>
-          </select>
+          <div class="form-group image-controls__format">
+            <label class="form-label" data-i18n="outputFormat">Formato Output</label>
+            <select id="formatSelect" class="form-select">
+              <option value="image/jpeg" data-i18n="formatJpeg">JPEG (consigliato)</option>
+              <option value="image/webp" data-i18n="formatWebp">WebP (moderno)</option>
+              <option value="image/png" data-i18n="formatPng">PNG (lossless)</option>
+            </select>
+          </div>
         </div>
 
         <p class="note text-muted" style="font-style: italic;" data-i18n="imageToolNotice">La compressione avviene localmente nel browser. Le immagini non vengono caricate su nessun server.</p>
