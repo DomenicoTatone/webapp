@@ -7,9 +7,11 @@
   </defs>
   <!-- Background -->
   <rect width="32" height="32" rx="6" fill="url(#bg)"/>
-  <!-- Chain Link Icon -->
-  <path d="M13.5 16.5a4 4 0 0 0 6.03.43l2.4-2.4a4 4 0 0 0-5.66-5.66l-1.37 1.37" 
-        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <path d="M18.5 15.5a4 4 0 0 0-6.03-.43l-2.4 2.4a4 4 0 0 0 5.66 5.66l1.37-1.37" 
-        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Chain Link (scaled from 24 to fit 32) -->
+  <g transform="translate(4, 4)">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" 
+          stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" 
+          stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
 </svg>
