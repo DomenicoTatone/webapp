@@ -229,6 +229,19 @@
     padding: var(--space-1) var(--space-2);
 }
 
+/* Mobile: Badge below title */
+@media (max-width: 768px) {
+    .page-header {
+        padding-top: 0;
+    }
+
+    .page-header .badge {
+        position: static;
+        display: inline-block;
+        margin-top: var(--space-2);
+    }
+}
+
 /* Page-specific */
 .link-list {
     display: flex;
