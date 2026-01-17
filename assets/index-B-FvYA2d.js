@@ -154,6 +154,7 @@
       <div class="card td-unified-card">
         <!-- Site Selector -->
         <div class="td-site-selector">
+          <label class="form-label" data-i18n="programLabel">Programma</label>
           <select id="islandSelect" class="form-select">
             <option value="" data-i18n="selectSite">Seleziona un sito</option>
             ${m.getAllIslands().map(t=>`<option value="${t.code}">${t.displayName}</option>`).join("")}
