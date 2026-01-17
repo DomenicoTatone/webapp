@@ -60,7 +60,7 @@ class I18nService {
         try {
             // Use Vite's BASE_URL to correctly resolve paths when deployed under a subpath
             const basePath = import.meta.env.BASE_URL || '/';
-            const response = await fetch(`${basePath}_locales/${lang}/messages.json`);
+            const response = await fetch(`${basePath}locales/${lang}/messages.json`);
             if (!response.ok) {
                 throw new Error(`Failed to load ${lang} messages`);
             }
