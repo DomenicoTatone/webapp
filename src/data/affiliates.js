@@ -1,194 +1,219 @@
 /**
  * Centralized Affiliate Programs Data
  * Single Source of Truth for all partner/program configurations
+ * Updated: 2026-01-17 from Tradedoubler screenshots
  */
 
 export const ISLAND_NAMES = {
-    "1639250": "Isola di Minorca IT",
-    "3220593": "Isola di Formentera",
-    "3337668": "Isola di Lanzarote",
-    "3349565": "Isola di Minorca EN",
-    "3349567": "Isola di Minorca ES",
-    "3335968": "Vacanze nel Mediterraneo"
+  "3220593": "Isola di Formentera",
+  "3337668": "Isola di Lanzarote",
+  "1639250": "Isola di Minorca",
+  "3349565": "Isola di Minorca EN",
+  "3349567": "Isola di Minorca ES",
+  "3335968": "Vacanze nel Mediterraneo"
+};
+
+// Program IDs for each partner (p= parameter in Tradedoubler links)
+export const PROGRAM_IDS = {
+  // Common programs across sites
+  "eDreams": "17269",
+  "Direct Ferries IT": "313887",
+  "Direct Ferries ES": "327261",
+  "Direct Ferries UK": "324849",
+  "Vueling IT": "288053",
+  "Vueling UK": "320047",
+  "Weweed": "343473",
+
+  // Minorca IT (1639250)
+  "Allianz Partners": "72847",
+  "AXA Assistance": "261028",
+  "Barceló Hotels & Resorts": "282865",
+  "Columbus Assicurazioni": "76623",
+  "Veratour": "319774",
+  "Viaggisicuri": "249882",
+  "Yalla Yalla": "218733",
+
+  // Minorca EN (3349565)
+  "Airport Parking Luton": "343105",
+  "Airport Parking Manchester": "343201",
+  "Airport Parking With Us": "343202",
+  "Bee Parking": "383148",
+  "Compare Cheap Parking Prices At M...": "355499",
+  "Compare Parking Prices": "355683",
+  "Compare Your Parking Deals": "360206",
+  "Muslim Aid": "335318",
+
+  // Minorca ES (3349567)
+  "AXA Seguros de Viaje": "343738",
+  "InterMundial": "381548",
+  "Vayacruceros ES": "342494",
+
+  // Vacanze nel Mediterraneo (3335968)
+  "Eurowings IT": "307239",
+  "Grandi Navi Veloci IT": "316693",
+  "Viaggi in crociera": "341133"
 };
 
 export const AFFILIATE_PARTNERS = {
-    "1639250": [
-        "Allianz Global Assistance",
-        "AXA Assistance",
-        "Barceló Hotels & Resorts",
-        "BeGood - Trattamento di Bellezza da Indossare",
-        "Columbus Assicurazioni",
-        "Direct Ferries IT",
-        "eDreams",
-        "Grandi Navi Veloci IT",
-        "HUMANTE Amore gel lubrificante",
-        "ORBIS Lifestyle",
-        "Viaggi in crociera",
-        "Viaggisicuri",
-        "Vueling IT",
-        "Weweed",
-        "Yalla Yalla"
-    ],
-    "3220593": [
-        "À La Folie",
-        "eDreams",
-        "Vueling IT",
-        "Weweed"
-    ],
-    "3337668": [
-        "Direct Ferries IT",
-        "eDreams",
-        "Vueling IT",
-        "Weweed"
-    ],
-    "3349565": [
-        "30% PLUS Commissions Performance Web Hosting",
-        "Airport Parking Luton",
-        "Compare Cheap Airport Parking Prices",
-        "Compare Parking Prices",
-        "Direct Ferries UK",
-        "Muslim Aid",
-        "One 2 One Flights UK",
-        "Vueling UK"
-    ],
-    "3349567": [
-        "My Tea Moments - Té e Infusiones Online"
-    ]
+  // Formentera - 3220593 (1 program)
+  "3220593": [
+    "eDreams"
+  ],
+
+  // Lanzarote - 3337668 (2 programs)
+  "3337668": [
+    "Direct Ferries IT",
+    "eDreams"
+  ],
+
+  // Minorca IT - 1639250 (8 programs)
+  "1639250": [
+    "Allianz Partners",
+    "AXA Assistance",
+    "Barceló Hotels & Resorts",
+    "Columbus Assicurazioni",
+    "Direct Ferries IT",
+    "Veratour",
+    "Viaggisicuri",
+    "Yalla Yalla"
+  ],
+
+  // Minorca EN - 3349565 (9 programs)
+  "3349565": [
+    "Airport Parking Luton",
+    "Airport Parking Manchester",
+    "Airport Parking With Us",
+    "Bee Parking",
+    "Compare Cheap Parking Prices At M...",
+    "Compare Parking Prices",
+    "Compare Your Parking Deals",
+    "Direct Ferries UK",
+    "Muslim Aid"
+  ],
+
+  // Minorca ES - 3349567 (5 programs)
+  "3349567": [
+    "AXA Seguros de Viaje",
+    "Direct Ferries ES",
+    "eDreams",
+    "InterMundial",
+    "Vayacruceros ES"
+  ],
+
+  // Vacanze nel Mediterraneo - 3335968 (5 programs)
+  "3335968": [
+    "Direct Ferries IT",
+    "Eurowings IT",
+    "Grandi Navi Veloci IT",
+    "Veratour",
+    "Viaggi in crociera"
+  ]
 };
 
-export const PARTNER_LINKS = {
-    "1639250": {
-        "Allianz Global Assistance": "https://clk.tradedoubler.com/click?p=72847&a=1639250",
-        "AXA Assistance": "https://clk.tradedoubler.com/click?p=261028&a=1639250",
-        "Barceló Hotels & Resorts": "https://clk.tradedoubler.com/click?p=277498&a=1639250",
-        "BeGood - Trattamento di Bellezza da Indossare": "https://clk.tradedoubler.com/click?p=346681&a=1639250",
-        "Columbus Assicurazioni": "https://clk.tradedoubler.com/click?p=270116&a=1639250",
-        "Direct Ferries IT": "https://clk.tradedoubler.com/click?p=275606&a=1639250",
-        "eDreams": "https://clk.tradedoubler.com/click?p=17269&a=1639250",
-        "Grandi Navi Veloci IT": "https://clk.tradedoubler.com/click?p=255412&a=1639250",
-        "HUMANTE Amore gel lubrificante": "https://clk.tradedoubler.com/click?p=352803&a=1639250",
-        "ORBIS Lifestyle": "https://clk.tradedoubler.com/click?p=351047&a=1639250",
-        "Viaggi in crociera": "https://clk.tradedoubler.com/click?p=282015&a=1639250",
-        "Viaggisicuri": "https://clk.tradedoubler.com/click?p=309891&a=1639250",
-        "Vueling IT": "https://clk.tradedoubler.com/click?p=288053&a=1639250",
-        "Weweed": "https://clk.tradedoubler.com/click?p=343473&a=1639250",
-        "Yalla Yalla": "https://clk.tradedoubler.com/click?p=218733&a=1639250"
-    },
-    "3220593": {
-        "À La Folie": "https://clk.tradedoubler.com/click?p=348934&a=3220593",
-        "eDreams": "https://clk.tradedoubler.com/click?p=17269&a=3220593",
-        "Vueling IT": "https://clk.tradedoubler.com/click?p=288053&a=3220593",
-        "Weweed": "https://clk.tradedoubler.com/click?p=343473&a=3220593"
-    },
-    "3337668": {
-        "Direct Ferries IT": "https://clk.tradedoubler.com/click?p=275606&a=3337668",
-        "eDreams": "https://clk.tradedoubler.com/click?p=17269&a=3337668",
-        "Vueling IT": "https://clk.tradedoubler.com/click?p=288053&a=3337668",
-        "Weweed": "https://clk.tradedoubler.com/click?p=343473&a=3337668"
-    },
-    "3349565": {
-        "30% PLUS Commissions Performance Web Hosting": "https://clk.tradedoubler.com/click?p=355894&a=3349565",
-        "Airport Parking Luton": "https://clk.tradedoubler.com/click?p=343105&a=3349565",
-        "Compare Cheap Airport Parking Prices": "https://clk.tradedoubler.com/click?p=340817&a=3349565",
-        "Compare Parking Prices": "https://clk.tradedoubler.com/click?p=338693&a=3349565",
-        "Direct Ferries UK": "https://clk.tradedoubler.com/click?p=275605&a=3349565",
-        "Muslim Aid": "https://clk.tradedoubler.com/click?p=287611&a=3349565",
-        "One 2 One Flights UK": "https://clk.tradedoubler.com/click?p=339657&a=3349565",
-        "Vueling UK": "https://clk.tradedoubler.com/click?p=320047&a=3349565"
-    },
-    "3349567": {
-        "My Tea Moments - Té e Infusiones Online": "https://clk.tradedoubler.com/click?p=357725&a=3349567"
+// Generate PARTNER_LINKS dynamically from PROGRAM_IDS
+function generatePartnerLinks() {
+  const links = {};
+  for (const [siteId, partners] of Object.entries(AFFILIATE_PARTNERS)) {
+    links[siteId] = {};
+    for (const partner of partners) {
+      const programId = PROGRAM_IDS[partner];
+      if (programId) {
+        links[siteId][partner] = `https://clk.tradedoubler.com/click?p=${programId}&a=${siteId}`;
+      }
     }
-};
+  }
+  return links;
+}
+
+export const PARTNER_LINKS = generatePartnerLinks();
 
 /**
  * Car Rental Providers for Menorca
  * Multilingual affiliate links
  */
 export const CAR_RENTAL_PROVIDERS = [
-  { 
-    name: "Coches Menorca", 
-    urls: { 
-      it: "https://cochesmenorca.es/it/?agentId=3", 
-      es: "https://cochesmenorca.es/?agentId=3", 
+  {
+    name: "Coches Menorca",
+    urls: {
+      it: "https://cochesmenorca.es/it/?agentId=3",
+      es: "https://cochesmenorca.es/?agentId=3",
       en: "https://cochesmenorca.es/en/?agentId=3",
       fr: "https://cochesmenorca.es/en/?agentId=3",
       de: "https://cochesmenorca.es/en/?agentId=3"
-    } 
+    }
   },
-  { 
-    name: "Menorca Rent", 
-    urls: { 
-      it: "https://www.menorcarent.com/it/?agentId=15", 
-      es: "https://www.menorcarent.com/?agentId=15", 
-      en: "https://www.menorcarent.com/en/?agentId=15", 
+  {
+    name: "Menorca Rent",
+    urls: {
+      it: "https://www.menorcarent.com/it/?agentId=15",
+      es: "https://www.menorcarent.com/?agentId=15",
+      en: "https://www.menorcarent.com/en/?agentId=15",
       fr: "https://www.menorcarent.com/fr/?agentId=15",
       de: "https://www.menorcarent.com/en/?agentId=15"
-    } 
+    }
   },
-  { 
-    name: "Autos Xoroi", 
-    urls: { 
-      it: "http://www.alquilercochesmenorca.com/it/?link=ISOLADIMINORCA", 
-      es: "http://www.alquilercochesmenorca.com/es/?link=ISOLADIMINORCA", 
-      en: "http://www.alquilercochesmenorca.com/?link=ISOLADIMINORCA", 
+  {
+    name: "Autos Xoroi",
+    urls: {
+      it: "http://www.alquilercochesmenorca.com/it/?link=ISOLADIMINORCA",
+      es: "http://www.alquilercochesmenorca.com/es/?link=ISOLADIMINORCA",
+      en: "http://www.alquilercochesmenorca.com/?link=ISOLADIMINORCA",
       fr: "http://www.alquilercochesmenorca.com/fr/?link=ISOLADIMINORCA",
       de: "http://www.alquilercochesmenorca.com/?link=ISOLADIMINORCA"
-    } 
+    }
   },
-  { 
-    name: "HIPER Rent a Car", 
-    urls: { 
-      it: "https://hiperrentacar.com/it/?colaborador=LO-0495108", 
-      es: "https://hiperrentacar.com/es/?colaborador=LO-0495108", 
-      en: "https://hiperrentacar.com/en/?colaborador=LO-0495108", 
+  {
+    name: "HIPER Rent a Car",
+    urls: {
+      it: "https://hiperrentacar.com/it/?colaborador=LO-0495108",
+      es: "https://hiperrentacar.com/es/?colaborador=LO-0495108",
+      en: "https://hiperrentacar.com/en/?colaborador=LO-0495108",
       fr: "https://hiperrentacar.com/fr/?colaborador=LO-0495108",
       de: "https://hiperrentacar.com/de/?colaborador=LO-0495108"
-    } 
+    }
   },
-  { 
-    name: "Rentalcars", 
-    urls: { 
-      it: "https://www.rentalcars.com/it/?affiliateCode=latitudine983", 
-      es: "https://www.rentalcars.com/es/?affiliateCode=latitudine983", 
-      en: "https://www.rentalcars.com/en/?affiliateCode=latitudine983", 
+  {
+    name: "Rentalcars",
+    urls: {
+      it: "https://www.rentalcars.com/it/?affiliateCode=latitudine983",
+      es: "https://www.rentalcars.com/es/?affiliateCode=latitudine983",
+      en: "https://www.rentalcars.com/en/?affiliateCode=latitudine983",
       fr: "https://www.rentalcars.com/fr/?affiliateCode=latitudine983",
       de: "https://www.rentalcars.com/de/?affiliateCode=latitudine983"
-    } 
+    }
   }
 ];
 
 export const VALIDATION_CRITERIA = {
-    "1639250": {
-        "Allianz Global Assistance": ["https://www.allianz-assistance.it/"],
-        "AXA Assistance": ["https://www.assicurazione-viaggio.axa-assistance.it/"],
-        "Barceló Hotels & Resorts": ["https://www.barcelo.com/"],
-        "Columbus Assicurazioni": ["https://www.columbusassicurazioni.it/"],
-        "Direct Ferries IT": ["https://www.directferries"],
-        "eDreams": ["https://www.edreams.it/", "https://rentacar.edreams.it/", "https://navette.edreams.it", "https://hotels.edreams.it/"],
-        "Grandi Navi Veloci IT": ["https://www.gnv.it/"],
-        "Viaggisicuri": ["https://www.viaggisicuri.com/"],
-        "Vueling IT": ["https://www.vueling.com/", "https://cars.vueling.com", "https://hotel.vueling.com/", "https://activities.vueling.com/", "https://parking.vueling.com/"],
-        "Weweed": ["https://prodotti-cannabis.it/"],
-        "Yalla Yalla": ["https://www.yallayalla.it/"]
-    },
-    "3220593": {
-        "À La Folie": ["https://alafolie.it/"],
-        "eDreams": ["https://www.edreams.it/", "https://rentacar.edreams.it/"],
-        "Vueling IT": ["https://www.vueling.com/"],
-        "Weweed": ["https://prodotti-cannabis.it/"]
-    },
-    "3337668": {
-        "Direct Ferries IT": ["https://www.directferries"],
-        "eDreams": ["https://www.edreams.it/"],
-        "Vueling IT": ["https://www.vueling.com/"],
-        "Weweed": ["https://prodotti-cannabis.it/"]
-    },
-    "3349565": {
-        "Vueling UK": ["https://www.vueling.com/"]
-    },
-    "3349567": {
-        "My Tea Moments - Té e Infusiones Online": ["https://myteamoments.com/"]
-    }
+  "1639250": {
+    "Allianz Partners": ["https://www.allianz-assistance.it/"],
+    "AXA Assistance": ["https://www.assicurazione-viaggio.axa-assistance.it/"],
+    "Barceló Hotels & Resorts": ["https://www.barcelo.com/"],
+    "Columbus Assicurazioni": ["https://www.columbusassicurazioni.it/"],
+    "Direct Ferries IT": ["https://www.directferries"],
+    "Veratour": ["https://www.veratour.it/"],
+    "Viaggisicuri": ["https://www.viaggisicuri.com/"],
+    "Yalla Yalla": ["https://www.yallayalla.it/"]
+  },
+  "3220593": {
+    "eDreams": ["https://www.edreams.it/"]
+  },
+  "3337668": {
+    "Direct Ferries IT": ["https://www.directferries"],
+    "eDreams": ["https://www.edreams.it/"]
+  },
+  "3349565": {
+    "Direct Ferries UK": ["https://www.directferries"]
+  },
+  "3349567": {
+    "eDreams": ["https://www.edreams.es/"],
+    "Vayacruceros ES": ["https://www.vayacruceros.com/"]
+  },
+  "3335968": {
+    "Direct Ferries IT": ["https://www.directferries"],
+    "Eurowings IT": ["https://www.eurowings.com/"],
+    "Grandi Navi Veloci IT": ["https://www.gnv.it/"],
+    "Veratour": ["https://www.veratour.it/"],
+    "Viaggi in crociera": ["https://www.viaggio-in-crociera.it/"]
+  }
 };
