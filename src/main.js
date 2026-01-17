@@ -462,6 +462,9 @@ class App {
     const resultContainer = document.getElementById('resultContainer');
     const resultLink = document.getElementById('resultLink');
 
+    // Initialize Custom Select dropdowns
+    if (islandSelect) new CustomSelect(islandSelect);
+
     islandSelect.addEventListener('change', () => {
       const code = islandSelect.value;
       platformSelect.innerHTML = `<option value="">${i18n.t('selectPlatform')}</option>`;
@@ -598,6 +601,9 @@ class App {
     const langSelect = document.getElementById('gygLangSelect');
     const homepageLink = document.getElementById('gygHomepageLink');
 
+    // Initialize Custom Select dropdown
+    if (langSelect) new CustomSelect(langSelect);
+
     const updateHomepageLink = () => {
       const url = gygHomepageLinks[langSelect.value] || gygHomepageLinks['en'];
       homepageLink.href = url;
@@ -722,6 +728,9 @@ class App {
     const langSelect = document.getElementById('civLangSelect');
     const homepageLink = document.getElementById('civHomepageLink');
 
+    // Initialize Custom Select dropdown
+    if (langSelect) new CustomSelect(langSelect);
+
     const updateHomepageLink = () => {
       const url = civHomepageLinks[langSelect.value] || civHomepageLinks['en'];
       homepageLink.href = url;
@@ -822,6 +831,10 @@ class App {
     const providerSelect = document.getElementById('carProviderSelect');
     const langSelect = document.getElementById('carLangSelect');
     const resultLink = document.getElementById('carResultLink');
+
+    // Initialize Custom Select dropdowns
+    if (providerSelect) new CustomSelect(providerSelect);
+    if (langSelect) new CustomSelect(langSelect);
 
     const updateLink = () => {
       const provider = CAR_RENTAL_PROVIDERS[providerSelect.value];
