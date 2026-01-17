@@ -161,11 +161,11 @@ class I18nService {
      */
     getSupportedLanguages() {
         return [
-            { code: 'it', label: 'Italiano', flag: '🇮🇹' },
-            { code: 'en', label: 'English', flag: '🇬🇧' },
-            { code: 'es', label: 'Español', flag: '🇪🇸' },
-            { code: 'fr', label: 'Français', flag: '🇫🇷' },
-            { code: 'de', label: 'Deutsch', flag: '🇩🇪' }
+            { code: 'it', label: 'Italiano' },
+            { code: 'en', label: 'English' },
+            { code: 'es', label: 'Español' },
+            { code: 'fr', label: 'Français' },
+            { code: 'de', label: 'Deutsch' }
         ];
     }
 }

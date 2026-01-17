@@ -53,11 +53,11 @@ class App {
     const options = document.querySelectorAll('.lang-option');
 
     const langData = {
-      it: { flag: '🇮🇹', code: 'IT' },
-      en: { flag: '🇬🇧', code: 'EN' },
-      es: { flag: '🇪🇸', code: 'ES' },
-      fr: { flag: '🇫🇷', code: 'FR' },
-      de: { flag: '🇩🇪', code: 'DE' }
+      it: { code: 'IT' },
+      en: { code: 'EN' },
+      es: { code: 'ES' },
+      fr: { code: 'FR' },
+      de: { code: 'DE' }
     };
 
     // Set initial active state
@@ -108,7 +108,6 @@ class App {
 
   updateLangTrigger(trigger, langInfo) {
     if (!trigger || !langInfo) return;
-    trigger.querySelector('.lang-flag').textContent = langInfo.flag;
     trigger.querySelector('.lang-code').textContent = langInfo.code;
   }
 
@@ -185,10 +184,10 @@ class App {
               <option value="genericLandingPages" data-i18n="genericLandingPages">Pagina Generica</option>
             </select>
             <select id="bookingLangSelect" class="form-select form-select-sm">
-              <option value="it">🇮🇹 IT</option>
-              <option value="es">🇪🇸 ES</option>
-              <option value="en">🇬🇧 EN</option>
-              <option value="fr">🇫🇷 FR</option>
+              <option value="it">IT</option>
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+              <option value="fr">FR</option>
             </select>
           </div>
           <input type="text" id="searchInput" class="form-control" 
