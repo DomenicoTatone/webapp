@@ -123,6 +123,21 @@
     min-width: 200px;
 }
 
+/* Mobile: Stack form-row vertically */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-row .form-group,
+    .form-group-sm,
+    .form-group-grow {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
 .form-label {
     display: block;
     margin-bottom: var(--space-2);
