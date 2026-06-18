@@ -1,0 +1,1 @@
+import{l as e}from"./button-DemG_kx8.js";var t=e();function n({url:e}){return(0,t.jsx)(`div`,{className:`dlp-scroll overflow-x-auto rounded-lg border border-border bg-secondary/50 px-4 py-3`,children:(0,t.jsx)(`a`,{href:e,target:`_blank`,rel:`noopener noreferrer`,className:`font-mono text-sm break-all text-primary hover:underline`,children:e})})}export{n as t};

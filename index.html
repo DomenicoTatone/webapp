@@ -1,102 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DeepLink Pro - Affiliate Link Generator</title>
-    <meta name="description" content="Genera Deep Link per Booking, Tradedoubler, GetYourGuide e Civitatis">
+    <link rel="icon" type="image/svg+xml" href="/webapp/favicon.svg" />
+    <link rel="apple-touch-icon" href="/webapp/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0d9488" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/webapp/favicon.svg">
-    <link rel="apple-touch-icon" href="/webapp/favicon.svg">
+    <title>DeepLink Pro — Affiliate Link Generator</title>
+    <meta
+      name="description"
+      content="Genera deep link affiliati per Booking, Tradedoubler, GetYourGuide, Civitatis e noleggio auto."
+    />
+    <link rel="canonical" href="https://domenicotatone.github.io/webapp/" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://domenicotatone.github.io/webapp/">
-    <meta property="og:title" content="DeepLink Pro">
-    <meta property="og:description"
-        content="Affiliate Link Generator per Booking, Tradedoubler, GetYourGuide e Civitatis">
-    <meta property="og:image" content="https://domenicotatone.github.io/webapp/og-image.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://domenicotatone.github.io/webapp/" />
+    <meta property="og:title" content="DeepLink Pro" />
+    <meta
+      property="og:description"
+      content="Generatore di deep link affiliati per Booking, Tradedoubler, GetYourGuide e Civitatis."
+    />
+    <meta
+      property="og:image"
+      content="https://domenicotatone.github.io/webapp/og-image.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DeepLink Pro" />
+    <meta
+      name="twitter:description"
+      content="Generatore di deep link affiliati per Booking, Tradedoubler, GetYourGuide e Civitatis."
+    />
+    <meta
+      name="twitter:image"
+      content="https://domenicotatone.github.io/webapp/og-image.png"
+    />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://domenicotatone.github.io/webapp/">
-    <meta property="twitter:title" content="DeepLink Pro">
-    <meta property="twitter:description"
-        content="Affiliate Link Generator per Booking, Tradedoubler, GetYourGuide e Civitatis">
-    <meta property="twitter:image" content="https://domenicotatone.github.io/webapp/og-image.png">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#667eea">
-  <script type="module" crossorigin src="/webapp/assets/index-_90YXZvh.js"></script>
-  <link rel="stylesheet" crossorigin href="/webapp/assets/index-y23_dXLx.css">
-</head>
-
-<body>
-    <div class="app-container">
-        <!-- Header -->
-        <header class="app-header">
-            <div class="header-content">
-                <a href="#" class="logo" data-page="booking">
-                    <span class="logo-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
-                            <!-- Chain Link 1 -->
-                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="white"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <!-- Chain Link 2 -->
-                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="white"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </span>
-                    <span class="logo-text">DeepLink Pro</span>
-                </a>
-
-                <nav class="header-nav">
-                    <a href="#" class="nav-link active" data-page="booking">Booking</a>
-                    <a href="#" class="nav-link" data-page="tradedoubler">Tradedoubler</a>
-                    <a href="#" class="nav-link" data-page="getyourguide">GetYourGuide</a>
-                    <a href="#" class="nav-link" data-page="civitatis">Civitatis</a>
-                    <a href="#" class="nav-link" data-page="carrental" data-i18n="carRentalNav">Noleggio Auto</a>
-                    <a href="#" class="nav-link" data-page="imgtool" data-i18n="imageToolNav">Immagini</a>
-                </nav>
-
-                <div class="language-dropdown">
-                    <button id="langTrigger" class="lang-trigger" aria-expanded="false" aria-haspopup="true">
-                        <span class="lang-code">IT</span>
-                        <span class="lang-arrow">▼</span>
-                    </button>
-                    <div id="langMenu" class="lang-menu" role="menu">
-                        <button class="lang-option" data-lang="it" role="menuitem">IT Italiano</button>
-                        <button class="lang-option" data-lang="en" role="menuitem">EN English</button>
-                        <button class="lang-option" data-lang="es" role="menuitem">ES Español</button>
-                        <button class="lang-option" data-lang="fr" role="menuitem">FR Français</button>
-                        <button class="lang-option" data-lang="de" role="menuitem">DE Deutsch</button>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="app-main">
-            <div id="page-content">
-                <!-- Dynamic content loaded here -->
-                <div class="text-center" style="padding: 40px;">
-                    <div class="spinner" style="margin: 0 auto;"></div>
-                    <p class="mt-4 text-muted">Loading...</p>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="app-footer">
-            <p data-i18n="footerText">© 2026 DeepLink Pro - Affiliate Link Generator</p>
-        </footer>
-    </div>
-
-    <!-- Floating Action Button for Feedback -->
-    <button id="feedbackFab" class="fab" data-page="feedback" title="Segnalazioni e Suggerimenti">💡</button>
-
-</body>
-
+    <!-- No-flash theme bootstrap -->
+    <script>
+      try {
+        var t = localStorage.getItem('dlp-theme');
+        var sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (t === 'dark' || (t === null && sysDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    </script>
+    <script type="module" crossorigin src="/webapp/assets/index-DD-69stq.js"></script>
+    <link rel="modulepreload" crossorigin href="/webapp/assets/chunk-BHe-jwch.js">
+    <link rel="modulepreload" crossorigin href="/webapp/assets/button-DemG_kx8.js">
+    <link rel="stylesheet" crossorigin href="/webapp/assets/index-B8scp5NL.css">
+  <link rel="manifest" href="/webapp/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/webapp/registerSW.js"></script></head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
