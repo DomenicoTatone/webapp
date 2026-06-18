@@ -34,14 +34,17 @@ describe('generateGetYourGuideLink', () => {
     )
   })
 
-  it('preserves existing query params and overwrites a stale partner_id', () => {
+  it('clean-slates the query and keeps only our params', () => {
     const res = generateGetYourGuideLink(
-      'https://www.getyourguide.com/x-t1/?ranking=1&partner_id=OLD'
+      'https://www.getyourguide.com/x-t1/?ranking=1&partner_id=OLD&currency=EUR'
     )
     expect(res.success).toBe(true)
     if (res.success) {
       const url = new URL(res.link)
-      expect(url.searchParams.get('ranking')).toBe('1')
+      expect([...url.searchParams.keys()].sort()).toEqual([
+        'partner_id',
+        'utm_medium',
+      ])
       expect(url.searchParams.get('partner_id')).toBe(GETYOURGUIDE_PARTNER_ID)
     }
   })
@@ -123,23 +126,15 @@ describe('detectPartnerFromUrl / validateUrl', () => {
 })
 
 describe('URL cleaning before applying the affiliate code', () => {
-  it('GYG: strips a competing partner_id, utm_*, click-ids, cmp and the hash; keeps content params', () => {
+  it('GYG: clean-slates a noisy product URL, leaving only our params and the path (real-world case)', () => {
     const res = generateGetYourGuideLink(
-      'https://www.getyourguide.com/madrid-l46/tour-t1/?currency=EUR&partner_id=COMPETITOR&utm_source=foo&utm_medium=bar&cmp=spring&gclid=xyz&fbclid=abc&ranking_uuid=u1#reviews'
+      'https://www.getyourguide.com/it-it/minorca-l465/mahon-tour-t441948/?ranking_uuid=01fe5957&referral_redirect=1&visitor-id=5KCNOANQ63LC92NERYFJTMUYSX88LLD4&partner_id=COMPETITOR&utm_source=foo#reviews'
     )
     expect(res.success).toBe(true)
     if (res.success) {
-      const u = new URL(res.link)
-      expect(u.searchParams.get('partner_id')).toBe(GETYOURGUIDE_PARTNER_ID)
-      expect(u.searchParams.get('utm_medium')).toBe('online_publisher')
-      expect(u.searchParams.get('currency')).toBe('EUR')
-      expect(u.searchParams.has('utm_source')).toBe(false)
-      expect(u.searchParams.has('cmp')).toBe(false)
-      expect(u.searchParams.has('gclid')).toBe(false)
-      expect(u.searchParams.has('fbclid')).toBe(false)
-      expect(u.searchParams.has('ranking_uuid')).toBe(false)
-      expect(res.link).not.toContain('COMPETITOR')
-      expect(res.link).not.toContain('#reviews')
+      expect(res.link).toBe(
+        `https://www.getyourguide.com/it-it/minorca-l465/mahon-tour-t441948/?partner_id=${GETYOURGUIDE_PARTNER_ID}&utm_medium=online_publisher`
+      )
     }
   })
 

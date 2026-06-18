@@ -104,8 +104,9 @@ export function generateGetYourGuideLink(inputUrl: string): GenResult {
   if (!/getyourguide\.[a-z]{2,}/i.test(url.hostname)) {
     return { success: false, error: 'validGetYourGuideURL' }
   }
-  // Strip any competing partner_id + tracking, then apply ours.
-  cleanUrl(url, { extraParams: ['partner_id'] })
+  // GetYourGuide product pages are path-identified (…-t441948/), so every query
+  // param is session/tracking noise — clean-slate it and apply only ours.
+  cleanUrl(url, { stripAllParams: true })
   url.searchParams.set('partner_id', GETYOURGUIDE_PARTNER_ID)
   url.searchParams.set('utm_medium', 'online_publisher')
   return { success: true, link: url.toString() }
@@ -123,10 +124,10 @@ export function generateCivitatisLink(inputUrl: string): GenResult {
     return { success: false, error: 'validCivitatisURL' }
   }
   // Civitatis affiliate method (per their docs): append ?aid=<id> directly to
-  // the product URL. The old /affiliate/?aid=&url= wrapper was NOT a tracking
-  // redirect — it 301s to the affiliate panel and discards the destination, so
-  // those links never attributed the sale.
-  cleanUrl(url, { extraParams: ['aid'] })
+  // the product URL. The page is path-identified, so clean-slate the query
+  // first. (The old /affiliate/?aid=&url= wrapper 301'd to the affiliate panel
+  // and discarded the destination, so those links never attributed the sale.)
+  cleanUrl(url, { stripAllParams: true })
   url.searchParams.set('aid', CIVITATIS_AFFILIATE_ID)
   return { success: true, link: url.toString() }
 }

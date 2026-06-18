@@ -35,4 +35,14 @@ describe('cleanUrl', () => {
     const u = cleanUrl(new URL('https://x.com/p?size=large'))
     expect(u.toString()).toBe('https://x.com/p?size=large')
   })
+
+  it('stripAllParams removes every query param (clean slate)', () => {
+    const u = cleanUrl(
+      new URL('https://x.com/p?keep=ok&date=2026&visitor-id=z#frag'),
+      { stripAllParams: true }
+    )
+    expect(u.search).toBe('')
+    expect(u.hash).toBe('')
+    expect(u.toString()).toBe('https://x.com/p')
+  })
 })
