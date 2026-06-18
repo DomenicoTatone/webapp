@@ -11,9 +11,9 @@ import type { Island, Lang, ProgramCard } from '@/lib/types'
 // ids — both attribution bugs).
 export const GETYOURGUIDE_PARTNER_ID = 'Q5TFESQ'
 /**
- * Civitatis affiliate id. The old app used 5488 on homepage links but 52698 in
- * the deep-link generator — an attribution bug. Unified to the homepage value.
- * TODO(confirm): verify 5488 is the correct Civitatis account id.
+ * Civitatis affiliate id — 5488, confirmed in the Civitatis affiliate panel.
+ * The old app wrongly used 52698 in the deep-link generator (an attribution
+ * bug); unified here to the correct value.
  */
 export const CIVITATIS_AFFILIATE_ID = '5488'
 export const BOOKING_AFFILIATE_ID = '955564'

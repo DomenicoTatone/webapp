@@ -51,7 +51,6 @@ src/
   and executing remote `<script>` tags.
 - Typed `i18n` keys with compile-time locale parity.
 - Real SVG icons (no emoji), light/dark theme, shareable routes, localized meta.
-
-> **TODO (confirm):** `CIVITATIS_AFFILIATE_ID` is set to `5488` (the value used
-> by the homepage links). The old generator used `52698`. Verify which is the
-> correct Civitatis account before going live.
+- The Civitatis deep link now appends `?aid=` to the product URL (the documented
+  method) instead of the old `/affiliate/?aid=&url=` wrapper, which silently
+  redirected to the affiliate panel and never attributed the sale.
