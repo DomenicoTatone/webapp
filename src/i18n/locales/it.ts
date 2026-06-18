@@ -1,0 +1,142 @@
+/** Italian — canonical source of truth. Every other locale must mirror these keys. */
+export const it = {
+  appName: 'DeepLink Pro',
+  appTagline: 'Generatore di link affiliati per viaggi',
+
+  // Booking
+  bookingHeader: 'Cerca il Deep Link di Booking',
+  spainIslandsOnly: 'Solo Spagna e Isole',
+  pageType: 'Tipo Pagina',
+  pageTypeLabel: 'Tipo Pagina',
+  searchPlaceholder: 'Cerca...',
+  searchLabel: 'Cerca',
+  languageLabel: 'Lingua',
+  cityPage: 'Pagina Città',
+  hotelPage: 'Pagina Hotel',
+  airportPage: 'Pagina Aeroporto',
+  districtPage: 'Pagina Quartiere',
+  islandPage: 'Pagina Isola',
+  landmarkPage: 'Pagina Luogo di Interesse',
+  regionPage: 'Pagina Regione',
+  genericLandingPages: 'Pagina dei risultati generica',
+  searchResultsPageLabel: 'Pagina dei Risultati di Ricerca',
+  landingPageLabel: 'Landing Page',
+  subTypeSearchTooltip: 'Pagina che mostra i risultati di ricerca filtrabili.',
+  subTypeLandingTooltip: 'Pagina di destinazione promozionale dedicata.',
+  homePage: 'Pagina principale →',
+  apartmentsPage: 'Pagina dei risultati per appartamenti →',
+  resortsPage: 'Pagina dei risultati per resort →',
+  villasPage: 'Pagina dei risultati per ville →',
+  bedAndBreakfastPage: 'Pagina dei risultati per bed & breakfast →',
+  guestHousePage: 'Pagina dei risultati per affittacamere →',
+  loadingData: 'Caricamento dati...',
+  searchMinChars: 'Digita almeno 3 caratteri per cercare',
+  noResultsFound: 'Nessun risultato trovato',
+  dataLoaded: 'Dati caricati correttamente!',
+  errorLoadingData: 'Errore nel caricamento dati. Riprova.',
+  resultsFound: 'risultati trovati',
+  retryLoad: 'Riprova',
+
+  // Tradedoubler
+  usefulTLinksHeader: 'I Programmi Attivi',
+  programLabel: 'Programma',
+  programsActive: 'programmi attivi',
+  selectSite: 'Seleziona un sito',
+  selectPlatform: 'Seleziona una piattaforma',
+  selectSiteAndPlatform: 'Seleziona sito e piattaforma',
+  selectSiteToViewPrograms: 'Seleziona un sito per vedere i programmi attivi',
+  autoDetectNote:
+    'Incolla un URL e il programma verrà riconosciuto automaticamente',
+  partnerDetected: 'Programma riconosciuto',
+  urlPlaceholder: 'https://www.edreams.it/...',
+
+  // Generic link tools
+  generateLink: 'Genera Link',
+  generateDeepLinkSection: 'Genera Deep Link',
+  copyLink: 'Copia Link',
+  openLink: 'Apri Link',
+  openInNewTab: 'Apri in una nuova scheda',
+  back: 'Indietro',
+  urlToTransform: 'URL da trasformare',
+  enterUrl: 'Inserisci un URL',
+  generatedDeepLink: 'Deep Link Generato',
+  homepageLinks: 'Link Homepage',
+  affiliateLink: 'Link Affiliato',
+  linkLanguage: 'Lingua Link',
+
+  // GetYourGuide / Civitatis
+  GetYourGuideLink: 'Deep Link GetYourGuide',
+  CivitatisLink: 'Deep Link Civitatis',
+  insertGetYourGuideLink: 'Inserisci il link di GetYourGuide qui',
+  insertCivitatisLink: 'Inserisci il link di Civitatis qui',
+  validGetYourGuideURL: 'Per favore, inserisci un URL valido di GetYourGuide.',
+  validCivitatisURL: 'Per favore, inserisci un URL valido di Civitatis.',
+
+  // Car rental
+  carRentalNav: 'Noleggio Auto',
+  carRentalHeader: 'Noleggio Auto a Minorca',
+  selectProvider: 'Seleziona Noleggio',
+  carRentalNotice:
+    'I link portano alle homepage delle rispettive piattaforme di noleggio.',
+
+  // Image tool
+  imageToolNav: 'Immagini',
+  imageToolHeader: 'Compressore di Immagini',
+  dropZoneText: 'Trascina qui le immagini o clicca per selezionarle',
+  compressionQuality: 'Qualità Compressione',
+  qualityHint: 'Valori più bassi = file più piccoli, qualità ridotta',
+  outputFormat: 'Formato Output',
+  imageToolNotice:
+    'La compressione avviene localmente nel browser. Le immagini non vengono caricate su nessun server.',
+  clearAll: 'Cancella Tutto',
+  downloadAll: 'Scarica Tutto (ZIP)',
+  download: 'Scarica',
+  images: 'immagini',
+  downloadStarted: 'Download avviato!',
+  removeImage: 'Rimuovi',
+  reduction: 'riduzione',
+  totalReduction: 'Riduzione totale',
+  originalLabel: 'Originale',
+  compressedLabel: 'Compresso',
+  addMoreImages: 'Aggiungi altre',
+  formatJpeg: 'JPEG (consigliato)',
+  formatWebp: 'WebP (moderno)',
+  formatPng: 'PNG (lossless)',
+
+  // Feedback
+  feedbackNav: 'Feedback',
+  feedbackHeader: 'Segnalazioni e Suggerimenti',
+  yourName: 'Nome',
+  yourEmail: 'Email',
+  platform: 'Piattaforma',
+  message: 'Messaggio',
+  other: 'Altro',
+  send: 'Invia',
+  thankYou: 'Grazie!',
+  messageReceived: 'Il tuo messaggio è stato ricevuto. Ti risponderemo presto.',
+  sendAnother: 'Invia un altro',
+  messageSent: 'Messaggio inviato!',
+  sendError: "Errore nell'invio. Per favore riprova.",
+
+  // Notifications & errors
+  deepLinkCopied: 'Deep Link copiato negli appunti!',
+  deepLinkGenerated: 'Deep Link generato!',
+  copyError: 'Errore nella copia del link.',
+  copied: 'Copiato!',
+  invalidUrl: 'URL non valido. Inserisci un URL completo con https://',
+  partnerNotRecognized: 'Programma non riconosciuto per questo URL.',
+  programOrPartnerNotFound: 'Programma o partner non trovato.',
+  urlNotValidForPartner: 'URL non valido per il partner selezionato.',
+  languageChanged: 'Lingua cambiata',
+
+  // Chrome
+  toggleTheme: 'Cambia tema',
+  lightMode: 'Chiaro',
+  darkMode: 'Scuro',
+  footerText: '© 2026 DeepLink Pro · Generatore Link Affiliati',
+  pageNotFound: 'Pagina non trovata',
+  goHome: 'Torna alla home',
+} as const
+
+export type TranslationKey = keyof typeof it
+export default it

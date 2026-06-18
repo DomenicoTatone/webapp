@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0d9488" />
+
+    <title>DeepLink Pro — Affiliate Link Generator</title>
+    <meta
+      name="description"
+      content="Genera deep link affiliati per Booking, Tradedoubler, GetYourGuide, Civitatis e noleggio auto."
+    />
+    <link rel="canonical" href="https://domenicotatone.github.io/webapp/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://domenicotatone.github.io/webapp/" />
+    <meta property="og:title" content="DeepLink Pro" />
+    <meta
+      property="og:description"
+      content="Generatore di deep link affiliati per Booking, Tradedoubler, GetYourGuide e Civitatis."
+    />
+    <meta
+      property="og:image"
+      content="https://domenicotatone.github.io/webapp/og-image.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DeepLink Pro" />
+    <meta
+      name="twitter:description"
+      content="Generatore di deep link affiliati per Booking, Tradedoubler, GetYourGuide e Civitatis."
+    />
+    <meta
+      name="twitter:image"
+      content="https://domenicotatone.github.io/webapp/og-image.png"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- No-flash theme bootstrap -->
+    <script>
+      try {
+        var t = localStorage.getItem('dlp-theme');
+        var sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (t === 'dark' || (t === null && sysDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
